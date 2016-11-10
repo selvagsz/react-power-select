@@ -8,13 +8,19 @@ export default class BeforeOptions extends Component {
     }, 0)
   }
 
+  componentWillMount() {
+    this.props.actions.search(this.props.searchTerm || '')
+  }
+
   render() {
+    let props = this.props
     return (
       <div className='before-options'>
         <input
           ref='before-options-input'
           className='form-control input-sm'
-          placeholder={this.props.placeholder}
+          placeholder={this.props.searchPlaceholder}
+          onChange={(e) => props.actions.search(e.target.value)}
         />
       </div>
     )

@@ -4,12 +4,14 @@ import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
 import BeforeOptions from './BeforeOptions'
 import AfterOptions from './AfterOptions'
+import { matcher } from './utils'
 
 export default class PowerSelect extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      isOpen: false
+      isOpen: false,
+      filteredOptions: null
     }
     this.open = ::this.open
     this.close = ::this.close
@@ -65,8 +67,28 @@ export default class PowerSelect extends Component {
     document.removeEventListener('click', this.handleDocumentClick)
   }
 
+  search(searchTerm) {
+    let { options, searchIndices } = this.props
+    let filteredOptions = options.filter((option) => {
+      return this.props.matcher({
+        option,
+        searchTerm,
+        searchIndices
+      })
+    })
+    this.setState({
+      filteredOptions
+    })
+  }
+
+  actions = {
+    open: ::this.open,
+    close: ::this.close,
+    toggle: ::this.toggle,
+    search: ::this.search
+  }
+
   render() {
-    let { isOpen } = this.state
     let {
       options,
       selected,
@@ -74,6 +96,9 @@ export default class PowerSelect extends Component {
       beforeOptionsComponent,
       afterOptionsComponent
     } = this.props
+
+    let { isOpen } = this.state
+    let filteredOptions = this.state.filteredOptions || options
 
     return (
       <Dropdown>
@@ -83,10 +108,11 @@ export default class PowerSelect extends Component {
         {
           isOpen &&
           <DropdownMenu
-            options={options}
+            options={filteredOptions}
             selected={selected}
             optionComponent={optionComponent}
             onOptionClick={this.onChange}
+            actions={this.actions}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
           />
@@ -108,5 +134,7 @@ PowerSelect.propTypes = {
 PowerSelect.defaultProps = {
   options: [],
   beforeOptionsComponent: BeforeOptions,
-  afterOptionsComponent: AfterOptions
+  afterOptionsComponent: AfterOptions,
+  searchIndices: [],
+  matcher: matcher
 }

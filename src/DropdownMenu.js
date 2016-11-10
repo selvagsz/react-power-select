@@ -59,6 +59,7 @@ export default class DropdownMenu extends Component {
       onOptionClick,
       selected,
       optionComponent,
+      actions,
       beforeOptionsComponent,
       afterOptionsComponent
     } = this.props
@@ -76,7 +77,7 @@ export default class DropdownMenu extends Component {
         className='power-select-menu'
         onKeyDown={(event) => this.handleKeyDown(event, highlightedIndex)}
       >
-        <BeforeOptionsComponent />
+        <BeforeOptionsComponent actions={actions} />
         {
           options.map((option, idx) => (
             <OptionContainer
@@ -88,7 +89,7 @@ export default class DropdownMenu extends Component {
             />
           ))
         }
-        <AfterOptionsComponent />
+        <AfterOptionsComponent label='+ Add New' />
       </div>
     )
   }
