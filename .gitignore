@@ -1,0 +1,10 @@
+# output
+lib/
+dist/
+
+# dependencies
+/node_modules
+/bower_components
+
+# misc
+npm-debug.log
