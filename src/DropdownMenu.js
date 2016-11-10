@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Option from './Option'
-import BeforeOptions from './BeforeOptions'
-import AfterOptions from './AfterOptions'
+import OptionContainer from './Option'
 
 const actions = {
   38: 'handleUpArrow',
@@ -56,7 +54,18 @@ export default class DropdownMenu extends Component {
   }
 
   render() {
-    let { options, onOptionClick, selected } = this.props
+    let {
+      options,
+      onOptionClick,
+      selected,
+      optionComponent,
+      beforeOptionsComponent,
+      afterOptionsComponent
+    } = this.props
+
+    let BeforeOptionsComponent = beforeOptionsComponent
+    let AfterOptionsComponent = afterOptionsComponent
+
     let { highlightedIndex } = this.state
     highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
 
@@ -67,18 +76,19 @@ export default class DropdownMenu extends Component {
         className='power-select-menu'
         onKeyDown={(event) => this.handleKeyDown(event, highlightedIndex)}
       >
-        <BeforeOptions />
+        <BeforeOptionsComponent />
         {
           options.map((option, idx) => (
-            <Option
+            <OptionContainer
               key={idx}
               option={option}
+              optionComponent={optionComponent}
               isHighlighted={highlightedIndex === idx}
               onOptionClick={() => onOptionClick(option)}
             />
           ))
         }
-        <AfterOptions label='Add...' />
+        <AfterOptionsComponent />
       </div>
     )
   }

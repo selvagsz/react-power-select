@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
-    "build": "npm run clean && npm run build:commonjs",
+    "build": "npm run clean && npm run build:commonjs && webpack",
     "prepublish": "npm run build"
   },
   "repository": {

@@ -6,8 +6,12 @@ const DIST_DIR = `${__dirname}/dist`
 
 module.exports = {
   context: SRC_DIR,
+  resolve: {
+    extensions: ['', '.js', '.scss']
+  },
   entry: {
-    main: './index.js'
+    main: './index.js',
+    css: './styles/index.js'
   },
   output: {
     path: `${DIST_DIR}/`,
@@ -28,6 +32,8 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('react-power-select.css')
+    new ExtractTextPlugin('react-power-select.css', {
+      allChunks: true
+    })
   ]
 }

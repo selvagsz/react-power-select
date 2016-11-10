@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
+import BeforeOptions from './BeforeOptions'
+import AfterOptions from './AfterOptions'
 
 export default class PowerSelect extends Component {
   constructor() {
@@ -65,7 +67,13 @@ export default class PowerSelect extends Component {
 
   render() {
     let { isOpen } = this.state
-    let { options, selected } = this.props
+    let {
+      options,
+      selected,
+      optionComponent,
+      beforeOptionsComponent,
+      afterOptionsComponent
+    } = this.props
 
     return (
       <Dropdown>
@@ -77,10 +85,28 @@ export default class PowerSelect extends Component {
           <DropdownMenu
             options={options}
             selected={selected}
+            optionComponent={optionComponent}
             onOptionClick={this.onChange}
+            beforeOptionsComponent={beforeOptionsComponent}
+            afterOptionsComponent={afterOptionsComponent}
           />
         }
       </Dropdown>
     )
   }
+}
+
+PowerSelect.propTypes = {
+  options: PropTypes.array.isRequired,
+  selected: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  onChange: PropTypes.func.isRequired
+}
+
+PowerSelect.defaultProps = {
+  options: [],
+  beforeOptionsComponent: BeforeOptions,
+  afterOptionsComponent: AfterOptions
 }

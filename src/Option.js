@@ -3,6 +3,10 @@ export default (props) => (
     className={`option ${props.isHighlighted ? 'highlighted' : ''}`}
     onClick={props.onOptionClick}
   >
-    {props.option}
+    {
+      props.optionComponent ?
+      props.optionComponent(props.option) :
+      props.option
+    }
   </div>
 )
