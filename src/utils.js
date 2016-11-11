@@ -1,9 +1,12 @@
-export const matcher = ({ option, searchTerm = '', searchIndices = [] }) => {
+export const matcher = ({ option, searchTerm = '', searchIndices }) => {
   searchTerm = searchTerm.trim().toLowerCase()
+  if (typeof option === 'string') {
+    return option.indexOf(searchTerm) !== -1
+  }
   if (searchIndices) {
     return searchIndices.some((index) => {
       return (option[index] || '').toLowerCase().indexOf(searchTerm) !== -1
     })
   }
-  return option.indexOf(searchTerm) !== -1
+  return true
 }

@@ -94,6 +94,7 @@ export default class PowerSelect extends Component {
       options,
       selected,
       selectedLabel,
+      placeholder,
       optionComponent,
       selectedOptionComponent,
       beforeOptionsComponent,
@@ -105,17 +106,22 @@ export default class PowerSelect extends Component {
 
     return (
       <Dropdown>
-        <div className={`power-select ${isOpen ? 'open' : ''}`}>
+        <div
+          ref='power-select-trigger-container'
+          className={`power-select ${isOpen ? 'open' : ''}`}
+        >
           <SelectTrigger
             selectedOption={selected}
             selectedLabel={selectedLabel}
             selectedOptionComponent={selectedOptionComponent}
+            placeholder={placeholder}
             onClick={this.toggle}
           />
         </div>
         {
           isOpen &&
           <DropdownMenu
+            minWidth={this.refs['power-select-trigger-container'].offsetWidth}
             options={filteredOptions}
             selected={selected}
             optionComponent={optionComponent}
@@ -144,6 +150,5 @@ PowerSelect.defaultProps = {
   selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
   afterOptionsComponent: AfterOptions,
-  searchIndices: [],
   matcher: matcher
 }

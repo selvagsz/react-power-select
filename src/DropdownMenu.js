@@ -61,7 +61,8 @@ export default class DropdownMenu extends Component {
       optionComponent,
       actions,
       beforeOptionsComponent,
-      afterOptionsComponent
+      afterOptionsComponent,
+      minWidth
     } = this.props
 
     let BeforeOptionsComponent = beforeOptionsComponent
@@ -76,6 +77,9 @@ export default class DropdownMenu extends Component {
         tabIndex='1'
         className='power-select-menu'
         onKeyDown={(event) => this.handleKeyDown(event, highlightedIndex)}
+        style={{
+          minWidth: `${minWidth}px`
+        }}
       >
         <BeforeOptionsComponent actions={actions} />
         {

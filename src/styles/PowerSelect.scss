@@ -1,8 +1,6 @@
 .power-select {
-  width: 300px;
   height: 34px;
   line-height: 24px;
-  display: inline-block;
   cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -20,7 +18,6 @@
 }
 
 .power-select-menu {
-  min-width: 300px;
   background-color: #fff;
   border: 1px solid #ccc;
 
@@ -43,4 +40,8 @@
   background-color: rgba(195, 195, 195, 0.23);
   color: #337ab7;
   cursor: pointer;
+}
+
+.power-select-placeholder {
+  color: #aaa;
 }

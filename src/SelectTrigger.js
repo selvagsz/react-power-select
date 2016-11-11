@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 export default (props) => {
-  let { selectedOption, selectedLabel, onClick } = props
+  let { selectedOption, selectedLabel, placeholder, onClick } = props
   let SelectedOptionComponent = props.selectedOptionComponent
 
   return (
@@ -12,7 +12,7 @@ export default (props) => {
           selectedLabel={selectedLabel}
           option={selectedOption}
         /> :
-        <span className='placeholder'>{props.placeholder}</span>
+        <span className='power-select-placeholder'>{placeholder}</span>
       }
     </div>
   )
