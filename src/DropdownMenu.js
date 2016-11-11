@@ -59,14 +59,12 @@ export default class DropdownMenu extends Component {
       onOptionClick,
       selected,
       optionComponent,
-      actions,
-      beforeOptionsComponent,
-      afterOptionsComponent,
+      select,
       minWidth
     } = this.props
 
-    let BeforeOptionsComponent = beforeOptionsComponent
-    let AfterOptionsComponent = afterOptionsComponent
+    let BeforeOptionsComponent = this.props.beforeOptionsComponent
+    let AfterOptionsComponent = this.props.afterOptionsComponent
 
     let { highlightedIndex } = this.state
     highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
@@ -81,7 +79,7 @@ export default class DropdownMenu extends Component {
           minWidth: `${minWidth}px`
         }}
       >
-        <BeforeOptionsComponent actions={actions} />
+        <BeforeOptionsComponent select={select} />
         {
           options.map((option, idx) => (
             <OptionContainer
@@ -93,7 +91,7 @@ export default class DropdownMenu extends Component {
             />
           ))
         }
-        <AfterOptionsComponent label='+ Add New' />
+        <AfterOptionsComponent select={select} />
       </div>
     )
   }

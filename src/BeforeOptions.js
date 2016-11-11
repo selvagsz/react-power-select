@@ -9,7 +9,7 @@ export default class BeforeOptions extends Component {
   }
 
   componentWillMount() {
-    this.props.actions.search(this.props.searchTerm || '')
+    this.props.select.search(this.props.searchTerm || '')
   }
 
   render() {
@@ -20,7 +20,7 @@ export default class BeforeOptions extends Component {
           ref='before-options-input'
           className='form-control input-sm'
           placeholder={this.props.searchPlaceholder}
-          onChange={(e) => props.actions.search(e.target.value)}
+          onChange={(e) => props.select.search(e.target.value)}
         />
       </div>
     )

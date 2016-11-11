@@ -82,7 +82,7 @@ export default class PowerSelect extends Component {
     })
   }
 
-  actions = {
+  select = {
     open: ::this.open,
     close: ::this.close,
     toggle: ::this.toggle,
@@ -126,7 +126,7 @@ export default class PowerSelect extends Component {
             selected={selected}
             optionComponent={optionComponent}
             onOptionClick={this.onChange}
-            actions={this.actions}
+            select={this.select}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
           />
@@ -149,6 +149,5 @@ PowerSelect.defaultProps = {
   options: [],
   selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
-  afterOptionsComponent: AfterOptions,
   matcher: matcher
 }
