@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
+import SelectedOption from './SelectedOption'
 import BeforeOptions from './BeforeOptions'
 import AfterOptions from './AfterOptions'
 import { matcher } from './utils'
@@ -92,7 +93,9 @@ export default class PowerSelect extends Component {
     let {
       options,
       selected,
+      selectedLabel,
       optionComponent,
+      selectedOptionComponent,
       beforeOptionsComponent,
       afterOptionsComponent
     } = this.props
@@ -103,7 +106,12 @@ export default class PowerSelect extends Component {
     return (
       <Dropdown>
         <div className={`power-select ${isOpen ? 'open' : ''}`}>
-          <SelectTrigger value={selected} onClick={this.toggle} />
+          <SelectTrigger
+            selectedOption={selected}
+            selectedLabel={selectedLabel}
+            selectedOptionComponent={selectedOptionComponent}
+            onClick={this.toggle}
+          />
         </div>
         {
           isOpen &&
@@ -133,6 +141,7 @@ PowerSelect.propTypes = {
 
 PowerSelect.defaultProps = {
   options: [],
+  selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
   afterOptionsComponent: AfterOptions,
   searchIndices: [],
