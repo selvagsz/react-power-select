@@ -11,75 +11,77 @@ const actions = {
 export default class DropdownMenu extends Component {
   constructor() {
     super(...arguments)
-    this.state = {
-      highlightedIndex: -1
-    }
+    // this.state = {
+    //   highlightedIndex: -1
+    // }
 
-    this.handleKeyDown = ::this.handleKeyDown
+    // this.handleKeyDown = ::this.handleKeyDown
   }
 
   componentDidMount() {
-    this.refs['power-select-menu'].focus()
+    // this.refs['power-select-menu'].focus()
   }
 
-  handleDownArrow(highlightedIndex) {
-    this.setState({
-      highlightedIndex: highlightedIndex < this.props.options.length - 1 ? ++highlightedIndex : 0
-    })
-  }
+  // handleDownArrow(highlightedIndex) {
+  //   this.setState({
+  //     highlightedIndex: highlightedIndex < this.props.options.length - 1 ? ++highlightedIndex : 0
+  //   })
+  // }
 
-  handleUpArrow(highlightedIndex) {
-    this.setState({
-      highlightedIndex: highlightedIndex > 0 ? --highlightedIndex : this.props.options.length - 1
-    })
-  }
+  // handleUpArrow(highlightedIndex) {
+  //   this.setState({
+  //     highlightedIndex: highlightedIndex > 0 ? --highlightedIndex : this.props.options.length - 1
+  //   })
+  // }
 
-  handleEnterPress(highlightedIndex) {
-    this.selectOption(highlightedIndex)
-  }
+  // handleEnterPress(highlightedIndex) {
+  //   this.selectOption(highlightedIndex)
+  // }
 
-  handleTabPress(highlightedIndex) {
-    this.selectOption(highlightedIndex)
-  }
+  // handleTabPress(highlightedIndex) {
+  //   this.selectOption(highlightedIndex)
+  // }
 
-  handleKeyDown(event, highlightedIndex) {
-    let action = this[actions[event.which]]
-    if (action) {
-      action.call(this, highlightedIndex)
-    }
-  }
+  // handleKeyDown(event, highlightedIndex) {
+  //   let action = this[actions[event.which]]
+  //   if (action) {
+  //     action.call(this, highlightedIndex)
+  //   }
+  // }
 
-  selectOption(highlightedIndex) {
-    this.props.onOptionClick(this.props.options[highlightedIndex])
-  }
+  // selectOption(highlightedIndex) {
+  //   this.props.onOptionClick(this.props.options[highlightedIndex])
+  // }
 
   render() {
     let {
       options,
       onOptionClick,
+      handleKeyDown,
       selected,
       optionComponent,
       select,
-      minWidth
+      minWidth,
+      highlightedIndex
     } = this.props
 
     let BeforeOptionsComponent = this.props.beforeOptionsComponent
     let AfterOptionsComponent = this.props.afterOptionsComponent
 
-    let { highlightedIndex } = this.state
-    highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
+    // let { highlightedIndex } = this.state
+    // highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
 
     return (
       <div
         ref='power-select-menu'
         tabIndex='1'
         className='power-select-menu'
-        onKeyDown={(event) => this.handleKeyDown(event, highlightedIndex)}
+        onKeyDown={(event) => handleKeyDown(event, highlightedIndex)}
         style={{
           minWidth: `${minWidth}px`
         }}
       >
-        <BeforeOptionsComponent select={select} />
+        {BeforeOptionsComponent && <BeforeOptionsComponent select={select} />}
         {
           options.map((option, idx) => (
             <OptionContainer
@@ -91,7 +93,7 @@ export default class DropdownMenu extends Component {
             />
           ))
         }
-        <AfterOptionsComponent select={select} />
+        {AfterOptionsComponent && <AfterOptionsComponent select={select} />}
       </div>
     )
   }
