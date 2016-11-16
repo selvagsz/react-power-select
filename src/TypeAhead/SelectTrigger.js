@@ -12,9 +12,10 @@ export default class TypeAheadSelectTrigger extends Component {
   }
 
   handleOnBlur(event) {
+    let select = this.props.select
     setTimeout(function() {
-      this.props.select.close()
-    }, 0)
+      select.close()
+    }, 300)
   }
 
   render() {

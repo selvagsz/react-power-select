@@ -34,17 +34,21 @@ export default class DropdownMenu extends Component {
         }}
       >
         {BeforeOptionsComponent && <BeforeOptionsComponent select={select} />}
-        {
-          options.map((option, idx) => (
-            <OptionContainer
-              key={idx}
-              option={option}
-              optionComponent={optionComponent}
-              isHighlighted={highlightedIndex === idx}
-              onOptionClick={() => onOptionClick(option)}
-            />
-          ))
-        }
+        <div className='options'>
+          {
+            options.map((option, idx) => (
+              <OptionContainer
+                key={idx}
+                option={option}
+                optionComponent={optionComponent}
+                isHighlighted={highlightedIndex === idx}
+                onOptionClick={() => {
+                  onOptionClick(idx, option)}
+                }
+              />
+            ))
+          }
+        </div>
         {AfterOptionsComponent && <AfterOptionsComponent select={select} />}
       </div>
     )

@@ -7,6 +7,13 @@ import BeforeOptions from './BeforeOptions'
 import AfterOptions from './AfterOptions'
 import { matcher } from './utils'
 
+const KEYCODES = {
+  UP_ARROW: 38,
+  DOWN_ARROW: 40,
+  ENTER: 13,
+  TAB: 9
+}
+
 const actions = {
   38: 'handleUpArrow',
   40: 'handleDownArrow',
@@ -27,7 +34,7 @@ export default class PowerSelect extends Component {
     this.open = ::this.open
     this.close = ::this.close
     this.toggle = ::this.toggle
-    this.onOptionChange = ::this.onOptionChange
+    this.selectOption = ::this.selectOption
     this.handleKeyDown = ::this.handleKeyDown
     this.handleTriggerChange = ::this.handleTriggerChange
   }
@@ -41,18 +48,16 @@ export default class PowerSelect extends Component {
     this.open()
   }
 
-  handleDownArrow(highlightedIndex) {
+  handleDownArrow(index) {
     let options = this.state.filteredOptions || this.props.options
-    this.setState({
-      highlightedIndex: highlightedIndex < options.length - 1 ? ++highlightedIndex : 0
-    })
+    let highlightedIndex = index < options.length - 1 ? ++index : 0
+    this.highlightOption(highlightedIndex)
   }
 
-  handleUpArrow(highlightedIndex) {
+  handleUpArrow(index) {
     let options = this.state.filteredOptions || this.props.options
-    this.setState({
-      highlightedIndex: highlightedIndex > 0 ? --highlightedIndex : options.length - 1
-    })
+    let highlightedIndex = index > 0 ? --index : options.length - 1
+    this.highlightOption(highlightedIndex)
   }
 
   handleEnterPress(highlightedIndex) {
@@ -64,23 +69,33 @@ export default class PowerSelect extends Component {
   }
 
   handleKeyDown(event, highlightedIndex) {
-    let action = this[actions[event.which]]
+    let keyCode = event.which
+    let action = this[actions[keyCode]]
     if (action) {
+      if ((keyCode === KEYCODES.UP_ARROW || keyCode === KEYCODES.DOWN_ARROW) && !this.state.isOpen) {
+        this.open()
+        return
+      }
+
       action.call(this, highlightedIndex)
     }
   }
 
-  selectOption(highlightedIndex) {
-    let options = this.state.filteredOptions || this.props.options
-    this.onOptionChange(options[highlightedIndex])
+  highlightOption(highlightedIndex) {
+    this.setState({
+      highlightedIndex
+    })
   }
 
-  onOptionChange(selectedOption) {
+  selectOption(highlightedIndex, option) {
+    let options = this.state.filteredOptions || this.props.options
+    let selectedOption = option || options[highlightedIndex]
+    this.highlightOption(highlightedIndex)
+
     this.setState({
       triggerInputText: null
     })
-
-    this.props.onChange(selectedOption)
+    this.props.onChange(selectedOption, this.select)
     this.close()
   }
 
@@ -141,11 +156,14 @@ export default class PowerSelect extends Component {
     })
   }
 
-  select = {
-    open: ::this.open,
-    close: ::this.close,
-    toggle: ::this.toggle,
-    search: ::this.search
+  get select() {
+    return {
+      open: ::this.open,
+      close: ::this.close,
+      toggle: ::this.toggle,
+      search: ::this.search,
+      searchTerm: this.state.triggerInputText
+    }
   }
 
   render() {
@@ -194,7 +212,7 @@ export default class PowerSelect extends Component {
             options={filteredOptions}
             selected={selected}
             optionComponent={optionComponent}
-            onOptionClick={this.onOptionChange}
+            onOptionClick={this.selectOption}
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
             select={this.select}

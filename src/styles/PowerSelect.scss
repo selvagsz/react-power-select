@@ -21,6 +21,11 @@
   background-color: #fff;
   border: 1px solid #ccc;
 
+  .options {
+    max-height: 300px;
+    overflow: auto;
+  }
+
   .option {
     cursor: pointer;
     padding: 4px 12px;

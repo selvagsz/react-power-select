@@ -1,6 +1,6 @@
 import { Component } from 'react'
-import PowerSelect from './PowerSelect'
-import TypeAheadSelectTrigger from './TypeAhead/SelectTrigger'
+import PowerSelect from '../PowerSelect'
+import TypeAheadSelectTrigger from './SelectTrigger'
 
 export default class TypeAhead extends Component {
   render() {
