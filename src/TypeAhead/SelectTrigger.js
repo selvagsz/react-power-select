@@ -29,7 +29,7 @@ export default class TypeAheadSelectTrigger extends Component {
       handleKeyDown
     } = props
 
-    let value = this.props.triggerInputText
+    let value = this.props.searchTerm
     if (value === null) {
       value = selectedOption ? selectedOption[selectedLabel] : ''
     }

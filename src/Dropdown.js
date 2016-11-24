@@ -7,10 +7,6 @@ export default class Dropdown extends Component {
       <TetherComponent
         attachment='top left'
         targetAttachment='bottom left'
-        constraints={[{
-          to: 'scrollParent',
-          attachment: 'together'
-        }]}
       >
         {this.props.children}
       </TetherComponent>

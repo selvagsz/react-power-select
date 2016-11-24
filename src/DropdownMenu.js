@@ -40,6 +40,7 @@ export default class DropdownMenu extends Component {
               <OptionContainer
                 key={idx}
                 option={option}
+                select={select}
                 optionComponent={optionComponent}
                 isHighlighted={highlightedIndex === idx}
                 onOptionClick={() => {

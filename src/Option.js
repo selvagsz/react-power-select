@@ -5,7 +5,10 @@ export default (props) => (
   >
     {
       props.optionComponent ?
-      props.optionComponent(props.option) :
+      props.optionComponent({
+        option: props.option,
+        select: props.select
+      }) :
       props.option
     }
   </div>

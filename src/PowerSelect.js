@@ -28,7 +28,7 @@ export default class PowerSelect extends Component {
       highlightedIndex: -1,
       isOpen: false,
       filteredOptions: null,
-      triggerInputText: null
+      searchTerm: null
     }
 
     this.open = ::this.open
@@ -41,9 +41,6 @@ export default class PowerSelect extends Component {
 
   handleTriggerChange(event) {
     let value = event.target.value
-    this.setState({
-      triggerInputText: value
-    })
     this.search(value)
     this.open()
   }
@@ -56,7 +53,7 @@ export default class PowerSelect extends Component {
 
   handleUpArrow(index) {
     let options = this.state.filteredOptions || this.props.options
-    let highlightedIndex = index > 0 ? --index : options.length - 1
+    let highlightedIndex = (index > 0 && index <= options.length) ? --index : options.length - 1
     this.highlightOption(highlightedIndex)
   }
 
@@ -93,7 +90,7 @@ export default class PowerSelect extends Component {
     this.highlightOption(highlightedIndex)
 
     this.setState({
-      triggerInputText: null
+      searchTerm: null
     })
     this.props.onChange(selectedOption, this.select)
     this.close()
@@ -107,7 +104,9 @@ export default class PowerSelect extends Component {
 
   close() {
     this.setState({
-      isOpen: false
+      isOpen: false,
+      highlightedIndex: -1,
+      filteredOptions: null
     })
   }
 
@@ -144,6 +143,7 @@ export default class PowerSelect extends Component {
 
   search(searchTerm) {
     let { options, searchIndices } = this.props
+    let highlightedIndex = this.state.highlightedIndex
     let filteredOptions = options.filter((option) => {
       return this.props.matcher({
         option,
@@ -151,19 +151,23 @@ export default class PowerSelect extends Component {
         searchIndices
       })
     })
+
+    if (searchTerm) {
+      highlightedIndex = 0
+    }
+
     this.setState({
-      filteredOptions
+      filteredOptions,
+      searchTerm,
+      highlightedIndex
     })
   }
 
-  get select() {
-    return {
-      open: ::this.open,
-      close: ::this.close,
-      toggle: ::this.toggle,
-      search: ::this.search,
-      searchTerm: this.state.triggerInputText
-    }
+  select = {
+    open: ::this.open,
+    close: ::this.close,
+    toggle: ::this.toggle,
+    search: ::this.search
   }
 
   render() {
@@ -181,7 +185,10 @@ export default class PowerSelect extends Component {
     let { isOpen } = this.state
     let filteredOptions = this.state.filteredOptions || options
     let SelectTrigger = this.props.selectTriggerComponent
-
+    let selectApi = {
+      ...this.select,
+      searchTerm: this.state.searchTerm
+    }
     let { highlightedIndex } = this.state
     highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
 
@@ -199,10 +206,10 @@ export default class PowerSelect extends Component {
             handleKeyDown={(event) => {
               this.handleKeyDown(event, highlightedIndex)
             }}
-            triggerInputText={this.state.triggerInputText}
+            searchTerm={this.state.searchTerm}
             handleOnChange={this.handleTriggerChange}
             onClick={this.toggle}
-            select={this.select}
+            select={selectApi}
           />
         </div>
         {
@@ -215,7 +222,7 @@ export default class PowerSelect extends Component {
             onOptionClick={this.selectOption}
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
-            select={this.select}
+            select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
           />
