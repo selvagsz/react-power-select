@@ -5,15 +5,16 @@ export default (props) => {
   let SelectedOptionComponent = props.selectedOptionComponent
 
   return (
-    <div className='trigger' onClick={onClick}>
+    <div className='powerselect__trigger' onClick={onClick}>
       {
         selectedOption ?
         <SelectedOptionComponent
           selectedLabel={selectedLabel}
           option={selectedOption}
         /> :
-        <span className='power-select-placeholder'>{placeholder}</span>
+        <span className='powerselect__placeholder'>{placeholder}</span>
       }
+      <span className='powerselect__trigger-status'></span>
     </div>
   )
 }

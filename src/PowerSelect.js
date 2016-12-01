@@ -110,7 +110,8 @@ export default class PowerSelect extends Component {
     })
   }
 
-  toggle() {
+  toggle(event) {
+    event && event.stopPropagation()
     if (this.state.isOpen) {
       this.close()
     } else {
@@ -126,7 +127,7 @@ export default class PowerSelect extends Component {
 
   handleDocumentClick(event) {
     let $target = event.target
-    if (!($target.closest('.power-select') || $target.closest('.power-select-menu'))) {
+    if (!($target.closest('.powerselect') || $target.closest('.powerselect__menu'))) {
       this.close()
     }
   }
@@ -196,7 +197,7 @@ export default class PowerSelect extends Component {
       <Dropdown>
         <div
           ref='power-select-trigger-container'
-          className={`power-select ${isOpen ? 'open' : ''}`}
+          className={`powerselect ${isOpen ? 'powerselect--open' : ''}`}
         >
           <SelectTrigger
             selectedOption={selected}

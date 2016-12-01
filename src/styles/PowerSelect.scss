@@ -1,52 +1,83 @@
-.power-select {
+.powerselect {
   height: 34px;
-  line-height: 24px;
+  line-height: 22px;
   cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
 
-  &.open {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-bottom: 0;
+.powerselect--open {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: 0;
+
+  .powerselect__trigger-status {
+    transform: rotate(-180deg);
   }
 }
 
-.trigger {
+.powerselect__trigger {
+  position: relative;
   height: 100%;
   padding: 4px 12px;
 }
 
-.power-select-menu {
+.powerselect__menu {
   background-color: #fff;
   border: 1px solid #ccc;
+}
 
-  .options {
-    max-height: 300px;
-    overflow: auto;
-  }
+.powerselect__options {
+  max-height: 250px;
+  overflow: auto;
+}
 
-  .option {
-    cursor: pointer;
-    padding: 4px 12px;
+.powerselect__option {
+  cursor: pointer;
+  padding: 4px 12px;
 
-    &:hover, &.highlighted {
-      background-color: #f6f6f6;
-    }
+  &:hover, &.powerselect__option--highlighted {
+    background-color: #f6f6f6;
   }
 }
 
-.before-options {
+.powerselect__before-options {
   padding: 8px 12px;
 }
 
-.power-select-placeholder {
+.powerselect__placeholder {
   color: #aaa;
 }
 
+.powerselect__search-input {
+  display: block;
+  width: 100%;
+  height: 32px;
+  padding: 4px 8px;
+  line-height: 1.4;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 
-.typeahead--trigger {
+  &:focus {
+    border-color: #66afe9;
+  }
+}
+
+.powerselect__trigger-input {
   display: block;
   width: 100%;
   border: none;
+}
+
+.powerselect__trigger-status {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 4px solid #777;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  position: absolute;
+  right: 8px;
+  top: 14px;
 }

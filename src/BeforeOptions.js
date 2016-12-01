@@ -15,10 +15,10 @@ export default class BeforeOptions extends Component {
   render() {
     let props = this.props
     return (
-      <div className='before-options'>
+      <div className='powerselect__before-options'>
         <input
           ref='before-options-input'
-          className='form-control input-sm'
+          className='powerselect__search-input'
           placeholder={this.props.searchPlaceholder}
           onChange={(e) => props.select.search(e.target.value)}
         />

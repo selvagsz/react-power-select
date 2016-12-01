@@ -27,14 +27,14 @@ export default class DropdownMenu extends Component {
     return (
       <div
         tabIndex='1'
-        className='power-select-menu'
+        className='powerselect__menu'
         onKeyDown={(event) => handleKeyDown(event, highlightedIndex)}
         style={{
           minWidth: `${minWidth}px`
         }}
       >
         {BeforeOptionsComponent && <BeforeOptionsComponent select={select} />}
-        <div className='options'>
+        <div className='powerselect__options'>
           {
             options.map((option, idx) => (
               <OptionContainer

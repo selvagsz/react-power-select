@@ -1,6 +1,6 @@
 export default (props) => (
   <div
-    className='after-options'
+    className='powerselect__after-options'
     onClick={props.onAfterOptionClick}
   >
     {props.label}

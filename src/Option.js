@@ -1,6 +1,8 @@
 export default (props) => (
   <div
-    className={`option ${props.isHighlighted ? 'highlighted' : ''}`}
+    className={
+      `powerselect__option ${props.isHighlighted ? 'powerselect__option--highlighted' : ''}`
+    }
     onClick={props.onOptionClick}
   >
     {

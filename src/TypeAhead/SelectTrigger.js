@@ -35,18 +35,20 @@ export default class TypeAheadSelectTrigger extends Component {
     }
 
     return (
-      <div className='trigger'>
+      <div className='powerselect__trigger'>
         <input
-          className='typeahead--trigger'
+          className='powerselect__trigger-input'
           autoComplete='off'
           spellCheck='false'
           placeholder={props.placeholder}
           value={value}
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
+          onClick={onClick}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
+        <span className='powerselect__trigger-status'></span>
       </div>
     )
   }
