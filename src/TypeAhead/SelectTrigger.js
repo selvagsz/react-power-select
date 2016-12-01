@@ -44,7 +44,6 @@ export default class TypeAheadSelectTrigger extends Component {
           value={value}
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
-          onClick={onClick}
           onFocus={this.handleOnFocus}
           onBlur={this.handleOnBlur}
         />
