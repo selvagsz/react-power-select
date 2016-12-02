@@ -132,14 +132,19 @@ export default class PowerSelect extends Component {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', ::this.handleEscapePress)
-    document.addEventListener('click', ::this.handleDocumentClick)
+  documentEventListeners = {
+    handleEscapePress: ::this.handleEscapePress,
+    handleDocumentClick: ::this.handleDocumentClick
   }
 
-  componentWillUnMount() {
-    document.removeEventListener('keydown', this.handleEscapePress)
-    document.removeEventListener('click', this.handleDocumentClick)
+  componentDidMount() {
+    document.addEventListener('keydown', this.documentEventListeners.handleEscapePress)
+    document.addEventListener('click', this.documentEventListeners.handleDocumentClick)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress)
+    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick)
   }
 
   search(searchTerm) {
