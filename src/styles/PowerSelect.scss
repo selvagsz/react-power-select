@@ -81,3 +81,12 @@
   right: 8px;
   top: 14px;
 }
+
+.powerselect__trigger-label {
+  display: inline-block;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
