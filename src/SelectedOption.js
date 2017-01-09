@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default ({ option, selectedLabel }) => {
   return (
-    <span class='powerselect__trigger-label'>
+    <span className='powerselect__trigger-label'>
       {
         typeof selectedLabel === 'function' ?
           selectedLabel(option) :
