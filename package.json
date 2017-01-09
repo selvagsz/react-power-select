@@ -1,6 +1,6 @@
 {
   "name": "react-power-select",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A highly composable & reusable select component in react",
   "main": "lib/index.js",
   "scripts": {
