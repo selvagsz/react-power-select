@@ -24,6 +24,7 @@ export default class TypeAheadSelectTrigger extends Component {
       selectedOption,
       selectedLabel,
       placeholder,
+      disabled,
       onClick,
       handleOnChange,
       handleKeyDown
@@ -42,6 +43,7 @@ export default class TypeAheadSelectTrigger extends Component {
           spellCheck='false'
           placeholder={props.placeholder}
           value={value}
+          disabled={disabled}
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
           onFocus={this.handleOnFocus}

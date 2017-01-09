@@ -6,6 +6,15 @@
   border-radius: 4px;
 }
 
+.powerselect--disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+
+  .powerselect__trigger-input {
+    background-color: #eee;
+  }
+}
+
 .powerselect--open {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;

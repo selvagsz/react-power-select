@@ -97,6 +97,9 @@ export default class PowerSelect extends Component {
   }
 
   open() {
+    if (this.props.disabled) {
+      return
+    }
     this.setState({
       isOpen: true
     })
@@ -182,6 +185,7 @@ export default class PowerSelect extends Component {
       selected,
       selectedLabel,
       placeholder,
+      disabled,
       optionComponent,
       selectedOptionComponent,
       beforeOptionsComponent,
@@ -202,7 +206,9 @@ export default class PowerSelect extends Component {
       <Dropdown>
         <div
           ref='power-select-trigger-container'
-          className={`powerselect ${isOpen ? 'powerselect--open' : ''}`}
+          className={
+            `powerselect ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''}`
+          }
           tabIndex={0}
         >
           <SelectTrigger
@@ -210,6 +216,7 @@ export default class PowerSelect extends Component {
             selectedLabel={selectedLabel}
             selectedOptionComponent={selectedOptionComponent}
             placeholder={placeholder}
+            disabled={disabled}
             handleKeyDown={(event) => {
               this.handleKeyDown(event, highlightedIndex)
             }}
@@ -250,6 +257,7 @@ PowerSelect.propTypes = {
 
 PowerSelect.defaultProps = {
   options: [],
+  disabled: false,
   selectTriggerComponent: SelectTrigger,
   selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
