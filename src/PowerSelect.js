@@ -203,6 +203,7 @@ export default class PowerSelect extends Component {
         <div
           ref='power-select-trigger-container'
           className={`powerselect ${isOpen ? 'powerselect--open' : ''}`}
+          tabIndex={0}
         >
           <SelectTrigger
             selectedOption={selected}
