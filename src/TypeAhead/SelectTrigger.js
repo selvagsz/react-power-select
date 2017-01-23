@@ -27,7 +27,9 @@ export default class TypeAheadSelectTrigger extends Component {
       disabled,
       onClick,
       handleOnChange,
-      handleKeyDown
+      handleKeyDown,
+      handleOnFocus,
+      handleOnBlur,
     } = props
 
     let value = this.props.searchTerm
@@ -36,7 +38,10 @@ export default class TypeAheadSelectTrigger extends Component {
     }
 
     return (
-      <div className='powerselect__trigger'>
+      <div
+        className='powerselect__trigger'
+        onClick={onClick}
+      >
         <input
           className='powerselect__trigger-input'
           autoComplete='off'
@@ -46,10 +51,12 @@ export default class TypeAheadSelectTrigger extends Component {
           disabled={disabled}
           onChange={handleOnChange}
           onKeyDown={handleKeyDown}
-          onFocus={this.handleOnFocus}
-          onBlur={this.handleOnBlur}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
         />
-        <span className='powerselect__trigger-status'></span>
+        <span
+          className='powerselect__trigger-status'
+        ></span>
       </div>
     )
   }

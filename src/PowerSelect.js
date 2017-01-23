@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { findDOMNode } from 'react-dom'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
@@ -21,11 +22,15 @@ const actions = {
   9: 'handleTabPress'
 }
 
+const noop = () => {}
+
 export default class PowerSelect extends Component {
+  focused = false
+
   constructor() {
     super(...arguments)
     this.state = {
-      highlightedIndex: -1,
+      highlightedIndex: null,
       isOpen: false,
       filteredOptions: null,
       searchTerm: null
@@ -37,6 +42,9 @@ export default class PowerSelect extends Component {
     this.selectOption = ::this.selectOption
     this.handleKeyDown = ::this.handleKeyDown
     this.handleTriggerChange = ::this.handleTriggerChange
+    this.handleFocus = ::this.handleFocus
+    this.handleBlur = ::this.handleBlur
+    this.handleClick = ::this.handleClick
   }
 
   handleTriggerChange(event) {
@@ -93,6 +101,7 @@ export default class PowerSelect extends Component {
       searchTerm: null
     })
     this.props.onChange(selectedOption, this.select)
+    this.focusField()
     this.close()
   }
 
@@ -100,15 +109,16 @@ export default class PowerSelect extends Component {
     if (this.props.disabled) {
       return
     }
+
     this.setState({
-      isOpen: true
+      isOpen: true,
     })
   }
 
   close() {
     this.setState({
       isOpen: false,
-      highlightedIndex: -1,
+      highlightedIndex: null,
       filteredOptions: null
     })
   }
@@ -133,6 +143,21 @@ export default class PowerSelect extends Component {
     if (!($target.closest('.powerselect') || $target.closest('.powerselect__menu'))) {
       this.close()
     }
+  }
+
+  handleFocus(event) {
+    this.focusField()
+    this.props.onFocus(event)
+  }
+
+  handleBlur(event) {
+    this.blurField()
+    this.props.onBlur(event)
+  }
+
+  handleClick(event) {
+    this.toggle(event)
+    this.props.onClick(event)
   }
 
   documentEventListeners = {
@@ -165,6 +190,10 @@ export default class PowerSelect extends Component {
       highlightedIndex = 0
     }
 
+    if (!searchTerm || !filteredOptions) {
+      highlightedIndex = -1
+    }
+
     this.setState({
       filteredOptions,
       searchTerm,
@@ -177,6 +206,18 @@ export default class PowerSelect extends Component {
     close: ::this.close,
     toggle: ::this.toggle,
     search: ::this.search
+  }
+
+  focusField() {
+    this.setState({
+      focused: true
+    })
+  }
+
+  blurField() {
+    this.setState({
+      focused: false
+    })
   }
 
   render() {
@@ -197,21 +238,26 @@ export default class PowerSelect extends Component {
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = {
       ...this.select,
+      isOpen,
       searchTerm: this.state.searchTerm
     }
-    let { highlightedIndex } = this.state
-    highlightedIndex = highlightedIndex !== -1 ? highlightedIndex : options.indexOf(selected)
+    let { highlightedIndex, focused } = this.state
+    highlightedIndex = highlightedIndex !== null ? highlightedIndex : options.indexOf(selected)
 
     return (
       <Dropdown>
         <div
           ref='power-select-trigger-container'
           className={
-            `powerselect ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''}`
+            `powerselect ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' }`
           }
           tabIndex={0}
+          onFocus={() => {
+            findDOMNode(this.refs['powerselect-trigger']).querySelector('input').focus()
+          }}
         >
           <SelectTrigger
+            ref='powerselect-trigger'
             selectedOption={selected}
             selectedLabel={selectedLabel}
             selectedOptionComponent={selectedOptionComponent}
@@ -222,7 +268,9 @@ export default class PowerSelect extends Component {
             }}
             searchTerm={this.state.searchTerm}
             handleOnChange={this.handleTriggerChange}
-            onClick={this.toggle}
+            onClick={this.handleClick}
+            handleOnFocus={this.handleFocus}
+            handleOnBlur={this.handleBlur}
             select={selectApi}
           />
         </div>
@@ -252,7 +300,7 @@ PowerSelect.propTypes = {
     PropTypes.string,
     PropTypes.object
   ]),
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 }
 
 PowerSelect.defaultProps = {
@@ -262,5 +310,8 @@ PowerSelect.defaultProps = {
   selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
   afterOptionsComponent: null,
-  matcher: matcher
+  matcher: matcher,
+  onFocus: noop,
+  onBlur: noop,
+  onClick: noop,
 }

@@ -3,7 +3,12 @@
   line-height: 22px;
   cursor: pointer;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.powerselect--focused {
+  border-color: #66afe9;
 }
 
 .powerselect--disabled {
@@ -28,7 +33,7 @@
 .powerselect__trigger {
   position: relative;
   height: 100%;
-  padding: 4px 12px;
+  padding: 4px 22px 4px 12px;
 }
 
 .powerselect__menu {
@@ -66,7 +71,8 @@
   line-height: 1.4;
   font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 2px;
+  cursor: pointer;
 
   &:focus {
     border-color: #66afe9;
@@ -77,6 +83,7 @@
   display: block;
   width: 100%;
   border: none;
+  cursor: pointer;
 }
 
 .powerselect__trigger-status {
