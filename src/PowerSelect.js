@@ -25,13 +25,24 @@ const actions = {
 const noop = () => {}
 
 export default class PowerSelect extends Component {
-  focused = false
+  documentEventListeners = {
+    handleEscapePress: ::this.handleEscapePress,
+    handleDocumentClick: ::this.handleDocumentClick
+  }
+
+  select = {
+    open: ::this.open,
+    close: ::this.close,
+    toggle: ::this.toggle,
+    search: ::this.search
+  }
 
   constructor() {
     super(...arguments)
     this.state = {
       highlightedIndex: null,
       isOpen: false,
+      focused: false,
       filteredOptions: null,
       searchTerm: null
     }
@@ -40,11 +51,101 @@ export default class PowerSelect extends Component {
     this.close = ::this.close
     this.toggle = ::this.toggle
     this.selectOption = ::this.selectOption
+    this.handleOptionClick = ::this.handleOptionClick
     this.handleKeyDown = ::this.handleKeyDown
     this.handleTriggerChange = ::this.handleTriggerChange
     this.handleFocus = ::this.handleFocus
     this.handleBlur = ::this.handleBlur
     this.handleClick = ::this.handleClick
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.documentEventListeners.handleEscapePress)
+    document.addEventListener('click', this.documentEventListeners.handleDocumentClick)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress)
+    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick)
+  }
+
+  highlightOption(highlightedIndex) {
+    this.setState({
+      highlightedIndex
+    })
+  }
+
+  selectOption(highlightedIndex, option) {
+    let options = this.state.filteredOptions || this.props.options
+    let selectedOption = option || options[highlightedIndex]
+    this.highlightOption(highlightedIndex)
+
+    this.setState({
+      searchTerm: null
+    })
+    this.props.onChange(selectedOption, this.select)
+  }
+
+  open() {
+    if (this.props.disabled) {
+      return
+    }
+
+    let highlightedIndex = this.state.highlightedIndex
+    let { options, selected } = this.props
+    highlightedIndex = highlightedIndex !== null ? highlightedIndex : options.indexOf(selected)
+
+    this.setState({
+      isOpen: true,
+      highlightedIndex,
+    })
+  }
+
+  close() {
+    this.setState({
+      isOpen: false,
+      highlightedIndex: null,
+      filteredOptions: null
+    })
+  }
+
+  toggle(event) {
+    event && event.stopPropagation()
+    if (this.state.isOpen) {
+      this.close()
+    } else {
+      this.open()
+    }
+  }
+
+  setFocusedState(focused) {
+    this.setState({ focused })
+  }
+
+  focusField() {
+    findDOMNode(this.refs['powerselect-trigger-container']).focus()
+  }
+
+  search(searchTerm) {
+    let { options, searchIndices } = this.props
+    let highlightedIndex = this.state.highlightedIndex
+    let filteredOptions = options.filter((option) => {
+      return this.props.matcher({
+        option,
+        searchTerm,
+        searchIndices
+      })
+    })
+
+    if (!searchTerm || !filteredOptions) {
+      highlightedIndex = -1
+    }
+
+    this.setState({
+      filteredOptions,
+      searchTerm,
+      highlightedIndex
+    })
   }
 
   handleTriggerChange(event) {
@@ -66,11 +167,19 @@ export default class PowerSelect extends Component {
   }
 
   handleEnterPress(highlightedIndex) {
-    this.selectOption(highlightedIndex)
+    if (this.state.isOpen) {
+      this.selectOption(highlightedIndex)
+      this.focusField()
+      this.close()
+    }
   }
 
   handleTabPress(highlightedIndex) {
-    this.selectOption(highlightedIndex)
+    this.setFocusedState(false)
+    if (this.state.isOpen) {
+      this.selectOption(highlightedIndex)
+      this.close()
+    }
   }
 
   handleKeyDown(event, highlightedIndex) {
@@ -86,52 +195,6 @@ export default class PowerSelect extends Component {
     }
   }
 
-  highlightOption(highlightedIndex) {
-    this.setState({
-      highlightedIndex
-    })
-  }
-
-  selectOption(highlightedIndex, option) {
-    let options = this.state.filteredOptions || this.props.options
-    let selectedOption = option || options[highlightedIndex]
-    this.highlightOption(highlightedIndex)
-
-    this.setState({
-      searchTerm: null
-    })
-    this.props.onChange(selectedOption, this.select)
-    this.focusField()
-    this.close()
-  }
-
-  open() {
-    if (this.props.disabled) {
-      return
-    }
-
-    this.setState({
-      isOpen: true,
-    })
-  }
-
-  close() {
-    this.setState({
-      isOpen: false,
-      highlightedIndex: null,
-      filteredOptions: null
-    })
-  }
-
-  toggle(event) {
-    event && event.stopPropagation()
-    if (this.state.isOpen) {
-      this.close()
-    } else {
-      this.open()
-    }
-  }
-
   handleEscapePress(event) {
     if (event.which === 27) {
       this.close()
@@ -141,18 +204,25 @@ export default class PowerSelect extends Component {
   handleDocumentClick(event) {
     let $target = event.target
     if (!($target.closest('.powerselect') || $target.closest('.powerselect__menu'))) {
-      this.selectOption(this.state.highlightedIndex)
-      this.close()
+      let { focused, isOpen } = this.state
+      if (focused) {
+        this.setFocusedState(false)
+      }
+
+      if (isOpen) {
+        this.selectOption(this.state.highlightedIndex)
+        this.close()
+      }
     }
   }
 
   handleFocus(event) {
-    this.focusField()
+    this.setFocusedState(true)
     this.props.onFocus(event)
   }
 
   handleBlur(event) {
-    this.blurField()
+    this.setFocusedState(false)
     this.props.onBlur(event)
   }
 
@@ -161,64 +231,10 @@ export default class PowerSelect extends Component {
     this.props.onClick(event)
   }
 
-  documentEventListeners = {
-    handleEscapePress: ::this.handleEscapePress,
-    handleDocumentClick: ::this.handleDocumentClick
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.documentEventListeners.handleEscapePress)
-    document.addEventListener('click', this.documentEventListeners.handleDocumentClick)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress)
-    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick)
-  }
-
-  search(searchTerm) {
-    let { options, searchIndices } = this.props
-    let highlightedIndex = this.state.highlightedIndex
-    let filteredOptions = options.filter((option) => {
-      return this.props.matcher({
-        option,
-        searchTerm,
-        searchIndices
-      })
-    })
-
-    if (searchTerm) {
-      highlightedIndex = 0
-    }
-
-    if (!searchTerm || !filteredOptions) {
-      highlightedIndex = -1
-    }
-
-    this.setState({
-      filteredOptions,
-      searchTerm,
-      highlightedIndex
-    })
-  }
-
-  select = {
-    open: ::this.open,
-    close: ::this.close,
-    toggle: ::this.toggle,
-    search: ::this.search
-  }
-
-  focusField() {
-    this.setState({
-      focused: true
-    })
-  }
-
-  blurField() {
-    this.setState({
-      focused: false
-    })
+  handleOptionClick(option) {
+    this.selectOption(option)
+    this.focusField()
+    this.close()
   }
 
   render() {
@@ -243,18 +259,17 @@ export default class PowerSelect extends Component {
       searchTerm: this.state.searchTerm
     }
     let { highlightedIndex, focused } = this.state
-    highlightedIndex = highlightedIndex !== null ? highlightedIndex : options.indexOf(selected)
 
     return (
       <Dropdown>
         <div
-          ref='power-select-trigger-container'
+          ref='powerselect-trigger-container'
           className={
             `powerselect ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' }`
           }
           tabIndex={0}
           onFocus={() => {
-            let triggerContainer = findDOMNode(this.refs['power-select-trigger-container'])
+            let triggerContainer = findDOMNode(this.refs['powerselect-trigger-container'])
             let triggerInput = triggerContainer.querySelector('input')
             if (triggerInput) {
               triggerInput.focus()
@@ -274,18 +289,17 @@ export default class PowerSelect extends Component {
             handleOnChange={this.handleTriggerChange}
             onClick={this.handleClick}
             handleOnFocus={this.handleFocus}
-            handleOnBlur={this.handleBlur}
             select={selectApi}
           />
         </div>
         {
           isOpen &&
           <DropdownMenu
-            minWidth={this.refs['power-select-trigger-container'].offsetWidth}
+            minWidth={this.refs['powerselect-trigger-container'].offsetWidth}
             options={filteredOptions}
             selected={selected}
             optionComponent={optionComponent}
-            onOptionClick={this.selectOption}
+            onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
             select={selectApi}
