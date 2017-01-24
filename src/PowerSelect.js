@@ -141,6 +141,7 @@ export default class PowerSelect extends Component {
   handleDocumentClick(event) {
     let $target = event.target
     if (!($target.closest('.powerselect') || $target.closest('.powerselect__menu'))) {
+      this.selectOption(this.state.highlightedIndex)
       this.close()
     }
   }
@@ -253,11 +254,14 @@ export default class PowerSelect extends Component {
           }
           tabIndex={0}
           onFocus={() => {
-            findDOMNode(this.refs['powerselect-trigger']).querySelector('input').focus()
+            let triggerContainer = findDOMNode(this.refs['power-select-trigger-container'])
+            let triggerInput = triggerContainer.querySelector('input')
+            if (triggerInput) {
+              triggerInput.focus()
+            }
           }}
         >
           <SelectTrigger
-            ref='powerselect-trigger'
             selectedOption={selected}
             selectedLabel={selectedLabel}
             selectedOptionComponent={selectedOptionComponent}
