@@ -79,11 +79,10 @@ export default class PowerSelect extends Component {
     let options = this.state.filteredOptions || this.props.options
     let selectedOption = option || options[highlightedIndex]
     this.highlightOption(highlightedIndex)
-
+    this.props.onChange(selectedOption, this.select)
     this.setState({
       searchTerm: null
     })
-    this.props.onChange(selectedOption, this.select)
   }
 
   open() {
@@ -126,9 +125,8 @@ export default class PowerSelect extends Component {
     findDOMNode(this.refs['powerselect-trigger-container']).focus()
   }
 
-  search(searchTerm) {
+  search(searchTerm, callback) {
     let { options, searchIndices } = this.props
-    let highlightedIndex = this.state.highlightedIndex
     let filteredOptions = options.filter((option) => {
       return this.props.matcher({
         option,
@@ -138,20 +136,19 @@ export default class PowerSelect extends Component {
     })
 
     if (!searchTerm || !filteredOptions) {
-      highlightedIndex = -1
+      let highlightedIndex = -1
+      this.highlightOption(highlightedIndex)
     }
 
     this.setState({
       filteredOptions,
       searchTerm,
-      highlightedIndex
-    })
+    }, callback)
   }
 
   handleTriggerChange(event) {
     let value = event.target.value
-    this.search(value)
-    this.open()
+    this.search(value, this.open)
   }
 
   handleDownArrow(index) {

@@ -14,7 +14,7 @@ export default (props) => {
 
   let value = props.searchTerm
   if (value === null) {
-    value = selectedOption ? selectedOption[selectedLabel] : ''
+    value = selectedOption ? (selectedOption[selectedLabel] || '') : ''
   }
 
   return (
