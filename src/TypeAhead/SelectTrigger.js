@@ -13,8 +13,16 @@ export default (props) => {
   } = props
 
   let value = props.searchTerm
+
   if (value === null) {
-    value = selectedOption ? (selectedOption[selectedLabel] || '') : ''
+    value = ''
+    if (selectedOption) {
+      if (typeof selectedLabel === 'function') {
+        value = selectedLabel(selectedOption)
+      } else {
+        value = selectedOption[selectedLabel]
+      }
+    }
   }
 
   return (
