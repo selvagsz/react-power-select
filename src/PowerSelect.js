@@ -236,6 +236,7 @@ export default class PowerSelect extends Component {
 
   render() {
     let {
+      className,
       options,
       selected,
       selectedLabel,
@@ -262,7 +263,7 @@ export default class PowerSelect extends Component {
         <div
           ref='powerselect-trigger-container'
           className={
-            `powerselect ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' }`
+            `powerselect ${className} ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' }`
           }
           tabIndex={0}
           onFocus={() => {
