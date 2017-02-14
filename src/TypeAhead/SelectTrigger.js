@@ -10,6 +10,7 @@ export default (props) => {
     handleOnChange,
     handleKeyDown,
     handleOnFocus,
+    handleOnBlur,
   } = props
 
   let value = props.searchTerm
@@ -40,6 +41,7 @@ export default (props) => {
         onChange={handleOnChange}
         onKeyDown={handleKeyDown}
         onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
       />
       <span
         className='powerselect__trigger-status'

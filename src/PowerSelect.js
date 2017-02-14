@@ -34,7 +34,7 @@ export default class PowerSelect extends Component {
     open: ::this.open,
     close: ::this.close,
     toggle: ::this.toggle,
-    search: ::this.search
+    search: ::this.search,
   }
 
   constructor() {
@@ -169,6 +169,7 @@ export default class PowerSelect extends Component {
       this.focusField()
       this.close()
     }
+    this.props.onEnter(this.getPublicApi())
   }
 
   handleTabPress(highlightedIndex) {
@@ -234,6 +235,16 @@ export default class PowerSelect extends Component {
     this.close()
   }
 
+  getPublicApi() {
+    let { isOpen, searchTerm } = this.state
+
+    return {
+      ...this.select,
+      isOpen,
+      searchTerm,
+    }
+  }
+
   render() {
     let {
       className,
@@ -251,11 +262,7 @@ export default class PowerSelect extends Component {
     let { isOpen } = this.state
     let filteredOptions = this.state.filteredOptions || options
     let SelectTrigger = this.props.selectTriggerComponent
-    let selectApi = {
-      ...this.select,
-      isOpen,
-      searchTerm: this.state.searchTerm
-    }
+    let selectApi = this.getPublicApi()
     let { highlightedIndex, focused } = this.state
 
     return (
@@ -287,6 +294,7 @@ export default class PowerSelect extends Component {
             handleOnChange={this.handleTriggerChange}
             onClick={this.handleClick}
             handleOnFocus={this.handleFocus}
+            handleOnBlur={this.handleBlur}
             select={selectApi}
           />
         </div>
@@ -330,4 +338,5 @@ PowerSelect.defaultProps = {
   onFocus: noop,
   onBlur: noop,
   onClick: noop,
+  onEnter: noop,
 }
