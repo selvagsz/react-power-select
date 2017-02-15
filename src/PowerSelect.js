@@ -94,17 +94,17 @@ export default class PowerSelect extends Component {
     let { options, selected } = this.props
     highlightedIndex = highlightedIndex !== null ? highlightedIndex : options.indexOf(selected)
 
+    this.highlightOption(highlightedIndex)
     this.setState({
       isOpen: true,
-      highlightedIndex,
     })
   }
 
   close() {
+    this.highlightOption(null)
     this.setState({
       isOpen: false,
-      highlightedIndex: null,
-      filteredOptions: null
+      filteredOptions: null,
     })
   }
 
@@ -135,7 +135,7 @@ export default class PowerSelect extends Component {
       })
     })
 
-    if (!searchTerm || !filteredOptions) {
+    if (!searchTerm || !filteredOptions.length) {
       let highlightedIndex = -1
       this.highlightOption(highlightedIndex)
     }
@@ -169,7 +169,9 @@ export default class PowerSelect extends Component {
       this.focusField()
       this.close()
     }
-    this.props.onEnter(this.getPublicApi())
+    if (highlightedIndex === -1) {
+      this.props.onEnter(this.getPublicApi())
+    }
   }
 
   handleTabPress(highlightedIndex) {
