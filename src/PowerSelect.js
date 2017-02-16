@@ -261,7 +261,7 @@ export default class PowerSelect extends Component {
       afterOptionsComponent
     } = this.props
 
-    let { isOpen } = this.state
+    let { isOpen, searchTerm } = this.state
     let filteredOptions = this.state.filteredOptions || options
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = this.getPublicApi()
@@ -272,7 +272,7 @@ export default class PowerSelect extends Component {
         <div
           ref='powerselect-trigger-container'
           className={
-            `powerselect ${className} ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' }`
+            `powerselect ${className} ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' } ${searchTerm ? 'powerselect__with-search' : ''}`
           }
           tabIndex={0}
           onFocus={() => {
@@ -292,7 +292,7 @@ export default class PowerSelect extends Component {
             handleKeyDown={(event) => {
               this.handleKeyDown(event, highlightedIndex)
             }}
-            searchTerm={this.state.searchTerm}
+            searchTerm={searchTerm}
             handleOnChange={this.handleTriggerChange}
             onClick={this.handleClick}
             handleOnFocus={this.handleFocus}
