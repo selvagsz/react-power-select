@@ -250,6 +250,7 @@ export default class PowerSelect extends Component {
   render() {
     let {
       className,
+      tabIndex,
       options,
       selected,
       selectedLabel,
@@ -274,7 +275,7 @@ export default class PowerSelect extends Component {
           className={
             `powerselect ${className} ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' } ${searchTerm ? 'powerselect__with-search' : ''}`
           }
-          tabIndex={0}
+          tabIndex={tabIndex}
           onFocus={() => {
             let triggerContainer = findDOMNode(this.refs['powerselect-trigger-container'])
             let triggerInput = triggerContainer.querySelector('input')
@@ -332,6 +333,7 @@ PowerSelect.propTypes = {
 PowerSelect.defaultProps = {
   options: [],
   disabled: false,
+  tabIndex: 1,
   selectTriggerComponent: SelectTrigger,
   selectedOptionComponent: SelectedOption,
   beforeOptionsComponent: BeforeOptions,
