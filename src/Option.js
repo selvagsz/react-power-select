@@ -1,17 +1,20 @@
-export default (props) => (
-  <div
-    className={
-      `powerselect__option ${props.isHighlighted ? 'powerselect__option--highlighted' : ''}`
+export default ({ option, optionLabelPath, optionComponent, select }) => {
+  debugger
+  let OptionComponent = optionComponent
+
+  if (OptionComponent) {
+    return <OptionComponent option={option} select={select} />
+  }
+
+  if (typeof option === 'object') {
+    if (optionLabelPath) {
+      return <span>{option[optionLabelPath]}</span>
     }
-    onClick={props.onOptionClick}
-  >
-    {
-      props.optionComponent ?
-      props.optionComponent({
-        option: props.option,
-        select: props.select
-      }) :
-      props.option
-    }
-  </div>
-)
+  }
+
+  if (typeof option === 'string') {
+    return <span>{option}</span>
+  }
+
+  return null
+}

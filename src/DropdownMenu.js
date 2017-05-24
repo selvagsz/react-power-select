@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import OptionContainer from './Option'
+import OptionWrapper from './OptionWrapper'
 import SearchInput from './SearchInput'
 
 export default class DropdownMenu extends Component {
@@ -30,6 +30,7 @@ export default class DropdownMenu extends Component {
       onOptionClick,
       handleKeyDown,
       selected,
+      optionLabelPath,
       searchEnabled,
       optionComponent,
       select,
@@ -59,10 +60,11 @@ export default class DropdownMenu extends Component {
         <div className='powerselect__options' ref={(optionsList) => this.optionsList = optionsList}>
           {
             options.map((option, idx) => (
-              <OptionContainer
+              <OptionWrapper
                 key={idx}
                 option={option}
                 select={select}
+                optionLabelPath={optionLabelPath}
                 optionComponent={optionComponent}
                 isHighlighted={highlightedIndex === idx}
                 onOptionClick={() => {

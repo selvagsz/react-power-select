@@ -3,7 +3,6 @@ import { findDOMNode } from 'react-dom'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
-import SelectedOption from './SelectedOption'
 import BeforeOptions from './BeforeOptions'
 import AfterOptions from './AfterOptions'
 import { matcher } from './utils'
@@ -80,7 +79,7 @@ export default class PowerSelect extends Component {
     let selectedOption = option || options[highlightedIndex]
     this.highlightOption(highlightedIndex)
     if (highlightedIndex !== -1) {
-      this.props.onChange(selectedOption, this.select)
+      this.props.onChange({ option: selectedOption, select: this.select })
     }
 
     this.setState({
@@ -258,11 +257,11 @@ export default class PowerSelect extends Component {
       tabIndex,
       options,
       selected,
-      selectedLabel,
+      optionLabelPath,
+      optionComponent,
       placeholder,
       disabled,
       searchEnabled,
-      optionComponent,
       selectedOptionComponent,
       beforeOptionsComponent,
       afterOptionsComponent
@@ -294,8 +293,8 @@ export default class PowerSelect extends Component {
         >
           <SelectTrigger
             selectedOption={selected}
-            selectedLabel={selectedLabel}
-            selectedOptionComponent={selectedOptionComponent}
+            optionLabelPath={optionLabelPath}
+            selectedOptionComponent={selectedOptionComponent || optionComponent}
             placeholder={placeholder}
             disabled={disabled}
             handleKeyDown={(event) => {
@@ -315,6 +314,7 @@ export default class PowerSelect extends Component {
             minWidth={this.powerselect.offsetWidth}
             options={filteredOptions}
             selected={selected}
+            optionLabelPath={optionLabelPath}
             optionComponent={optionComponent}
             onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
@@ -345,7 +345,8 @@ PowerSelect.defaultProps = {
   tabIndex: 0,
   searchEnabled: true,
   selectTriggerComponent: SelectTrigger,
-  selectedOptionComponent: SelectedOption,
+  selectedOptionComponent: null,
+  optionComponent: null,
   beforeOptionsComponent: null,
   afterOptionsComponent: null,
   matcher: matcher,

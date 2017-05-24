@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import Option from './Option'
 
-export default (props) => {
-  let { selectedOption, selectedLabel, placeholder, onClick } = props
-  let SelectedOptionComponent = props.selectedOptionComponent
-
+export default ({ selectedOption, optionLabelPath, selectedOptionComponent, placeholder, onClick, select }) => {
   return (
     <div className='powerselect__trigger' onClick={onClick}>
       {
         selectedOption ?
-        <SelectedOptionComponent
-          selectedLabel={selectedLabel}
+
+        <Option
+          optionLabelPath={optionLabelPath}
           option={selectedOption}
+          optionComponent={selectedOptionComponent}
+          select={select}
         /> :
         <span className='powerselect__placeholder'>{placeholder}</span>
       }
