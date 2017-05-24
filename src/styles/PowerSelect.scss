@@ -5,6 +5,10 @@
   border: 1px solid #ccc;
   border-radius: 2px;
   background-color: #fff;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .powerselect--focused {
@@ -39,6 +43,10 @@
 .powerselect__menu {
   background-color: #fff;
   border: 1px solid #ccc;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .powerselect__options {
@@ -48,10 +56,14 @@
 
 .powerselect__option {
   cursor: pointer;
-  padding: 4px 12px;
+  padding: 8px 12px;
 
-  &:hover, &.powerselect__option--highlighted {
-    background-color: #f6f6f6;
+  &:hover {
+    background-color: #f9f9f9;
+  }
+
+  &.powerselect__option--highlighted {
+    background-color: #eaeaea;
   }
 }
 
@@ -76,6 +88,7 @@
 
   &:focus {
     border-color: #66afe9;
+    outline: none;
   }
 }
 

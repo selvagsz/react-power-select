@@ -79,7 +79,10 @@ export default class PowerSelect extends Component {
     let options = this.state.filteredOptions || this.props.options
     let selectedOption = option || options[highlightedIndex]
     this.highlightOption(highlightedIndex)
-    this.props.onChange(selectedOption, this.select)
+    if (highlightedIndex !== -1) {
+      this.props.onChange(selectedOption, this.select)
+    }
+
     this.setState({
       searchTerm: null
     })
