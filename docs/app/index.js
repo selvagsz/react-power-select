@@ -28,11 +28,13 @@ class App extends Component {
 
   render() {
     return (
-      <PowerSelect
-        options={this.frameworks}
-        selected={this.state.selectedFramework}
-        onChange={this.handleChange}
-      />
+      <div className="container">
+        <PowerSelect
+          options={this.frameworks}
+          selected={this.state.selectedFramework}
+          onChange={this.handleChange}
+        />
+      </div>
     )
   }
 }
