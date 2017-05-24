@@ -4,16 +4,16 @@ import OptionContainer from './Option'
 
 export default class DropdownMenu extends Component {
   componentWillReceiveProps(nextProps) {
-    this.scrollTo(this.props.highlightedIndex, nextProps.highlightedIndex)
+    this.scrollTo(nextProps.highlightedIndex)
   }
 
   componentDidMount() {
     this.optionsListOffsetHeight = this.optionsList.offsetHeight
     this.optionOffsetHeight = document.querySelector('.powerselect__option').offsetHeight
-    this.scrollTo(0, this.props.highlightedIndex)
+    this.scrollTo(this.props.highlightedIndex)
   }
 
-  scrollTo(oldHighlightedIndex, newHighlightedIndex) {
+  scrollTo(newHighlightedIndex) {
     let optionOffsetHeight = this.optionOffsetHeight
     let delta = (optionOffsetHeight * newHighlightedIndex + optionOffsetHeight) - this.optionsListOffsetHeight
 
