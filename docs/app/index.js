@@ -18,7 +18,7 @@ class App extends Component {
     selectedFramework: 'React'
   }
 
-  frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Preact']
+  frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Meteor', 'Backbone', 'Knockout', 'SproutCore', 'Spine']
 
   handleChange = (option) => {
     this.setState({
