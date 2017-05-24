@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import OptionContainer from './Option'
 
-const actions = {
-  38: 'handleUpArrow',
-  40: 'handleDownArrow',
-  13: 'handleEnterPress',
-  9: 'handleTabPress'
-}
-
 export default class DropdownMenu extends Component {
   render() {
     let {

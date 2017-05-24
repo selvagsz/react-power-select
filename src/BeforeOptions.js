@@ -9,7 +9,10 @@ export default class BeforeOptions extends Component {
   }
 
   componentWillMount() {
-    this.props.select.search(this.props.searchTerm || '')
+    let searchTerm = this.props.searchTerm
+    if (searchTerm !== undefined) {
+      this.props.select.search(searchTerm)
+    }
   }
 
   render() {
