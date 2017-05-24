@@ -125,7 +125,7 @@ export default class PowerSelect extends Component {
   }
 
   focusField() {
-    findDOMNode(this.refs['powerselect-trigger-container']).focus()
+    this.powerselect.focus()
   }
 
   search(searchTerm, callback) {
@@ -206,7 +206,9 @@ export default class PowerSelect extends Component {
 
   handleDocumentClick(event) {
     let $target = event.target
-    if (!($target.closest('.powerselect') || $target.closest('.powerselect__menu'))) {
+    let powerselect = this.powerselect
+
+    if (!(powerselect.contains($target) || $target.closest('.powerselect__menu'))) {
       let { focused, isOpen } = this.state
       if (focused) {
         this.setFocusedState(false)
@@ -259,6 +261,7 @@ export default class PowerSelect extends Component {
       selectedLabel,
       placeholder,
       disabled,
+      searchEnabled,
       optionComponent,
       selectedOptionComponent,
       beforeOptionsComponent,
@@ -270,18 +273,18 @@ export default class PowerSelect extends Component {
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = this.getPublicApi()
     let { highlightedIndex, focused } = this.state
+    debugger
 
     return (
       <Dropdown>
         <div
-          ref='powerselect-trigger-container'
+          ref={(powerselect) => this.powerselect = powerselect}
           className={
             `powerselect ${className} ${disabled ? 'powerselect--disabled' : ''} ${isOpen ? 'powerselect--open' : ''} ${focused ? 'powerselect--focused' : '' } ${searchTerm ? 'powerselect__with-search' : ''}`
           }
           tabIndex={tabIndex}
           onFocus={() => {
-            let triggerContainer = findDOMNode(this.refs['powerselect-trigger-container'])
-            let triggerInput = triggerContainer.querySelector('input')
+            let triggerInput = this.powerselect.querySelector('input')
             if (triggerInput) {
               triggerInput.focus()
             }
@@ -307,7 +310,7 @@ export default class PowerSelect extends Component {
         {
           isOpen &&
           <DropdownMenu
-            minWidth={this.refs['powerselect-trigger-container'].offsetWidth}
+            minWidth={this.powerselect.offsetWidth}
             options={filteredOptions}
             selected={selected}
             optionComponent={optionComponent}
@@ -315,6 +318,7 @@ export default class PowerSelect extends Component {
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
             select={selectApi}
+            searchEnabled={searchEnabled}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
           />
@@ -336,10 +340,11 @@ PowerSelect.propTypes = {
 PowerSelect.defaultProps = {
   options: [],
   disabled: false,
-  tabIndex: 1,
+  tabIndex: 0,
+  searchEnabled: true,
   selectTriggerComponent: SelectTrigger,
   selectedOptionComponent: SelectedOption,
-  beforeOptionsComponent: BeforeOptions,
+  beforeOptionsComponent: null,
   afterOptionsComponent: null,
   matcher: matcher,
   onFocus: noop,

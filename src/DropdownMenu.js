@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom'
 import OptionContainer from './Option'
+import SearchInput from './SearchInput'
 
 export default class DropdownMenu extends Component {
   componentWillReceiveProps(nextProps) {
@@ -30,6 +30,7 @@ export default class DropdownMenu extends Component {
       onOptionClick,
       handleKeyDown,
       selected,
+      searchEnabled,
       optionComponent,
       select,
       minWidth,
@@ -49,6 +50,12 @@ export default class DropdownMenu extends Component {
         }}
       >
         {BeforeOptionsComponent && <BeforeOptionsComponent select={select} />}
+        {
+          searchEnabled &&
+            <div className="powerselect__search-input-container">
+              <SearchInput select={select} />
+            </div>
+        }
         <div className='powerselect__options' ref={(optionsList) => this.optionsList = optionsList}>
           {
             options.map((option, idx) => (
