@@ -98,10 +98,10 @@ export default class DemoWithArrayOfObjects extends Component {
             options={this.countries}
             selected={this.state.selectedCountry}
             optionComponent={({ option }) => (
-              <div>
+              <span>
                 <img className="flag" src={option.flag} />
                 {option.name} ({option.code})
-              </div>
+              </span>
             )}
             searchIndices={["name", "code"]}
             onChange={this.handleChange}

@@ -38,6 +38,9 @@
   position: relative;
   height: 100%;
   padding: 4px 22px 4px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .powerselect__menu {
@@ -113,13 +116,4 @@
   position: absolute;
   right: 8px;
   top: 14px;
-}
-
-.powerselect__trigger-label {
-  display: inline-block;
-  height: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
