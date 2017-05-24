@@ -273,7 +273,6 @@ export default class PowerSelect extends Component {
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = this.getPublicApi()
     let { highlightedIndex, focused } = this.state
-    debugger
 
     return (
       <Dropdown>
@@ -288,6 +287,9 @@ export default class PowerSelect extends Component {
             if (triggerInput) {
               triggerInput.focus()
             }
+          }}
+          onKeyDown={(event) => {
+            this.handleKeyDown(event, highlightedIndex)
           }}
         >
           <SelectTrigger
