@@ -3,8 +3,7 @@ import { findDOMNode } from 'react-dom'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
-import BeforeOptions from './BeforeOptions'
-import AfterOptions from './AfterOptions'
+import SearchInput from './SearchInput'
 import { matcher } from './utils'
 
 const KEYCODES = {
@@ -100,6 +99,8 @@ export default class PowerSelect extends Component {
     this.setState({
       isOpen: true,
     })
+
+    this.props.onOpen()
   }
 
   close() {
@@ -108,6 +109,7 @@ export default class PowerSelect extends Component {
       isOpen: false,
       filteredOptions: null,
     })
+    this.props.onClose()
   }
 
   toggle(event) {
@@ -264,7 +266,7 @@ export default class PowerSelect extends Component {
       searchEnabled,
       selectedOptionComponent,
       beforeOptionsComponent,
-      afterOptionsComponent
+      afterOptionsComponent,
     } = this.props
 
     let { isOpen, searchTerm } = this.state
@@ -272,6 +274,10 @@ export default class PowerSelect extends Component {
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = this.getPublicApi()
     let { highlightedIndex, focused } = this.state
+
+    if (!searchEnabled && beforeOptionsComponent === SearchInput) {
+      beforeOptionsComponent = null
+    }
 
     return (
       <Dropdown>
@@ -320,7 +326,6 @@ export default class PowerSelect extends Component {
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
             select={selectApi}
-            searchEnabled={searchEnabled}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
           />
@@ -345,13 +350,16 @@ PowerSelect.defaultProps = {
   tabIndex: 0,
   searchEnabled: true,
   selectTriggerComponent: SelectTrigger,
-  selectedOptionComponent: null,
+  optionLabelPath: null,
   optionComponent: null,
-  beforeOptionsComponent: null,
+  selectedOptionComponent: null,
+  beforeOptionsComponent: SearchInput,
   afterOptionsComponent: null,
   matcher: matcher,
   onFocus: noop,
   onBlur: noop,
   onClick: noop,
   onEnter: noop,
+  onOpen: noop,
+  onClose: noop,
 }

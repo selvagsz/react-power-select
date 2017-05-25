@@ -11,6 +11,7 @@ html {
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
+  padding-bottom: 100px;
 }
 
 .container {
@@ -26,12 +27,65 @@ body {
   }
 }
 
-.powerselect:focus {
-  border-color: orange;
-}
-
 .flag {
   width: 20px;
   height: 13px;
   margin-right: 8px;
+}
+
+.quick-create {
+  padding: 8px 12px;
+  border-top: 1px solid #e5e5e5;
+  cursor: pointer;
+  display: block;
+  color: #3260b7;
+  background-color: #e5ebf6;
+
+  &:hover {
+    color: #0039a6;
+  }
+}
+
+.spinner {
+  text-align: center;
+  padding: 10px;
+  font-size: 13px;
+  color: #bbb;
+}
+
+.spinner > div {
+  width: 6px;
+  height: 6px;
+  background-color: #888;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  margin-left: 5px;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
 }

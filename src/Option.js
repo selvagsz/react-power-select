@@ -1,6 +1,14 @@
+import React, { isValidElement, cloneElement } from 'react'
+
 export default ({ option, optionLabelPath, optionComponent, select }) => {
-  debugger
   let OptionComponent = optionComponent
+
+  if (isValidElement(OptionComponent)) {
+    return cloneElement(OptionComponent, {
+      option,
+      select
+    })
+  }
 
   if (OptionComponent) {
     return <OptionComponent option={option} select={select} />

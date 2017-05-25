@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PowerSelect from 'src/PowerSelect'
 
-export default class DemoWithPlainArray extends Component {
+export default class PlainArrayDemo extends Component {
   state = {
     selectedFramework: 'React'
   }
@@ -20,16 +20,6 @@ export default class DemoWithPlainArray extends Component {
           <PowerSelect
             options={this.frameworks}
             selected={this.state.selectedFramework}
-            onChange={this.handleChange}
-          />
-        </div>
-
-        <div className="demo">
-          <h3>Without Search Field</h3>
-          <PowerSelect
-            options={this.frameworks}
-            selected={this.state.selectedFramework}
-            searchEnabled={false}
             onChange={this.handleChange}
           />
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class SaerchInput extends Component {
+export default class SearchInput extends Component {
   componentDidMount() {
     let input = this.refs['before-options-input']
     setTimeout(function() {
@@ -18,12 +18,14 @@ export default class SaerchInput extends Component {
   render() {
     let props = this.props
     return (
-      <input
-        ref='before-options-input'
-        className='powerselect__search-input'
-        placeholder={this.props.searchPlaceholder}
-        onChange={(e) => props.select.search(e.target.value)}
-      />
+      <div className="powerselect__search-input-container">
+        <input
+          ref='before-options-input'
+          className='powerselect__search-input'
+          placeholder={this.props.searchPlaceholder}
+          onChange={(e) => props.select.search(e.target.value)}
+        />
+      </div>
     )
   }
 }
