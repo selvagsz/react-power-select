@@ -25,14 +25,16 @@ export default class AfterOptionsDemo extends Component {
           optionLabelPath="name"
           searchIndices={["name", "code"]}
           onChange={this.handleChange}
-            afterOptionsComponent={({ select }) => (
-              <a className="quick-create" onClick={() => {
-                this.handleNewClick()
-                select.close();
-              }}>
-                + Add New
-              </a>
-            )}
+
+          afterOptionsComponent={({ select }) => (
+            <a className="quick-create" onClick={() => {
+              this.handleNewClick()
+              select.close();
+            }}>
+              + Add New
+            </a>
+          )}
+
         />
       </div>
     )
