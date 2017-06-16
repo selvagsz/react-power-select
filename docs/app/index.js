@@ -4,5 +4,4 @@ import Demos from './Demos'
 import './index.scss'
 import 'src/styles/PowerSelect'
 
-
 render(<Demos />, document.getElementById('root'))

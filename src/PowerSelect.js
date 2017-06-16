@@ -128,7 +128,7 @@ export default class PowerSelect extends Component {
   }
 
   search(searchTerm, callback) {
-    let { options, optionLabelPath, searchIndices } = this.props
+    let { options, optionLabelPath, searchIndices = optionLabelPath } = this.props
     let filteredOptions = options.filter((option) => {
       return this.props.matcher({
         option,
