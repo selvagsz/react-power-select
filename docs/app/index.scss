@@ -27,6 +27,10 @@ body {
   }
 }
 
+.powerselect:focus {
+  border-color: orange;
+}
+
 .flag {
   width: 20px;
   height: 13px;

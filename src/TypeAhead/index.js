@@ -7,7 +7,7 @@ export default class TypeAhead extends Component {
     return (
       <PowerSelect
         selectTriggerComponent={TypeAheadSelectTrigger}
-        beforeOptionsComponent={null}
+        searchEnabled={false}
         {...this.props}
       />
     )

@@ -39,13 +39,15 @@ export default class DropdownMenu extends Component {
   }
 
   scrollTo(newHighlightedIndex) {
-    let optionOffsetHeight = this.optionOffsetHeight
-    let delta = (optionOffsetHeight * newHighlightedIndex + optionOffsetHeight) - this.optionsListOffsetHeight
+    if (newHighlightedIndex !== this.props.highlightedIndex) {
+      let optionOffsetHeight = this.optionOffsetHeight
+      let delta = (optionOffsetHeight * newHighlightedIndex + optionOffsetHeight) - this.optionsListOffsetHeight
 
-    if (delta > 0) {
-      this.optionsList.scrollTop = delta
-    } else {
-      this.optionsList.scrollTop = 0
+      if (delta > 0) {
+        this.optionsList.scrollTop = delta
+      } else {
+        this.optionsList.scrollTop = 0
+      }
     }
   }
 

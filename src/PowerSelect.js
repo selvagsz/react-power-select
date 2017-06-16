@@ -77,10 +77,7 @@ export default class PowerSelect extends Component {
     let options = this.state.filteredOptions || this.props.options
     let selectedOption = option || options[highlightedIndex]
     this.highlightOption(highlightedIndex)
-    if (highlightedIndex !== -1) {
-      this.props.onChange({ option: selectedOption, select: this.select })
-    }
-
+    this.props.onChange({ option: selectedOption, select: this.getPublicApi() })
     this.setState({
       searchTerm: null
     })
@@ -108,6 +105,7 @@ export default class PowerSelect extends Component {
     this.setState({
       isOpen: false,
       filteredOptions: null,
+      searchTerm: null,
     })
     this.props.onClose()
   }
@@ -130,7 +128,7 @@ export default class PowerSelect extends Component {
   }
 
   search(searchTerm, callback) {
-    let { options, searchIndices } = this.props
+    let { options, optionLabelPath, searchIndices } = this.props
     let filteredOptions = options.filter((option) => {
       return this.props.matcher({
         option,
@@ -142,6 +140,13 @@ export default class PowerSelect extends Component {
     if (!searchTerm || !filteredOptions.length) {
       let highlightedIndex = -1
       this.highlightOption(highlightedIndex)
+    }
+
+    if (searchTerm && filteredOptions.length) {
+      // let firstOption = filteredOptions[0]
+      // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
+        this.highlightOption(0)
+      // }
     }
 
     this.setState({
@@ -303,9 +308,6 @@ export default class PowerSelect extends Component {
             selectedOptionComponent={selectedOptionComponent || optionComponent}
             placeholder={placeholder}
             disabled={disabled}
-            handleKeyDown={(event) => {
-              this.handleKeyDown(event, highlightedIndex)
-            }}
             searchTerm={searchTerm}
             handleOnChange={this.handleTriggerChange}
             onClick={this.handleClick}

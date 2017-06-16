@@ -37,7 +37,6 @@
 .powerselect__trigger {
   position: relative;
   height: 100%;
-  padding: 4px 22px 4px 12px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -104,6 +103,13 @@
   width: 100%;
   border: none;
   cursor: pointer;
+  padding: 4px 22px 4px 12px;
+  height: 100%;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .powerselect__trigger-status {
