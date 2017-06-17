@@ -1,21 +1,21 @@
-import PlainArrayDemo from './PlainArrayDemo'
-import WithoutSearchDemo from './WithoutSearchDemo'
-import ArrayOfObjectsDemo from './ArrayOfObjectsDemo'
-import SearchFieldsDemo from './SearchFieldsDemo'
-import CustomOptionDemo from './CustomOptionDemo'
-import CustomSelectedOptionDemo from './CustomSelectedOptionDemo'
-import AfterOptionsDemo from './AfterOptionsDemo'
-import BeforeOptionsDemo from './BeforeOptionsDemo'
+import PlainArrayDemo from './PlainArrayDemo';
+import WithoutSearchDemo from './WithoutSearchDemo';
+import ArrayOfObjectsDemo from './ArrayOfObjectsDemo';
+import SearchFieldsDemo from './SearchFieldsDemo';
+import CustomOptionDemo from './CustomOptionDemo';
+import CustomSelectedOptionDemo from './CustomSelectedOptionDemo';
+import AfterOptionsDemo from './AfterOptionsDemo';
+import BeforeOptionsDemo from './BeforeOptionsDemo';
 
-import TypeAheadPlainArray from './TypeAhead/PlainArray'
-import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo'
+import TypeAheadPlainArray from './TypeAhead/PlainArray';
+import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
-import MultiSelectPlainArray from './MultiSelect/PlainArray'
+import MultiSelectPlainArray from './MultiSelect/PlainArray';
 
 export default () => {
   return (
     <div className="container">
-{/*
+      {/*
       <section>
         <h1>Power Select</h1>
         <PlainArrayDemo />
@@ -39,5 +39,5 @@ export default () => {
         <MultiSelectPlainArray />
       </section>
     </div>
-  )
-}
+  );
+};

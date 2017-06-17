@@ -1,22 +1,21 @@
-import React, { Component } from 'react'
-import { TypeAhead } from 'src'
-import { countries } from '../constants'
+import React, { Component } from 'react';
+import { TypeAhead } from 'src';
+import { countries } from '../constants';
 
-const CustomOptionComponnet = ({ option }) => (
+const CustomOptionComponnet = ({ option }) =>
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </div>
-)
+  </div>;
 
 export default class ArrayOfObjectsDemo extends Component {
   state = {
-    selectedCountry: null
-  }
+    selectedCountry: null,
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   render() {
     return (
@@ -30,6 +29,6 @@ export default class ArrayOfObjectsDemo extends Component {
           onChange={this.handleChange}
         />
       </div>
-    )
+    );
   }
 }

@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
-import { countries } from './constants'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
+import { countries } from './constants';
 
 export default class ArrayOfObjectsDemo extends Component {
   state = {
-    selectedCountry: null
-  }
+    selectedCountry: null,
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   render() {
     return (
@@ -22,6 +22,6 @@ export default class ArrayOfObjectsDemo extends Component {
           onChange={this.handleChange}
         />
       </div>
-    )
+    );
   }
 }

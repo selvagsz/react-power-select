@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import Option from '../Option'
-import SelectedOptions from './SelectedOptions'
-import MultiSelectSearchInput from './SearchInput'
+import React, { Component } from 'react';
+import Option from '../Option';
+import SelectedOptions from './SelectedOptions';
+import MultiSelectSearchInput from './SearchInput';
 
 export default class SelectTrigger extends Component {
   state = {
-    value: ''
-  }
+    value: '',
+  };
 
   componentWillReceiveProps(nextProps) {
-    let value = nextProps.searchTerm !== null ? nextProps.searchTerm : ''
+    let value = nextProps.searchTerm !== null ? nextProps.searchTerm : '';
     this.setState({
-      value
-    })
+      value,
+    });
   }
 
   render() {
@@ -27,15 +27,12 @@ export default class SelectTrigger extends Component {
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
-    } = this.props
+    } = this.props;
 
-    let selected = selectedOption || []
+    let selected = selectedOption || [];
 
     return (
-      <div
-        className='powerselect__trigger'
-        onClick={onClick}
-      >
+      <div className="powerselect__trigger" onClick={onClick}>
         <div className="powerselect-multiple__optionsContainer">
           <SelectedOptions
             selected={selected}
@@ -44,9 +41,9 @@ export default class SelectTrigger extends Component {
           />
 
           <MultiSelectSearchInput
-            className='powerselect__trigger-input'
-            autoComplete='off'
-            spellCheck='false'
+            className="powerselect__trigger-input"
+            autoComplete="off"
+            spellCheck="false"
             placeholder={placeholder}
             value={this.state.value}
             disabled={disabled}
@@ -55,11 +52,9 @@ export default class SelectTrigger extends Component {
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
           />
-          <span
-            className='powerselect__trigger-status'
-          ></span>
+          <span className="powerselect__trigger-status" />
         </div>
       </div>
-    )
+    );
   }
 }

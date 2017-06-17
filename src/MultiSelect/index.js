@@ -1,45 +1,50 @@
-import { Component } from 'react'
-import Select from '../Select'
-import TypeAheadSelectTrigger from './SelectTrigger'
+import { Component } from 'react';
+import Select from '../Select';
+import TypeAheadSelectTrigger from './SelectTrigger';
 
 export default class MultiSelect extends Component {
-  state = {}
+  state = {};
 
   componentWillMount() {
-    this.filterOptions(this.props.options, this.props.selected)
+    this.filterOptions(this.props.options, this.props.selected);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.filterOptions(nextProps.options, nextProps.selected)
+    this.filterOptions(nextProps.options, nextProps.selected);
   }
 
   handleOnChange = ({ option, select }) => {
-    let { selected, onChange } = this.props
-    let options = selected.slice()
-    options.push(option)
+    let { selected, onChange } = this.props;
+    let options = selected.slice();
+    options.push(option);
 
     onChange({
       options,
-      select
-    })
+      select,
+    });
 
     if (select.searchTerm) {
       this.filterOptions(this.props.options, options, () => {
-        select.search('')
-      })
+        select.search('');
+      });
     }
-  }
+  };
 
   filterOptions(options, selected, callback) {
-    let filteredOptions = options.filter((option) => selected.indexOf(option) === -1)
+    let filteredOptions = options.filter(
+      option => selected.indexOf(option) === -1
+    );
 
-    this.setState({
-      filteredOptions
-    }, callback)
+    this.setState(
+      {
+        filteredOptions,
+      },
+      callback
+    );
   }
 
   render() {
-    let { className, options, onChange, searchEnabled, ...rest } = this.props
+    let { className, options, onChange, searchEnabled, ...rest } = this.props;
 
     return (
       <Select
@@ -51,6 +56,6 @@ export default class MultiSelect extends Component {
         closeOnOptionClick={false}
         {...rest}
       />
-    )
+    );
   }
 }

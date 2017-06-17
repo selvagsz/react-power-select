@@ -1,51 +1,54 @@
-import React, { Component, isValidElement, cloneElement } from 'react'
-import OptionWrapper from './OptionWrapper'
+import React, { Component, isValidElement, cloneElement } from 'react';
+import OptionWrapper from './OptionWrapper';
 
 const renderComponent = (Component, props) => {
   if (isValidElement(Component)) {
-    return cloneElement(Component, props)
+    return cloneElement(Component, props);
   }
 
   if (Component) {
-    return <Component {...props} />
+    return <Component {...props} />;
   }
-}
+};
 
 export default class DropdownMenu extends Component {
   componentWillReceiveProps(nextProps) {
-    this.scrollTo(nextProps.highlightedIndex)
+    this.scrollTo(nextProps.highlightedIndex);
   }
 
   componentDidMount() {
-    this.optionsListOffsetHeight = this.optionsList.offsetHeight
-    this.stashOptionOffsetHeight()
-    this.scrollTo(this.props.highlightedIndex)
+    this.optionsListOffsetHeight = this.optionsList.offsetHeight;
+    this.stashOptionOffsetHeight();
+    this.scrollTo(this.props.highlightedIndex);
   }
 
   componentDidUpdate() {
     if (!this.optionOffsetHeight) {
-      this.stashOptionOffsetHeight()
+      this.stashOptionOffsetHeight();
     }
 
-    if(!this.optionsListOffsetHeight) {
-      this.optionsListOffsetHeight = this.optionsList.offsetHeight
+    if (!this.optionsListOffsetHeight) {
+      this.optionsListOffsetHeight = this.optionsList.offsetHeight;
     }
   }
 
   stashOptionOffsetHeight() {
-    let option = document.querySelector('.powerselect__option')
-    this.optionOffsetHeight = (option && option.offsetHeight) || 0
+    let option = document.querySelector('.powerselect__option');
+    this.optionOffsetHeight = (option && option.offsetHeight) || 0;
   }
 
   scrollTo(newHighlightedIndex) {
     if (newHighlightedIndex !== this.props.highlightedIndex) {
-      let optionOffsetHeight = this.optionOffsetHeight
-      let delta = (optionOffsetHeight * newHighlightedIndex + optionOffsetHeight) - this.optionsListOffsetHeight
+      let optionOffsetHeight = this.optionOffsetHeight;
+      let delta =
+        optionOffsetHeight * newHighlightedIndex +
+        optionOffsetHeight -
+        this.optionsListOffsetHeight;
 
       if (delta > 0) {
-        this.optionsList.scrollTop = delta
+        this.optionsList.scrollTop = delta;
       } else {
-        this.optionsList.scrollTop = 0
+        this.optionsList.scrollTop = 0;
       }
     }
   }
@@ -63,37 +66,40 @@ export default class DropdownMenu extends Component {
       highlightedIndex,
       beforeOptionsComponent,
       afterOptionsComponent,
-    } = this.props
+    } = this.props;
 
     return (
       <div
-        tabIndex='1'
-        className='powerselect__menu'
-        onKeyDown={(event) => handleKeyDown(event, highlightedIndex)}
+        tabIndex="1"
+        className="powerselect__menu"
+        onKeyDown={event => handleKeyDown(event, highlightedIndex)}
         style={{
-          minWidth: `${minWidth}px`
+          minWidth: `${minWidth}px`,
         }}
       >
-        {beforeOptionsComponent && renderComponent(beforeOptionsComponent, { select })}
-        <div className='powerselect__options' ref={(optionsList) => this.optionsList = optionsList}>
-          {
-            options.map((option, idx) => (
-              <OptionWrapper
-                key={idx}
-                option={option}
-                select={select}
-                optionLabelPath={optionLabelPath}
-                optionComponent={optionComponent}
-                isHighlighted={highlightedIndex === idx}
-                onOptionClick={() => {
-                  onOptionClick(idx, option)}
-                }
-              />
-            ))
-          }
+        {beforeOptionsComponent &&
+          renderComponent(beforeOptionsComponent, { select })}
+        <div
+          className="powerselect__options"
+          ref={optionsList => (this.optionsList = optionsList)}
+        >
+          {options.map((option, idx) =>
+            <OptionWrapper
+              key={idx}
+              option={option}
+              select={select}
+              optionLabelPath={optionLabelPath}
+              optionComponent={optionComponent}
+              isHighlighted={highlightedIndex === idx}
+              onOptionClick={() => {
+                onOptionClick(idx, option);
+              }}
+            />
+          )}
         </div>
-        {afterOptionsComponent && renderComponent(afterOptionsComponent, { select })}
+        {afterOptionsComponent &&
+          renderComponent(afterOptionsComponent, { select })}
       </div>
-    )
+    );
   }
 }

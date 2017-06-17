@@ -1,37 +1,36 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
-import { countries } from './constants'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
+import { countries } from './constants';
 
-const Loader = ({ loadingText = ''}) => (
+const Loader = ({ loadingText = '' }) =>
   <div className="spinner">
     {loadingText}
-    <div className="bounce1"></div>
-    <div className="bounce2"></div>
-    <div className="bounce3"></div>
-  </div>
-)
+    <div className="bounce1" />
+    <div className="bounce2" />
+    <div className="bounce3" />
+  </div>;
 
 export default class BeforeOptionsDemo extends Component {
   state = {
-    selectedCountry: null
-  }
+    selectedCountry: null,
+  };
 
-  countries = []
+  countries = [];
 
   handleOpen = () => {
-    this.countries = []
-    this.setState({ loading: true })
+    this.countries = [];
+    this.setState({ loading: true });
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        this.countries = countries
-        this.setState({ loading: false })
-      }, 5000)
-    })
-  }
+        this.countries = countries;
+        this.setState({ loading: false });
+      }, 5000);
+    });
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   render() {
     return (
@@ -41,12 +40,12 @@ export default class BeforeOptionsDemo extends Component {
           options={this.countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={["name", "code"]}
+          searchIndices={['name', 'code']}
           onChange={this.handleChange}
           onOpen={this.handleOpen}
           beforeOptionsComponent={({ select }) => {
             if (this.state.loading) {
-              return <Loader loadingText="Loading countries" />
+              return <Loader loadingText="Loading countries" />;
             }
             return (
               <div className="powerselect__search-input-container">
@@ -54,15 +53,15 @@ export default class BeforeOptionsDemo extends Component {
                   className="powerselect__search-input"
                   value={select.searchTerm || ''}
                   autoFocus={true}
-                  onChange={(event) => {
-                    select.search(event.target.value)
+                  onChange={event => {
+                    select.search(event.target.value);
                   }}
                 />
               </div>
-            )
+            );
           }}
         />
       </div>
-    )
+    );
   }
 }

@@ -1,16 +1,27 @@
-import React, { Component } from 'react'
-import { PowerSelectMultiple } from 'src'
+import React, { Component } from 'react';
+import { PowerSelectMultiple } from 'src';
 
 export default class PlainArrayDemo extends Component {
   state = {
-    selectedFrameworks: ['React', 'Ember']
-  }
+    selectedFrameworks: ['React', 'Ember'],
+  };
 
-  frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Meteor', 'Backbone', 'Knockout', 'SproutCore', 'Spine']
+  frameworks = [
+    'React',
+    'Ember',
+    'Angular',
+    'Vue',
+    'Preact',
+    'Meteor',
+    'Backbone',
+    'Knockout',
+    'SproutCore',
+    'Spine',
+  ];
 
   handleChange = ({ options }) => {
-    this.setState({ selectedFrameworks: options })
-  }
+    this.setState({ selectedFrameworks: options });
+  };
 
   render() {
     return (
@@ -24,6 +35,6 @@ export default class PlainArrayDemo extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }

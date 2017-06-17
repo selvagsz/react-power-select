@@ -1,16 +1,27 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
 
 export default class WithoutSearchDemo extends Component {
   state = {
-    selectedFramework: 'React'
-  }
+    selectedFramework: 'React',
+  };
 
-  frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Meteor', 'Backbone', 'Knockout', 'SproutCore', 'Spine']
+  frameworks = [
+    'React',
+    'Ember',
+    'Angular',
+    'Vue',
+    'Preact',
+    'Meteor',
+    'Backbone',
+    'Knockout',
+    'SproutCore',
+    'Spine',
+  ];
 
   handleChange = ({ option }) => {
-    this.setState({ selectedFramework: option })
-  }
+    this.setState({ selectedFramework: option });
+  };
 
   render() {
     return (
@@ -23,6 +34,6 @@ export default class WithoutSearchDemo extends Component {
           onChange={this.handleChange}
         />
       </div>
-    )
+    );
   }
 }

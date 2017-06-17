@@ -25,7 +25,7 @@ const webpackConfig = {
 // Entry Points
 // ------------------------------------
 webpackConfig.entry = {
-  app: './docs/app/index.js'
+  app: './docs/app/index.js',
 };
 
 // ------------------------------------
@@ -56,18 +56,18 @@ webpackConfig.module.rules = [
   {
     test: /\.scss$/,
     use: [
-        {
-          loader: 'style-loader'
-        },
-        {
-          loader: 'css-loader'
-        },
-        {
-          loader: 'sass-loader'
-        }
-      ]
-  }
-]
+      {
+        loader: 'style-loader',
+      },
+      {
+        loader: 'css-loader',
+      },
+      {
+        loader: 'sass-loader',
+      },
+    ],
+  },
+];
 
 // ------------------------------------
 // Plugins
@@ -78,8 +78,8 @@ webpackConfig.plugins = [
   }),
 
   new HtmlWebpackPlugin({
-    template: './docs/app/index.html'
-  })
-]
+    template: './docs/app/index.html',
+  }),
+];
 
 module.exports = webpackConfig;

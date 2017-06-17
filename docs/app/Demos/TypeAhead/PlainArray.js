@@ -1,16 +1,27 @@
-import React, { Component } from 'react'
-import { TypeAhead } from 'src'
+import React, { Component } from 'react';
+import { TypeAhead } from 'src';
 
 export default class PlainArrayDemo extends Component {
   state = {
-    selectedFramework: 'React'
-  }
+    selectedFramework: 'React',
+  };
 
-  frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Meteor', 'Backbone', 'Knockout', 'SproutCore', 'Spine']
+  frameworks = [
+    'React',
+    'Ember',
+    'Angular',
+    'Vue',
+    'Preact',
+    'Meteor',
+    'Backbone',
+    'Knockout',
+    'SproutCore',
+    'Spine',
+  ];
 
   handleChange = ({ option }) => {
-    this.setState({ selectedFramework: option })
-  }
+    this.setState({ selectedFramework: option });
+  };
 
   render() {
     return (
@@ -24,6 +35,6 @@ export default class PlainArrayDemo extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }

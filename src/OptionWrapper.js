@@ -1,10 +1,17 @@
-import Option from './Option'
+import Option from './Option';
 
-export default ({ option, optionLabelPath, optionComponent, isHighlighted, onOptionClick, select }) => (
+export default ({
+  option,
+  optionLabelPath,
+  optionComponent,
+  isHighlighted,
+  onOptionClick,
+  select,
+}) =>
   <div
-    className={
-      `powerselect__option ${isHighlighted ? 'powerselect__option--highlighted' : ''}`
-    }
+    className={`powerselect__option ${isHighlighted
+      ? 'powerselect__option--highlighted'
+      : ''}`}
     onClick={onOptionClick}
   >
     <Option
@@ -13,5 +20,4 @@ export default ({ option, optionLabelPath, optionComponent, isHighlighted, onOpt
       optionComponent={optionComponent}
       select={select}
     />
-  </div>
-)
+  </div>;

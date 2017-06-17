@@ -1,25 +1,22 @@
-import { Component } from 'react'
-import Select from '../Select'
-import SearchInput from './SearchInput'
+import { Component } from 'react';
+import Select from '../Select';
+import SearchInput from './SearchInput';
 
 export default class PowerSelect extends Component {
   render() {
-    let { searchEnabled, beforeOptionsComponent } = this.props
+    let { searchEnabled, beforeOptionsComponent } = this.props;
 
     if (!searchEnabled && beforeOptionsComponent === SearchInput) {
-      beforeOptionsComponent = null
+      beforeOptionsComponent = null;
     }
 
     return (
-      <Select
-        beforeOptionsComponent={beforeOptionsComponent}
-        {...this.props}
-      />
-    )
+      <Select beforeOptionsComponent={beforeOptionsComponent} {...this.props} />
+    );
   }
 }
 
 PowerSelect.defaultProps = {
   searchEnabled: true,
-  beforeOptionsComponent: SearchInput
-}
+  beforeOptionsComponent: SearchInput,
+};

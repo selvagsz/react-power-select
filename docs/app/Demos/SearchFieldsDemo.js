@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
-import { countries } from './constants'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
+import { countries } from './constants';
 
 export default class SearchFieldsDemo extends Component {
   state = {
-    selectedCountry: null
-  }
+    selectedCountry: null,
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   render() {
     return (
@@ -19,10 +19,10 @@ export default class SearchFieldsDemo extends Component {
           options={countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={["name", "code"]}
+          searchIndices={['name', 'code']}
           onChange={this.handleChange}
         />
       </div>
-    )
+    );
   }
 }

@@ -1,22 +1,21 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
-import { countries } from './constants'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
+import { countries } from './constants';
 
-const CustomOptionComponnet = ({ option }) => (
+const CustomOptionComponnet = ({ option }) =>
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </div>
-)
+  </div>;
 
 export default class CustomOptionDemo extends Component {
   state = {
-    selectedCountry: countries[4]
-  }
+    selectedCountry: countries[4],
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   render() {
     return (
@@ -26,10 +25,10 @@ export default class CustomOptionDemo extends Component {
           options={countries}
           selected={this.state.selectedCountry}
           optionComponent={<CustomOptionComponnet />}
-          searchIndices={["name", "code"]}
+          searchIndices={['name', 'code']}
           onChange={this.handleChange}
         />
       </div>
-    )
+    );
   }
 }

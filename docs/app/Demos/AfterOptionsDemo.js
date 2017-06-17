@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
-import PowerSelect from 'src/PowerSelect'
-import { countries } from './constants'
+import React, { Component } from 'react';
+import PowerSelect from 'src/PowerSelect';
+import { countries } from './constants';
 
 export default class AfterOptionsDemo extends Component {
   state = {
-    selectedCountry: null
-  }
+    selectedCountry: null,
+  };
 
   handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option })
-  }
+    this.setState({ selectedCountry: option });
+  };
 
   handleNewClick = () => {
-    alert("Lalalala");
-  }
+    alert('Lalalala');
+  };
 
   render() {
     return (
@@ -23,20 +23,20 @@ export default class AfterOptionsDemo extends Component {
           options={countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={["name", "code"]}
+          searchIndices={['name', 'code']}
           onChange={this.handleChange}
-
-          afterOptionsComponent={({ select }) => (
-            <a className="quick-create" onClick={() => {
-              this.handleNewClick()
-              select.close();
-            }}>
+          afterOptionsComponent={({ select }) =>
+            <a
+              className="quick-create"
+              onClick={() => {
+                this.handleNewClick();
+                select.close();
+              }}
+            >
               + Add New
-            </a>
-          )}
-
+            </a>}
         />
       </div>
-    )
+    );
   }
 }

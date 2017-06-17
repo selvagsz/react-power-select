@@ -1,33 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class SelectTrigger extends Component {
-  state = {}
+  state = {};
 
   componentWillMount() {
-    let value = this.getValueFromSelectedOption(this.props)
-    this.setState({ value })
+    let value = this.getValueFromSelectedOption(this.props);
+    this.setState({ value });
   }
 
   componentWillReceiveProps(nextProps) {
-    let value = nextProps.searchTerm !== null ? nextProps.searchTerm : this.getValueFromSelectedOption(nextProps)
+    let value = nextProps.searchTerm !== null
+      ? nextProps.searchTerm
+      : this.getValueFromSelectedOption(nextProps);
     this.setState({
-      value
-    })
+      value,
+    });
   }
 
   getValueFromSelectedOption(props = this.props) {
-    let { selectedOption, optionLabelPath } = props
-    let value = ''
+    let { selectedOption, optionLabelPath } = props;
+    let value = '';
 
     if (selectedOption) {
       if (typeof selectedOption === 'string') {
-        value = selectedOption
-      } else if(optionLabelPath) {
-        value = selectedOption[optionLabelPath]
+        value = selectedOption;
+      } else if (optionLabelPath) {
+        value = selectedOption[optionLabelPath];
       }
     }
 
-    return value
+    return value;
   }
 
   render() {
@@ -39,17 +41,14 @@ export default class SelectTrigger extends Component {
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
-    } = this.props
+    } = this.props;
 
     return (
-      <div
-        className='powerselect__trigger'
-        onClick={onClick}
-      >
+      <div className="powerselect__trigger" onClick={onClick}>
         <input
-          className='powerselect__trigger-input'
-          autoComplete='off'
-          spellCheck='false'
+          className="powerselect__trigger-input"
+          autoComplete="off"
+          spellCheck="false"
           placeholder={placeholder}
           value={this.state.value}
           disabled={disabled}
@@ -58,10 +57,8 @@ export default class SelectTrigger extends Component {
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
         />
-        <span
-          className='powerselect__trigger-status'
-        ></span>
+        <span className="powerselect__trigger-status" />
       </div>
-    )
+    );
   }
 }
