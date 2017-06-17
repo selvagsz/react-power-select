@@ -3,7 +3,6 @@ import { findDOMNode } from 'react-dom'
 import Dropdown from './Dropdown'
 import SelectTrigger from './SelectTrigger'
 import DropdownMenu from './DropdownMenu'
-import SearchInput from './SearchInput'
 import { matcher } from './utils'
 
 const KEYCODES = {
@@ -22,7 +21,7 @@ const actions = {
 
 const noop = () => {}
 
-export default class PowerSelect extends Component {
+export default class Select extends Component {
   documentEventListeners = {
     handleEscapePress: ::this.handleEscapePress,
     handleDocumentClick: ::this.handleDocumentClick
@@ -59,12 +58,12 @@ export default class PowerSelect extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.documentEventListeners.handleEscapePress)
-    document.addEventListener('click', this.documentEventListeners.handleDocumentClick)
+    document.addEventListener('click', this.documentEventListeners.handleDocumentClick, true)
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress)
-    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick)
+    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick, true)
   }
 
   highlightOption(highlightedIndex) {
@@ -221,7 +220,7 @@ export default class PowerSelect extends Component {
       }
 
       if (isOpen) {
-        this.selectOption(this.state.highlightedIndex)
+        // this.selectOption(this.state.highlightedIndex)
         this.close()
       }
     }
@@ -245,7 +244,10 @@ export default class PowerSelect extends Component {
   handleOptionClick(option) {
     this.selectOption(option)
     this.focusField()
-    this.close()
+
+    if (this.props.closeOnOptionClick) {
+      this.close()
+    }
   }
 
   getPublicApi() {
@@ -268,7 +270,6 @@ export default class PowerSelect extends Component {
       optionComponent,
       placeholder,
       disabled,
-      searchEnabled,
       selectedOptionComponent,
       beforeOptionsComponent,
       afterOptionsComponent,
@@ -279,10 +280,6 @@ export default class PowerSelect extends Component {
     let SelectTrigger = this.props.selectTriggerComponent
     let selectApi = this.getPublicApi()
     let { highlightedIndex, focused } = this.state
-
-    if (!searchEnabled && beforeOptionsComponent === SearchInput) {
-      beforeOptionsComponent = null
-    }
 
     return (
       <Dropdown>
@@ -337,25 +334,25 @@ export default class PowerSelect extends Component {
   }
 }
 
-PowerSelect.propTypes = {
+Select.propTypes = {
   options: PropTypes.array.isRequired,
   selected: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.object
+    PropTypes.object,
+    PropTypes.array,
   ]),
   onChange: PropTypes.func.isRequired,
 }
 
-PowerSelect.defaultProps = {
+Select.defaultProps = {
   options: [],
   disabled: false,
   tabIndex: 0,
-  searchEnabled: true,
   selectTriggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
   selectedOptionComponent: null,
-  beforeOptionsComponent: SearchInput,
+  beforeOptionsComponent: null,
   afterOptionsComponent: null,
   matcher: matcher,
   onFocus: noop,
@@ -364,4 +361,6 @@ PowerSelect.defaultProps = {
   onEnter: noop,
   onOpen: noop,
   onClose: noop,
+
+  closeOnOptionClick: true
 }

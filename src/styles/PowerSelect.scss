@@ -1,5 +1,5 @@
 .powerselect {
-  height: 34px;
+  min-height: 34px;
   line-height: 22px;
   cursor: pointer;
   border: 1px solid #ccc;
@@ -127,4 +127,33 @@
   position: absolute;
   right: 8px;
   top: 14px;
+}
+
+
+// MultiSelect
+.powerselectmultiple__selectedOptions {
+  list-style: none;
+  padding-left: 0;
+  display: inline-block;
+}
+
+.powerselectmultiple__selectedOption {
+  display: inline-block;
+  margin: 4px 0px 0 4px;
+  padding: 3px 9px;
+  background-color: #ebeeff;
+}
+
+.powerselect-multiple {
+  .powerselect__trigger {
+    white-space: normal;
+  }
+
+  .powerselect__trigger-input {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    height: 34px;
+    margin-left: 4px;
+  }
 }

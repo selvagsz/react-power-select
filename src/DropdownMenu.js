@@ -1,6 +1,5 @@
 import React, { Component, isValidElement, cloneElement } from 'react'
 import OptionWrapper from './OptionWrapper'
-import SearchInput from './SearchInput'
 
 const renderComponent = (Component, props) => {
   if (isValidElement(Component)) {
