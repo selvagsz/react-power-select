@@ -1,4 +1,4 @@
-export default ({ option, optionLabelPath, select }) => {
+export default ({ option, optionLabelPath, onCloseClick, select }) => {
   let value = null;
 
   if (typeof option === 'object') {
@@ -13,7 +13,18 @@ export default ({ option, optionLabelPath, select }) => {
 
   return (
     <li className="powerselectmultiple__selectedOption">
-      <span>{value}</span>
+      <span className="powerselectmultiple__selectedOption__label">
+        {value}
+      </span>
+      <span
+        className="powerselectmultiple__selectedOption__close"
+        onClick={event => {
+          event.stopPropagation();
+          onCloseClick({ option, select });
+        }}
+      >
+        ×
+      </span>
     </li>
   );
 };

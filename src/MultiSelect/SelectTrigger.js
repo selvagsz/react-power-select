@@ -41,6 +41,7 @@ export default class SelectTrigger extends Component {
                   key={index}
                   option={selectedOption}
                   optionLabelPath={optionLabelPath}
+                  onCloseClick={this.props.onOptionCloseClick}
                   select={select}
                 />
               );
@@ -67,3 +68,7 @@ export default class SelectTrigger extends Component {
     );
   }
 }
+
+SelectTrigger.defaultProps = {
+  onOptionCloseClick: () => {},
+};

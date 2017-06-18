@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Select from '../Select';
-import TypeAheadSelectTrigger from './SelectTrigger';
+import MultiSelectTrigger from './SelectTrigger';
 
 export default class MultiSelect extends Component {
   state = {};
@@ -57,13 +57,26 @@ export default class MultiSelect extends Component {
     }
   };
 
+  removeOption = ({ option, select }) => {
+    let { selected, onChange } = this.props;
+    let options = selected.filter(opt => opt !== option);
+    onChange({
+      options,
+      select,
+    });
+  };
+
   render() {
     let { className, options, onChange, searchEnabled, ...rest } = this.props;
 
     return (
       <Select
         className={`${className} powerselect-multiple`}
-        selectTriggerComponent={TypeAheadSelectTrigger}
+        selectTriggerComponent={props =>
+          <MultiSelectTrigger
+            {...props}
+            onOptionCloseClick={this.removeOption}
+          />}
         options={this.state.filteredOptions}
         searchEnabled={false}
         onChange={this.handleOnChange}

@@ -1,6 +1,6 @@
 .powerselect {
   min-height: 34px;
-  line-height: 22px;
+  line-height: 20px;
   cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 2px;
@@ -143,9 +143,28 @@
 }
 
 .powerselectmultiple__selectedOption {
-  margin: 4px 0px 0 4px;
-  padding: 3px 9px;
+  margin: 4px 0px 4px 4px;
   background-color: #ebeeff;
+  border: 1px solid #c6cfff;
+}
+
+.powerselectmultiple__selectedOption__label {
+  padding: 2px 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.powerselectmultiple__selectedOption__close {
+  padding: 2px 6px;
+  font-size: 0.9em;
+  border-left: 1px solid #c6cfff;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: #dce1ff;
+  }
 }
 
 .powerselect-multiple {
@@ -157,7 +176,7 @@
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 34px;
+    height: 32px;
     margin-left: 4px;
   }
 }
