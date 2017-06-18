@@ -135,10 +135,13 @@
   list-style: none;
   padding-left: 0;
   display: inline-block;
+
+  > li {
+    display: inline-block;
+  }
 }
 
 .powerselectmultiple__selectedOption {
-  display: inline-block;
   margin: 4px 0px 0 4px;
   padding: 3px 9px;
   background-color: #ebeeff;

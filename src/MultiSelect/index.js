@@ -49,11 +49,11 @@ export default class MultiSelect extends Component {
 
     if (value === '' && selected.length) {
       let options = selected.slice(0, selected.length - 1);
-
       onChange({
         options,
         select,
       });
+      select.open();
     }
   };
 
