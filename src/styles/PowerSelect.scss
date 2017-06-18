@@ -126,7 +126,7 @@
   border-right: 4px solid transparent;
   position: absolute;
   right: 8px;
-  top: 14px;
+  top: 50%;
 }
 
 
@@ -134,6 +134,7 @@
 .powerselectmultiple__selectedOptions {
   list-style: none;
   padding-left: 0;
+  padding-right: 22px;
   display: inline-block;
 
   > li {

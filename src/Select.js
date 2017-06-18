@@ -92,10 +92,12 @@ export default class Select extends Component {
     let options = this.state.filteredOptions || this.props.options;
     let selectedOption = option || options[highlightedIndex];
     this.highlightOption(highlightedIndex);
-    this.props.onChange({
-      option: selectedOption,
-      select: this.getPublicApi(),
-    });
+    if (selectedOption) {
+      this.props.onChange({
+        option: selectedOption,
+        select: this.getPublicApi(),
+      });
+    }
     this.setState({
       searchTerm: null,
     });
