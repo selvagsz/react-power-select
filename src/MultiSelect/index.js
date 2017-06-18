@@ -43,6 +43,20 @@ export default class MultiSelect extends Component {
     );
   }
 
+  handleBackspacePress = (event, select) => {
+    let { selected, onChange } = this.props;
+    let value = event.target.value;
+
+    if (value === '' && selected.length) {
+      let options = selected.slice(0, selected.length - 1);
+
+      onChange({
+        options,
+        select,
+      });
+    }
+  };
+
   render() {
     let { className, options, onChange, searchEnabled, ...rest } = this.props;
 
@@ -54,6 +68,7 @@ export default class MultiSelect extends Component {
         searchEnabled={false}
         onChange={this.handleOnChange}
         closeOnOptionClick={false}
+        onBackspacePress={this.handleBackspacePress}
         {...rest}
       />
     );

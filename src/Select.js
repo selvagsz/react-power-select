@@ -10,6 +10,7 @@ const KEYCODES = {
   DOWN_ARROW: 40,
   ENTER: 13,
   TAB: 9,
+  BACK_SPACE: 8,
 };
 
 const actions = {
@@ -17,6 +18,7 @@ const actions = {
   40: 'handleDownArrow',
   13: 'handleEnterPress',
   9: 'handleTabPress',
+  8: 'handleBackspacePress',
 };
 
 const noop = () => {};
@@ -50,7 +52,7 @@ export default class Select extends Component {
     this.selectOption = ::this.selectOption;
     this.handleOptionClick = ::this.handleOptionClick;
     this.handleKeyDown = ::this.handleKeyDown;
-    this.handleTriggerChange = ::this.handleTriggerChange;
+    this.handleSearchInputChange = ::this.handleSearchInputChange;
     this.handleFocus = ::this.handleFocus;
     this.handleBlur = ::this.handleBlur;
     this.handleClick = ::this.handleClick;
@@ -151,6 +153,7 @@ export default class Select extends Component {
       optionLabelPath,
       searchIndices = optionLabelPath,
     } = this.props;
+
     let filteredOptions = options.filter(option => {
       return this.props.matcher({
         option,
@@ -180,18 +183,19 @@ export default class Select extends Component {
     );
   }
 
-  handleTriggerChange(event) {
+  handleSearchInputChange(event) {
     let value = event.target.value;
     this.search(value, this.open);
+    this.props.onSearchInputChange(event);
   }
 
-  handleDownArrow(index) {
+  handleDownArrow(event, index) {
     let options = this.state.filteredOptions || this.props.options;
     let highlightedIndex = index < options.length - 1 ? ++index : 0;
     this.highlightOption(highlightedIndex);
   }
 
-  handleUpArrow(index) {
+  handleUpArrow(event, index) {
     let options = this.state.filteredOptions || this.props.options;
     let highlightedIndex = index > 0 && index <= options.length
       ? --index
@@ -199,18 +203,18 @@ export default class Select extends Component {
     this.highlightOption(highlightedIndex);
   }
 
-  handleEnterPress(highlightedIndex) {
+  handleEnterPress(event, highlightedIndex) {
     if (this.state.isOpen) {
       this.selectOption(highlightedIndex);
       this.focusField();
       this.close();
     }
     if (highlightedIndex === -1) {
-      this.props.onEnter(this.getPublicApi());
+      this.props.onEnter(event, this.getPublicApi());
     }
   }
 
-  handleTabPress(highlightedIndex) {
+  handleTabPress(event, highlightedIndex) {
     this.setFocusedState(false);
     if (this.state.isOpen) {
       this.selectOption(highlightedIndex);
@@ -218,7 +222,12 @@ export default class Select extends Component {
     }
   }
 
-  handleKeyDown(event, highlightedIndex) {
+  handleBackspacePress(event, highlightedIndex) {
+    this.props.onBackspacePress(event, this.getPublicApi());
+  }
+
+  handleKeyDown(...args) {
+    let [event] = args;
     let keyCode = event.which;
     let action = this[actions[keyCode]];
     if (action) {
@@ -230,7 +239,7 @@ export default class Select extends Component {
         return;
       }
 
-      action.call(this, highlightedIndex);
+      action.apply(this, args);
     }
   }
 
@@ -341,7 +350,7 @@ export default class Select extends Component {
             placeholder={placeholder}
             disabled={disabled}
             searchTerm={searchTerm}
-            handleOnChange={this.handleTriggerChange}
+            handleOnChange={this.handleSearchInputChange}
             onClick={this.handleClick}
             handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
@@ -396,4 +405,6 @@ Select.defaultProps = {
   onClose: noop,
 
   closeOnOptionClick: true,
+  onSearchInputChange: noop,
+  onBackspacePress: noop,
 };
