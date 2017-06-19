@@ -1,17 +1,26 @@
-export default (props) => (
-  <div
-    className={
-      `powerselect__option ${props.isHighlighted ? 'powerselect__option--highlighted' : ''}`
+import React, { isValidElement, cloneElement } from 'react';
+
+export default props => {
+  let { option, optionLabelPath, optionComponent, select } = props;
+  let OptionComponent = optionComponent;
+
+  if (isValidElement(OptionComponent)) {
+    return cloneElement(OptionComponent, props);
+  }
+
+  if (OptionComponent) {
+    return <OptionComponent {...props} />;
+  }
+
+  if (typeof option === 'object') {
+    if (optionLabelPath) {
+      return <span>{option[optionLabelPath]}</span>;
     }
-    onClick={props.onOptionClick}
-  >
-    {
-      props.optionComponent ?
-      props.optionComponent({
-        option: props.option,
-        select: props.select
-      }) :
-      props.option
-    }
-  </div>
-)
+  }
+
+  if (typeof option === 'string') {
+    return <span>{option}</span>;
+  }
+
+  return null;
+};

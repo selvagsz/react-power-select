@@ -1,39 +1,61 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const SRC_DIR = `${__dirname}/src`
-const DIST_DIR = `${__dirname}/dist`
+const SRC_DIR = `${__dirname}/src`;
+const DIST_DIR = `${__dirname}/dist`;
 
 module.exports = {
   context: SRC_DIR,
   resolve: {
-    extensions: ['', '.js', '.scss']
+    extensions: ['.js', '.scss'],
   },
   entry: {
     main: './index.js',
-    css: './styles/index.js'
   },
   output: {
     path: `${DIST_DIR}/`,
-    filename: 'react-power-select.js'
+    filename: 'react-power-select.js',
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'babel'
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              presets: ['es2015', 'react', 'stage-0'],
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
-      }
-    ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        }),
+      },
+    ],
   },
 
   plugins: [
-    new ExtractTextPlugin('react-power-select.css', {
-      allChunks: true
-    })
-  ]
-}
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
+
+    new ExtractTextPlugin({
+      filename: 'react-power-select.css',
+    }),
+  ],
+};

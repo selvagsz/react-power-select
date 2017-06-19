@@ -1,69 +1,89 @@
-.powerselect {
-  height: 34px;
-  line-height: 22px;
+.PowerSelect {
   cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 2px;
   background-color: #fff;
+
+  &:focus {
+    outline: none;
+  }
 }
 
-.powerselect--focused {
+.PowerSelect--focused {
   border-color: #66afe9;
 }
 
-.powerselect--disabled {
+.PowerSelect--disabled {
   background-color: #eee;
   cursor: not-allowed;
 
-  .powerselect__trigger-input {
+  .PowerSelect__Trigger {
+    pointer-events: none;
+  }
+
+  .PowerSelect__TriggerInput {
     background-color: #eee;
   }
 }
 
-.powerselect--open {
+.PowerSelect--open {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   border-bottom: 0;
 
-  .powerselect__trigger-status {
+  .PowerSelect__TriggerStatus {
     transform: rotate(-180deg);
   }
 }
 
-.powerselect__trigger {
+.PowerSelect__Trigger {
   position: relative;
-  height: 100%;
-  padding: 4px 22px 4px 12px;
+  height: 34px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.powerselect__menu {
+.PowerSelect__Menu {
   background-color: #fff;
   border: 1px solid #ccc;
-}
 
-.powerselect__options {
-  max-height: 250px;
-  overflow: auto;
-}
-
-.powerselect__option {
-  cursor: pointer;
-  padding: 4px 12px;
-
-  &:hover, &.powerselect__option--highlighted {
-    background-color: #f6f6f6;
+  &:focus {
+    outline: none;
   }
 }
 
-.powerselect__before-options {
+.PowerSelect__Options {
+  max-height: 238px;
+  overflow: auto;
+}
+
+.PowerSelect__Option {
+  cursor: pointer;
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: #fbfbfb;
+  }
+}
+
+.PowerSelect__Option--highlighted {
+  background-color: #f1f1f1;
+}
+
+.PowerSelect__BeforeOptions {
   padding: 8px 12px;
 }
 
-.powerselect__placeholder {
+.PowerSelect__Placeholder {
   color: #aaa;
 }
 
-.powerselect__search-input {
+.PowerSelect__SearchInputContainer {
+  padding: 8px;
+}
+
+.PowerSelect__SearchInput {
   display: block;
   width: 100%;
   height: 32px;
@@ -76,33 +96,89 @@
 
   &:focus {
     border-color: #66afe9;
+    outline: none;
   }
 }
 
-.powerselect__trigger-input {
+.PowerSelect__TriggerInput {
   display: block;
+  height: 32px;
   width: 100%;
   border: none;
   cursor: pointer;
+  padding: 4px 22px 4px 12px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
 }
 
-.powerselect__trigger-status {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-top: 4px solid #777;
+.PowerSelect__TriggerLabel {
+  display: block;
+  line-height: 24px;
+  height: 100%;
+  padding: 5px 22px 5px 12px;
+}
+
+.PowerSelect__TriggerStatus {
+  border-top: 4px solid #ccc;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   position: absolute;
   right: 8px;
-  top: 14px;
+  top: 50%;
 }
 
-.powerselect__trigger-label {
+
+// MultiSelect
+.PowerSelectMultiple__SelectedOptions {
+  list-style: none;
+  padding-left: 0;
+  padding-right: 22px;
   display: inline-block;
-  height: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+  > li {
+    display: inline-block;
+  }
+}
+
+.PowerSelectMultiple__SelectedOption {
+  margin: 4px 0px 4px 4px;
+  background-color: #ebeeff;
+  border: 1px solid #c6cfff;
+}
+
+.PowerSelectMultiple__SelectedOption__Label {
+  padding: 2px 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.PowerSelectMultiple__SelectedOption__Close {
+  padding: 2px 6px;
+  border-left: 1px solid #c6cfff;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: #dce1ff;
+  }
+}
+
+.PowerSelectMultiple {
+  .PowerSelect__Trigger {
+    white-space: normal;
+    height: auto;
+    min-height: 34px;
+  }
+
+  .PowerSelect__TriggerInput {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    height: 34px;
+    margin-left: 4px;
+  }
 }

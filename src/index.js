@@ -1,7 +1,6 @@
-import PowerSelect from './PowerSelect'
-import TypeAhead from './TypeAhead'
+import PowerSelect from './PowerSelect';
+import TypeAhead from './TypeAhead';
+import PowerSelectMultiple from './PowerSelectMultiple';
+import './styles/PowerSelect.scss';
 
-export {
-  PowerSelect,
-  TypeAhead
-}
+export { PowerSelect, TypeAhead, PowerSelectMultiple };
