@@ -33,7 +33,7 @@ export default class DropdownMenu extends Component {
   }
 
   stashOptionOffsetHeight() {
-    let option = document.querySelector('.powerselect__option');
+    let option = document.querySelector('.PowerSelect__Option');
     this.optionOffsetHeight = (option && option.offsetHeight) || 0;
   }
 
@@ -70,7 +70,7 @@ export default class DropdownMenu extends Component {
 
     return (
       <div
-        className="powerselect__menu"
+        className="PowerSelect__Menu"
         onKeyDown={event => handleKeyDown(event, highlightedIndex)}
         style={{
           minWidth: `${minWidth}px`,
@@ -79,7 +79,7 @@ export default class DropdownMenu extends Component {
         {beforeOptionsComponent &&
           renderComponent(beforeOptionsComponent, { select })}
         <div
-          className="powerselect__options"
+          className="PowerSelect__Options"
           ref={optionsList => (this.optionsList = optionsList)}
         >
           {options.map((option, idx) =>

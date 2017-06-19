@@ -9,8 +9,8 @@ export default ({
   select,
 }) =>
   <div
-    className={`powerselect__option ${isHighlighted
-      ? 'powerselect__option--highlighted'
+    className={`PowerSelect__Option ${isHighlighted
+      ? 'PowerSelect__Option--highlighted'
       : ''}`}
     onClick={onOptionClick}
   >

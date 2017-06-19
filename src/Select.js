@@ -256,7 +256,7 @@ export default class Select extends Component {
     let powerselect = this.powerselect;
 
     if (
-      !(powerselect.contains($target) || $target.closest('.powerselect__menu'))
+      !(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))
     ) {
       let { focused, isOpen } = this.state;
       if (focused) {
@@ -335,11 +335,11 @@ export default class Select extends Component {
               onRef(powerselect);
             }
           }}
-          className={`powerselect ${className} ${disabled
-            ? 'powerselect--disabled'
-            : ''} ${isOpen ? 'powerselect--open' : ''} ${focused
-            ? 'powerselect--focused'
-            : ''} ${searchTerm ? 'powerselect__with-search' : ''}`}
+          className={`PowerSelect ${className} ${disabled
+            ? 'PowerSelect--disabled'
+            : ''} ${isOpen ? 'PowerSelect--open' : ''} ${focused
+            ? 'PowerSelect--focused'
+            : ''} ${searchTerm ? 'PowerSelect__WithSearch' : ''}`}
           tabIndex={tabIndex}
           onFocus={() => {
             let triggerInput = this.powerselect.querySelector('input');

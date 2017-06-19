@@ -10,8 +10,8 @@ export default ({
   select,
 }) => {
   return (
-    <div className="powerselect__trigger" onClick={onClick}>
-      <span className="powerselect__trigger-label">
+    <div className="PowerSelect__Trigger" onClick={onClick}>
+      <span className="PowerSelect__TriggerLabel">
         {selectedOption
           ? <Option
               optionLabelPath={optionLabelPath}
@@ -19,9 +19,9 @@ export default ({
               optionComponent={selectedOptionComponent}
               select={select}
             />
-          : <span className="powerselect__placeholder">{placeholder}</span>}
+          : <span className="PowerSelect__Placeholder">{placeholder}</span>}
       </span>
-      <span className="powerselect__trigger-status" />
+      <span className="PowerSelect__TriggerStatus" />
     </div>
   );
 };

@@ -44,9 +44,9 @@ export default class SelectTrigger extends Component {
     } = this.props;
 
     return (
-      <div className="powerselect__trigger" onClick={onClick}>
+      <div className="PowerSelect__Trigger" onClick={onClick}>
         <input
-          className="powerselect__trigger-input"
+          className="PowerSelect__TriggerInput"
           autoComplete="off"
           spellCheck="false"
           placeholder={placeholder}
@@ -57,7 +57,7 @@ export default class SelectTrigger extends Component {
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
         />
-        <span className="powerselect__trigger-status" />
+        <span className="PowerSelect__TriggerStatus" />
       </div>
     );
   }

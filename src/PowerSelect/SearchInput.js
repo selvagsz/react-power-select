@@ -18,10 +18,10 @@ export default class SearchInput extends Component {
   render() {
     let props = this.props;
     return (
-      <div className="powerselect__search-input-container">
+      <div className="PowerSelect__SearchInputContainer">
         <input
           ref="before-options-input"
-          className="powerselect__search-input"
+          className="PowerSelect__SearchInput"
           placeholder={this.props.searchPlaceholder}
           onChange={e => props.select.search(e.target.value)}
         />

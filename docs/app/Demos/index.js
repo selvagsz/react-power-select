@@ -11,9 +11,9 @@ import BeforeOptionsDemo from './PowerSelect/BeforeOptionsDemo';
 import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
-import MultiSelectPlainArray from './MultiSelect/PlainArray';
-import MultiSelectArrayOfObjects from './MultiSelect/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption from './MultiSelect/CustomSelectedOption';
+import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
+import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
 
 export default () => {
   return (

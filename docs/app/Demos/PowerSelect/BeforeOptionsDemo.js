@@ -48,9 +48,9 @@ export default class BeforeOptionsDemo extends Component {
               return <Loader loadingText="Loading countries" />;
             }
             return (
-              <div className="powerselect__search-input-container">
+              <div className="PowerSelect__SearchInputContainer">
                 <input
-                  className="powerselect__search-input"
+                  className="PowerSelect__SearchInput"
                   value={select.searchTerm || ''}
                   autoFocus={true}
                   onChange={event => {
