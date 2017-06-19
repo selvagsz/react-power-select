@@ -54,6 +54,9 @@ export default class MultiSelect extends Component {
         select,
       });
       select.open();
+      setTimeout(() => {
+        this.powerselect.querySelector('.powerselect__trigger-input').focus();
+      }, 0);
     }
   };
 
@@ -64,6 +67,9 @@ export default class MultiSelect extends Component {
       options,
       select,
     });
+    setTimeout(() => {
+      this.powerselect.querySelector('.powerselect__trigger-input').focus();
+    }, 0);
   };
 
   render() {
@@ -72,6 +78,7 @@ export default class MultiSelect extends Component {
     return (
       <Select
         className={`${className} powerselect-multiple`}
+        onRef={powerselect => (this.powerselect = powerselect)}
         selectTriggerComponent={props =>
           <MultiSelectTrigger
             {...props}

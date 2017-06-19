@@ -306,6 +306,7 @@ export default class Select extends Component {
 
   render() {
     let {
+      onRef,
       className,
       tabIndex,
       options,
@@ -328,7 +329,12 @@ export default class Select extends Component {
     return (
       <Dropdown>
         <div
-          ref={powerselect => (this.powerselect = powerselect)}
+          ref={powerselect => {
+            this.powerselect = powerselect;
+            if (onRef) {
+              onRef(powerselect);
+            }
+          }}
           className={`powerselect ${className} ${disabled
             ? 'powerselect--disabled'
             : ''} ${isOpen ? 'powerselect--open' : ''} ${focused

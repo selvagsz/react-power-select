@@ -167,13 +167,14 @@
   .powerselect__trigger {
     white-space: normal;
     height: auto;
+    min-height: 34px;
   }
 
   .powerselect__trigger-input {
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 100%;
+    height: 34px;
     margin-left: 4px;
   }
 }
