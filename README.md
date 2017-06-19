@@ -12,14 +12,8 @@ npm i react-power-select --save
 ```js
 import { PowerSelect } from 'react-power-select'
 
-export default class FooBar {
-  constructor() {
-    super(...arguments)
-    this.handleChange = ::this.handleChange
-    this.state = {
-      selectedOption: null
-    }
-  }
+export default class Demo {
+  state = {};
   
   handleChange({ option }) {
     this.setState({
@@ -30,9 +24,8 @@ export default class FooBar {
   render() {
     return (
       <PowerSelect
-        options={[]}
+        options={['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Inferno']}
         selected={this.state.selectedOption}
-        selectedLabel='name'
         placeholder='Select a customer'
         onChange={this.handleChange}
       />
