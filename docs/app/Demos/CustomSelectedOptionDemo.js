@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { countries } from './constants';
 
-const CustomOptionComponnet = ({ option }) =>
+const CustomOptionComponent = ({ option }) =>
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
@@ -30,7 +30,7 @@ export default class CustomSelectedOptionDemo extends Component {
         <PowerSelect
           options={countries}
           selected={this.state.selectedCountry}
-          optionComponent={<CustomOptionComponnet />}
+          optionComponent={<CustomOptionComponent />}
           selectedOptionComponent={<CustomSelectedOptionComponent />}
           searchIndices={['name', 'code']}
           onChange={this.handleChange}

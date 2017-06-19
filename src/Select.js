@@ -354,7 +354,7 @@ export default class Select extends Component {
           <SelectTrigger
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
-            selectedOptionComponent={selectedOptionComponent || optionComponent}
+            selectedOptionComponent={selectedOptionComponent}
             placeholder={placeholder}
             disabled={disabled}
             searchTerm={searchTerm}

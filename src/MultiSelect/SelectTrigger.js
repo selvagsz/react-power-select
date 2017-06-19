@@ -19,6 +19,7 @@ export default class SelectTrigger extends Component {
     let {
       selectedOption,
       optionLabelPath,
+      showOptionClose,
       select,
       placeholder,
       disabled,
@@ -27,6 +28,7 @@ export default class SelectTrigger extends Component {
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
+      selectedOptionComponent,
     } = this.props;
 
     let selected = selectedOption || [];
@@ -41,6 +43,8 @@ export default class SelectTrigger extends Component {
                   key={index}
                   option={selectedOption}
                   optionLabelPath={optionLabelPath}
+                  selectedOptionComponent={selectedOptionComponent}
+                  showOptionClose={showOptionClose}
                   onCloseClick={this.props.onOptionCloseClick}
                   select={select}
                 />

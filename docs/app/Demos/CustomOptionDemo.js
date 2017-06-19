@@ -24,6 +24,7 @@ export default class CustomOptionDemo extends Component {
         <PowerSelect
           options={countries}
           selected={this.state.selectedCountry}
+          optionLabelPath="name"
           optionComponent={<CustomOptionComponnet />}
           searchIndices={['name', 'code']}
           onChange={this.handleChange}

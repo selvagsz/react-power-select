@@ -17,6 +17,10 @@
   background-color: #eee;
   cursor: not-allowed;
 
+  .powerselect__trigger {
+    pointer-events: none;
+  }
+
   .powerselect__trigger-input {
     background-color: #eee;
   }

@@ -45,7 +45,7 @@ export const countries = [
     flag: 'https://restcountries.eu/data/esp.svg',
   },
   {
-    name: 'United Kingdom of Great Britain and Northern Ireland',
+    name: 'United Kingdom',
     code: 'GBR',
     flag: 'https://restcountries.eu/data/gbr.svg',
   },

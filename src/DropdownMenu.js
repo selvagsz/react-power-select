@@ -70,7 +70,6 @@ export default class DropdownMenu extends Component {
 
     return (
       <div
-        tabIndex="1"
         className="powerselect__menu"
         onKeyDown={event => handleKeyDown(event, highlightedIndex)}
         style={{

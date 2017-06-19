@@ -4,15 +4,13 @@ import SearchInput from './SearchInput';
 
 export default class PowerSelect extends Component {
   render() {
-    let { searchEnabled, beforeOptionsComponent } = this.props;
+    let { searchEnabled, beforeOptionsComponent, ...rest } = this.props;
 
     if (!searchEnabled && beforeOptionsComponent === SearchInput) {
       beforeOptionsComponent = null;
     }
 
-    return (
-      <Select beforeOptionsComponent={beforeOptionsComponent} {...this.props} />
-    );
+    return <Select beforeOptionsComponent={beforeOptionsComponent} {...rest} />;
   }
 }
 

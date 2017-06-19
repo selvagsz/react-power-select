@@ -11,10 +11,13 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './MultiSelect/PlainArray';
+import MultiSelectArrayOfObjects from './MultiSelect/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption from './MultiSelect/CustomSelectedOption';
 
 export default () => {
   return (
     <div className="container">
+
       <section>
         <h1>Power Select</h1>
         <PlainArrayDemo />
@@ -36,6 +39,8 @@ export default () => {
       <section>
         <h1>MultiSelect</h1>
         <MultiSelectPlainArray />
+        <MultiSelectArrayOfObjects />
+        <MultiSelectCustomSelectedOption />
       </section>
     </div>
   );

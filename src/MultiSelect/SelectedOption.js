@@ -1,5 +1,24 @@
-export default ({ option, optionLabelPath, onCloseClick, select }) => {
+import React, { isValidElement, cloneElement } from 'react';
+
+export default props => {
+  let {
+    option,
+    optionLabelPath,
+    selectedOptionComponent,
+    showOptionClose,
+    onCloseClick,
+    select,
+  } = props;
   let value = null;
+  let SelectedOptionComponent = selectedOptionComponent;
+
+  if (isValidElement(SelectedOptionComponent)) {
+    return cloneElement(SelectedOptionComponent, props);
+  }
+
+  if (SelectedOptionComponent) {
+    return <SelectedOptionComponent {...props} />;
+  }
 
   if (typeof option === 'object') {
     if (optionLabelPath) {
@@ -16,15 +35,17 @@ export default ({ option, optionLabelPath, onCloseClick, select }) => {
       <span className="powerselectmultiple__selectedOption__label">
         {value}
       </span>
-      <span
-        className="powerselectmultiple__selectedOption__close"
-        onClick={event => {
-          event.stopPropagation();
-          onCloseClick({ option, select });
-        }}
-      >
-        ×
-      </span>
+      {showOptionClose
+        ? <span
+            className="powerselectmultiple__selectedOption__close"
+            onClick={event => {
+              event.stopPropagation();
+              onCloseClick({ option, select });
+            }}
+          >
+            ×
+          </span>
+        : null}
     </li>
   );
 };

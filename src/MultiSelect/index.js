@@ -54,9 +54,7 @@ export default class MultiSelect extends Component {
         select,
       });
       select.open();
-      setTimeout(() => {
-        this.powerselect.querySelector('.powerselect__trigger-input').focus();
-      }, 0);
+      this.focusSearchInput();
     }
   };
 
@@ -67,13 +65,17 @@ export default class MultiSelect extends Component {
       options,
       select,
     });
+    this.focusSearchInput();
+  };
+
+  focusSearchInput() {
     setTimeout(() => {
       this.powerselect.querySelector('.powerselect__trigger-input').focus();
     }, 0);
-  };
+  }
 
   render() {
-    let { className, options, onChange, searchEnabled, ...rest } = this.props;
+    let { className, options, onChange, showOptionClose, ...rest } = this.props;
 
     return (
       <Select
@@ -82,10 +84,10 @@ export default class MultiSelect extends Component {
         selectTriggerComponent={props =>
           <MultiSelectTrigger
             {...props}
+            showOptionClose={showOptionClose}
             onOptionCloseClick={this.removeOption}
           />}
         options={this.state.filteredOptions}
-        searchEnabled={false}
         onChange={this.handleOnChange}
         closeOnOptionClick={false}
         onBackspacePress={this.handleBackspacePress}
@@ -94,3 +96,7 @@ export default class MultiSelect extends Component {
     );
   }
 }
+
+MultiSelect.defaultProps = {
+  showOptionClose: true,
+};
