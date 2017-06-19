@@ -1,6 +1,4 @@
 .powerselect {
-  min-height: 34px;
-  line-height: 20px;
   cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 2px;
@@ -36,7 +34,7 @@
 
 .powerselect__trigger {
   position: relative;
-  height: 100%;
+  height: 34px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -100,11 +98,11 @@
 
 .powerselect__trigger-input {
   display: block;
+  height: 32px;
   width: 100%;
   border: none;
   cursor: pointer;
   padding: 4px 22px 4px 12px;
-  height: 100%;
   font-size: 14px;
 
   &:focus {
@@ -114,14 +112,13 @@
 
 .powerselect__trigger-label {
   display: block;
+  line-height: 24px;
+  height: 100%;
   padding: 5px 22px 5px 12px;
 }
 
 .powerselect__trigger-status {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-top: 4px solid #777;
+  border-top: 4px solid #ccc;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   position: absolute;
@@ -156,7 +153,6 @@
 
 .powerselectmultiple__selectedOption__close {
   padding: 2px 6px;
-  font-size: 0.9em;
   border-left: 1px solid #c6cfff;
   cursor: pointer;
   display: inline-block;
@@ -170,13 +166,14 @@
 .powerselect-multiple {
   .powerselect__trigger {
     white-space: normal;
+    height: auto;
   }
 
   .powerselect__trigger-input {
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 32px;
+    height: 100%;
     margin-left: 4px;
   }
 }

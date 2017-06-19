@@ -24,7 +24,7 @@ export default class BeforeOptionsDemo extends Component {
       setTimeout(() => {
         this.countries = countries;
         this.setState({ loading: false });
-      }, 5000);
+      }, 3000);
     });
   };
 
