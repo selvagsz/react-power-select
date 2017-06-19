@@ -1,11 +1,12 @@
-import PlainArrayDemo from './PlainArrayDemo';
-import WithoutSearchDemo from './WithoutSearchDemo';
-import ArrayOfObjectsDemo from './ArrayOfObjectsDemo';
-import SearchFieldsDemo from './SearchFieldsDemo';
-import CustomOptionDemo from './CustomOptionDemo';
-import CustomSelectedOptionDemo from './CustomSelectedOptionDemo';
-import AfterOptionsDemo from './AfterOptionsDemo';
-import BeforeOptionsDemo from './BeforeOptionsDemo';
+import PlainArrayDemo from './PowerSelect/PlainArrayDemo';
+import WithoutSearchDemo from './PowerSelect/WithoutSearchDemo';
+import ArrayOfObjectsDemo from './PowerSelect/ArrayOfObjectsDemo';
+import HighlightSearchDemo from './PowerSelect/HighlightSearch';
+import SearchFieldsDemo from './PowerSelect/SearchFieldsDemo';
+import CustomOptionDemo from './PowerSelect/CustomOptionDemo';
+import CustomSelectedOptionDemo from './PowerSelect/CustomSelectedOptionDemo';
+import AfterOptionsDemo from './PowerSelect/AfterOptionsDemo';
+import BeforeOptionsDemo from './PowerSelect/BeforeOptionsDemo';
 
 import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
@@ -25,6 +26,7 @@ export default () => {
         <ArrayOfObjectsDemo />
         <SearchFieldsDemo />
         <CustomOptionDemo />
+        <HighlightSearchDemo />
         <CustomSelectedOptionDemo />
         <AfterOptionsDemo />
         <BeforeOptionsDemo />

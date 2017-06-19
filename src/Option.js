@@ -1,17 +1,15 @@
 import React, { isValidElement, cloneElement } from 'react';
 
-export default ({ option, optionLabelPath, optionComponent, select }) => {
+export default props => {
+  let { option, optionLabelPath, optionComponent, select } = props;
   let OptionComponent = optionComponent;
 
   if (isValidElement(OptionComponent)) {
-    return cloneElement(OptionComponent, {
-      option,
-      select,
-    });
+    return cloneElement(OptionComponent, props);
   }
 
   if (OptionComponent) {
-    return <OptionComponent option={option} select={select} />;
+    return <OptionComponent {...props} />;
   }
 
   if (typeof option === 'object') {

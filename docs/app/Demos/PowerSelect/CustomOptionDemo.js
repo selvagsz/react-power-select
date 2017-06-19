@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
-import { countries } from './constants';
+import { countries } from '../constants';
 
-export default class ArrayOfObjectsDemo extends Component {
+const CustomOptionComponnet = ({ option }) =>
+  <div>
+    <img className="flag" src={option.flag} />
+    {option.name} ({option.code})
+  </div>;
+
+export default class CustomOptionDemo extends Component {
   state = {
-    selectedCountry: null,
+    selectedCountry: countries[4],
   };
 
   handleChange = ({ option }) => {
@@ -14,11 +20,13 @@ export default class ArrayOfObjectsDemo extends Component {
   render() {
     return (
       <div className="demo">
-        <h3>Array of Objects</h3>
+        <h3>Custom Option Component</h3>
         <PowerSelect
           options={countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
+          optionComponent={<CustomOptionComponnet />}
+          searchIndices={['name', 'code']}
           onChange={this.handleChange}
         />
       </div>

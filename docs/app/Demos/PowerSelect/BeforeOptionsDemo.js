@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
-import { countries } from './constants';
+import { countries } from '../constants';
 
 const Loader = ({ loadingText = '' }) =>
   <div className="spinner">

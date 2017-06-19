@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
-import { countries } from './constants';
+import { countries } from '../constants';
 
-export default class SearchFieldsDemo extends Component {
+export default class ArrayOfObjectsDemo extends Component {
   state = {
     selectedCountry: null,
   };
@@ -14,12 +14,11 @@ export default class SearchFieldsDemo extends Component {
   render() {
     return (
       <div className="demo">
-        <h3>Search Fields</h3>
+        <h3>Array of Objects</h3>
         <PowerSelect
           options={countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={['name', 'code']}
           onChange={this.handleChange}
         />
       </div>
