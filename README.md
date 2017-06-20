@@ -1,6 +1,8 @@
 # react-power-select
 A highly composable &amp; reusable select components
 
+### DEMO https://selvagsz.github.io/react-power-select/
+
 # Installation
 
 ```bash
@@ -33,3 +35,8 @@ export default class Demo {
   }
 }
 ```
+
+
+### Credits
+
+Hat tip to [ember-power-select's](https://github.com/cibernox/ember-power-select) [architecture](http://www.ember-power-select.com/EPS_disected-48ad0d36e579a5554bff1407b51c554b.png)
