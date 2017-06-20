@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --config docs/app/webpack.config.js --content-base docs/index.html",
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
+    "build:docs": "webpack --config docs/app/webpack.config.js",
     "build": "npm run clean && npm run build:commonjs && webpack",
     "prepublish": "npm run build",
     "precommit": "lint-staged"

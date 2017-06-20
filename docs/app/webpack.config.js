@@ -42,6 +42,7 @@ webpackConfig.output = {
 webpackConfig.module.rules = [
   {
     test: /\.(js|jsx)$/,
+    exclude: /node_modules/,
     use: [
       {
         loader: 'babel-loader',
@@ -61,6 +62,9 @@ webpackConfig.module.rules = [
       },
       {
         loader: 'css-loader',
+        options: {
+          minimize: true,
+        },
       },
       {
         loader: 'sass-loader',
@@ -75,6 +79,15 @@ webpackConfig.module.rules = [
 webpackConfig.plugins = [
   new webpack.ProvidePlugin({
     React: 'react',
+  }),
+
+  new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false,
+    },
+    output: {
+      comments: false,
+    },
   }),
 
   new HtmlWebpackPlugin({
