@@ -28,7 +28,7 @@
   "homepage": "https://github.com/selvagsz/react-power-select#readme",
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --trailing-comma es5 --write",
+      "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js' 'docs/Demos/**/*.js'",
       "git add"
     ]
   },
