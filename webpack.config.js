@@ -22,6 +22,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
@@ -39,6 +40,9 @@ module.exports = {
           use: [
             {
               loader: 'css-loader',
+              options: {
+                minimize: true,
+              },
             },
             {
               loader: 'sass-loader',
@@ -52,6 +56,15 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       React: 'react',
+    }),
+
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false,
+      },
     }),
 
     new ExtractTextPlugin({
