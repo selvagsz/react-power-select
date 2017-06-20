@@ -24,39 +24,18 @@ const actions = {
 const noop = () => {};
 
 export default class Select extends Component {
+  state = {
+    highlightedIndex: null,
+    isOpen: false,
+    focused: false,
+    filteredOptions: null,
+    searchTerm: null,
+  };
+
   documentEventListeners = {
     handleEscapePress: ::this.handleEscapePress,
     handleDocumentClick: ::this.handleDocumentClick,
   };
-
-  select = {
-    open: ::this.open,
-    close: ::this.close,
-    toggle: ::this.toggle,
-    search: ::this.search,
-  };
-
-  constructor() {
-    super(...arguments);
-    this.state = {
-      highlightedIndex: null,
-      isOpen: false,
-      focused: false,
-      filteredOptions: null,
-      searchTerm: null,
-    };
-
-    this.open = ::this.open;
-    this.close = ::this.close;
-    this.toggle = ::this.toggle;
-    this.selectOption = ::this.selectOption;
-    this.handleOptionClick = ::this.handleOptionClick;
-    this.handleKeyDown = ::this.handleKeyDown;
-    this.handleSearchInputChange = ::this.handleSearchInputChange;
-    this.handleFocus = ::this.handleFocus;
-    this.handleBlur = ::this.handleBlur;
-    this.handleClick = ::this.handleClick;
-  }
 
   componentDidMount() {
     document.addEventListener(
@@ -88,7 +67,7 @@ export default class Select extends Component {
     });
   }
 
-  selectOption(highlightedIndex, option) {
+  selectOption = (highlightedIndex, option) => {
     let options = this.state.filteredOptions || this.props.options;
     let selectedOption = option || options[highlightedIndex];
     this.highlightOption(highlightedIndex);
@@ -101,9 +80,9 @@ export default class Select extends Component {
     this.setState({
       searchTerm: null,
     });
-  }
+  };
 
-  open() {
+  open = () => {
     if (this.props.disabled) {
       return;
     }
@@ -120,9 +99,9 @@ export default class Select extends Component {
     });
 
     this.props.onOpen();
-  }
+  };
 
-  close() {
+  close = () => {
     this.highlightOption(null);
     this.setState({
       isOpen: false,
@@ -130,16 +109,16 @@ export default class Select extends Component {
       searchTerm: null,
     });
     this.props.onClose();
-  }
+  };
 
-  toggle(event) {
+  toggle = event => {
     event && event.stopPropagation();
     if (this.state.isOpen) {
       this.close();
     } else {
       this.open();
     }
-  }
+  };
 
   setFocusedState(focused) {
     this.setState({ focused });
@@ -149,7 +128,7 @@ export default class Select extends Component {
     this.powerselect.focus();
   }
 
-  search(searchTerm, callback) {
+  search = (searchTerm, callback) => {
     let {
       options,
       optionLabelPath,
@@ -183,13 +162,13 @@ export default class Select extends Component {
       },
       callback
     );
-  }
+  };
 
-  handleSearchInputChange(event) {
+  handleSearchInputChange = event => {
     let value = event.target.value;
     this.search(value, this.open);
     this.props.onSearchInputChange(event);
-  }
+  };
 
   handleDownArrow(event, index) {
     let options = this.state.filteredOptions || this.props.options;
@@ -228,7 +207,7 @@ export default class Select extends Component {
     this.props.onBackspacePress(event, this.getPublicApi());
   }
 
-  handleKeyDown(...args) {
+  handleKeyDown = (...args) => {
     let [event] = args;
     let keyCode = event.which;
     let action = this[actions[keyCode]];
@@ -243,7 +222,7 @@ export default class Select extends Component {
 
       action.apply(this, args);
     }
-  }
+  };
 
   handleEscapePress(event) {
     if (event.which === 27) {
@@ -270,35 +249,38 @@ export default class Select extends Component {
     }
   }
 
-  handleFocus(event) {
+  handleFocus = event => {
     this.setFocusedState(true);
     this.props.onFocus(event);
-  }
+  };
 
-  handleBlur(event) {
+  handleBlur = event => {
     this.setFocusedState(false);
     this.props.onBlur(event);
-  }
+  };
 
-  handleClick(event) {
+  handleClick = event => {
     this.toggle(event);
     this.props.onClick(event);
-  }
+  };
 
-  handleOptionClick(option) {
+  handleOptionClick = option => {
     this.selectOption(option);
     this.focusField();
 
     if (this.props.closeOnOptionClick) {
       this.close();
     }
-  }
+  };
 
   getPublicApi() {
     let { isOpen, searchTerm } = this.state;
 
     return {
-      ...this.select,
+      open: this.open,
+      close: this.close,
+      toggle: this.toggle,
+      search: this.search,
       isOpen,
       searchTerm,
     };
