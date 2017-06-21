@@ -8,7 +8,7 @@
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
     "build:docs": "webpack --config docs/app/webpack.config.js",
-    "build": "npm run clean && npm run build:commonjs && webpack",
+    "build": "npm run clean && npm run build:commonjs && webpack && rm -rf dist/css.js",
     "prepublish": "npm run build",
     "precommit": "lint-staged"
   },

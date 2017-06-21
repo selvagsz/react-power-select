@@ -11,11 +11,12 @@ module.exports = {
     extensions: ['.js', '.scss'],
   },
   entry: {
-    main: './index.js',
+    'react-power-select': './index.js',
+    css: './styles/index.js',
   },
   output: {
     path: `${DIST_DIR}/`,
-    filename: 'react-power-select.js',
+    filename: '[name].js',
   },
 
   module: {
