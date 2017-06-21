@@ -18,14 +18,15 @@ export default class SelectTrigger extends Component {
   }
 
   getValueFromSelectedOption(props = this.props) {
-    let { selectedOption, optionLabelPath } = props;
+    let { selectedOption, selectedOptionLabelPath, optionLabelPath } = props;
     let value = '';
+    selectedOptionLabelPath = selectedOptionLabelPath || optionLabelPath;
 
     if (selectedOption) {
       if (typeof selectedOption === 'string') {
         value = selectedOption;
-      } else if (optionLabelPath) {
-        value = selectedOption[optionLabelPath];
+      } else if (selectedOptionLabelPath) {
+        value = selectedOption[selectedOptionLabelPath];
       }
     }
 

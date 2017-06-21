@@ -4,8 +4,19 @@ import TypeAheadSelectTrigger from './SelectTrigger';
 
 export default class TypeAhead extends Component {
   render() {
+    let { selectedOptionLabelPath, ...rest } = this.props;
     return (
-      <Select selectTriggerComponent={TypeAheadSelectTrigger} {...this.props} />
+      <Select
+        selectTriggerComponent={props => {
+          return (
+            <TypeAheadSelectTrigger
+              {...props}
+              selectedOptionLabelPath={selectedOptionLabelPath}
+            />
+          );
+        }}
+        {...rest}
+      />
     );
   }
 }
