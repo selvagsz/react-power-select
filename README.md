@@ -28,7 +28,6 @@ export default class Demo {
       <PowerSelect
         options={['React', 'Ember', 'Angular', 'Vue', 'Preact', 'Inferno']}
         selected={this.state.selectedOption}
-        placeholder='Select a customer'
         onChange={this.handleChange}
       />
     )
