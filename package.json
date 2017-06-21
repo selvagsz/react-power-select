@@ -21,6 +21,14 @@
   "bugs": {
     "url": "https://github.com/selvagsz/react-power-select/issues"
   },
+  "keywords": [
+    "react-power-select",
+    "react-autocomplete",
+    "react-select",
+    "react-typeahead",
+    "react-multiselect",
+    "react-component"
+  ],
   "files": [
     "lib",
     "dist"
