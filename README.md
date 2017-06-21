@@ -14,9 +14,10 @@ npm i react-power-select --save
 # Usage
 
 ```js
+import { Component } from 'react'
 import { PowerSelect } from 'react-power-select'
 
-export default class Demo {
+export default class Demo extends Component {
   state = {};
 
   handleChange({ option }) {
