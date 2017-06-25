@@ -36,7 +36,7 @@
   "homepage": "https://github.com/selvagsz/react-power-select#readme",
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --trailing-comma es5 --write 'src/**/*.js' 'docs/Demos/**/*.js'",
+      "prettier --single-quote --trailing-comma es5 --write docs/!(app).js 'src/**/*.js' 'docs/Demos/**/*.js'",
       "git add"
     ]
   },
@@ -52,6 +52,7 @@
     "html-webpack-plugin": "^2.28.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.1",
+    "multi-loader": "^0.1.0",
     "node-sass": "^4.5.3",
     "prettier": "^1.4.4",
     "react": "^15.5.4",

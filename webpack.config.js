@@ -10,10 +10,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.scss'],
   },
+
   entry: {
     'react-power-select': './index.js',
     css: './styles/index.js',
   },
+
   output: {
     path: `${DIST_DIR}/`,
     filename: '[name].js',

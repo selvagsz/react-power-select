@@ -3,21 +3,27 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const multi = require('multi-loader');
+
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackConfig = {
   context: process.cwd(),
   resolve: {
-    alias: {
-      react: path.resolve(process.cwd(), 'node_modules/react'),
-      'react-dom': path.resolve(process.cwd(), 'node_modules/react-dom'),
-    },
+    extensions: ['.js', '.jsx', '.scss'],
     modules: [
       path.resolve(process.cwd(), 'node_modules'),
       path.resolve(process.cwd(), '.'),
     ],
-    extensions: ['.js', '.jsx', '.scss'],
   },
+
+  resolveLoader: {
+    modules: [
+      path.resolve(process.cwd(), 'loaders'),
+      path.resolve(process.cwd(), 'node_modules'),
+    ],
+  },
+
   module: {},
 };
 
@@ -45,11 +51,7 @@ webpackConfig.module.rules = [
     exclude: /node_modules/,
     use: [
       {
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react', 'stage-0'],
-        },
+        loader: multi('babel-loader', 'snippet-loader'),
       },
     ],
   },
