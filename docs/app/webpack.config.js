@@ -51,13 +51,13 @@ webpackConfig.module.rules = [
     exclude: /node_modules/,
     use: [
       {
-        loader: multi('babel-loader', 'snippet-loader'),
+        loader: multi('snippet-loader', 'babel-loader'),
       },
     ],
   },
 
   {
-    test: /\.scss$/,
+    test: /\.(css|scss)$/,
     use: [
       {
         loader: 'style-loader',
@@ -83,14 +83,14 @@ webpackConfig.plugins = [
     React: 'react',
   }),
 
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false,
-    },
-    output: {
-      comments: false,
-    },
-  }),
+  // new webpack.optimize.UglifyJsPlugin({
+  //   compress: {
+  //     warnings: false,
+  //   },
+  //   output: {
+  //     comments: false,
+  //   },
+  // }),
 
   new HtmlWebpackPlugin({
     template: './docs/app/index.html',

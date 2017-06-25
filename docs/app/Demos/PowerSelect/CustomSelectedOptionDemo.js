@@ -32,7 +32,6 @@ export default class CustomSelectedOptionDemo extends Component {
           selected={this.state.selectedCountry}
           optionComponent={<CustomOptionComponent />}
           selectedOptionComponent={<CustomSelectedOptionComponent />}
-          searchIndices={['name', 'code']}
           onChange={this.handleChange}
         />
       </div>

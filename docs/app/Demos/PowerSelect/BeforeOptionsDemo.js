@@ -40,7 +40,6 @@ export default class BeforeOptionsDemo extends Component {
           options={this.countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={['name', 'code']}
           onChange={this.handleChange}
           onOpen={this.handleOpen}
           beforeOptionsComponent={({ select }) => {

@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
+import { frameworks } from '../constants';
 
 export default class WithoutSearchDemo extends Component {
   state = {
     selectedFramework: 'React',
   };
-
-  frameworks = [
-    'React',
-    'Ember',
-    'Angular',
-    'Vue',
-    'Preact',
-    'Meteor',
-    'Backbone',
-    'Knockout',
-    'SproutCore',
-    'Spine',
-  ];
 
   handleChange = ({ option }) => {
     this.setState({ selectedFramework: option });
@@ -28,7 +16,7 @@ export default class WithoutSearchDemo extends Component {
       <div className="demo">
         <h3>Without Search Field</h3>
         <PowerSelect
-          options={this.frameworks}
+          options={frameworks}
           selected={this.state.selectedFramework}
           searchEnabled={false}
           onChange={this.handleChange}

@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
+import { frameworks } from '../constants';
 
 export default class PlainArrayDemo extends Component {
   state = {
     selectedFramework: 'React',
   };
-
-  frameworks = [
-    'React',
-    'Ember',
-    'Angular',
-    'Vue',
-    'Preact',
-    'Meteor',
-    'Backbone',
-    'Knockout',
-    'SproutCore',
-    'Spine',
-  ];
 
   handleChange = ({ option }) => {
     this.setState({ selectedFramework: option });
@@ -29,7 +17,7 @@ export default class PlainArrayDemo extends Component {
         <div className="demo">
           <h3>Plain Array</h3>
           <PowerSelect
-            options={this.frameworks}
+            options={frameworks}
             selected={this.state.selectedFramework}
             onChange={this.handleChange}
           />

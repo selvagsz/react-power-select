@@ -23,7 +23,6 @@ export default class AfterOptionsDemo extends Component {
           options={countries}
           selected={this.state.selectedCountry}
           optionLabelPath="name"
-          searchIndices={['name', 'code']}
           onChange={this.handleChange}
           afterOptionsComponent={({ select }) =>
             <a

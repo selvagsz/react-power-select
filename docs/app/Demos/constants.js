@@ -55,3 +55,16 @@ export const countries = [
     flag: 'https://restcountries.eu/data/usa.svg',
   },
 ];
+
+export const frameworks = [
+  'React',
+  'Ember',
+  'Angular',
+  'Vue',
+  'Preact',
+  'Meteor',
+  'Backbone',
+  'Knockout',
+  'SproutCore',
+  'Spine',
+];

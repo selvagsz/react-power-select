@@ -12,11 +12,61 @@ html {
 body {
   font-family: 'Source Sans Pro', sans-serif;
   padding-bottom: 100px;
+
+  &::before {
+    content: '';
+    width: 25%;
+    height: 190px;
+    display: block;
+    position: absolute;
+    background: linear-gradient(39deg,#f761e4,#ffd9bb);
+    z-index: 0;
+    transform: rotate(-45deg);
+    margin-top: 3%;
+    margin-left: -14%;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    background: linear-gradient(90deg,#c76eff,rgb(248, 162, 180));
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 278px;
+  }
+}
+
+html, body {
+  background-color: #fafafa;
+}
+
+.tether-element {
+  z-index: 3;
+}
+
+header {
+  font-size: 45px;
+  color: #fff;
+  padding: 75px 10px;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  font-weight: 800;
+  letter-spacing: 4px;
 }
 
 .container {
-  max-width: 375px;
-  margin: 100px auto;
+  max-width: 875px;
+  margin: auto;
+  z-index: 1;
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 0 0 20px -9px #333;
+  background-color: #fff;
 }
 
 .demo {
@@ -28,9 +78,22 @@ body {
 }
 
 section {
-  background-color: #f3f3f3;
-  padding: 30px;
-  margin-bottom: 50px;
+  padding: 30px 30px 0;
+
+  > h1 {
+    position: relative;
+    margin-bottom: 35px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 40px;
+      top: 100%;
+      border: 2px solid #cb72fa;
+      margin-top: 8px;
+    }
+  }
 }
 
 .powerselect:focus {
@@ -110,5 +173,39 @@ section {
   } 40% {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
+  }
+}
+
+.Section {
+  margin-bottom: 45px;
+  padding-bottom: 45px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.Section__Demo {
+  width: 45%;
+  margin-right: 5%;
+  float: left;
+}
+
+.styled-background {
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+@media (max-width: 875px) {
+  .container {
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    font-size: 30px;
+    letter-spacing: 2px;
+  }
+
+  .Section__Demo {
+    width: 100%;
+    float: none;
   }
 }
