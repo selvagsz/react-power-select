@@ -317,11 +317,7 @@ export default class Select extends Component {
               onRef(powerselect);
             }
           }}
-          className={`PowerSelect ${className} ${disabled
-            ? 'PowerSelect--disabled'
-            : ''} ${isOpen ? 'PowerSelect--open' : ''} ${focused
-            ? 'PowerSelect--focused'
-            : ''} ${searchTerm ? 'PowerSelect__WithSearch' : ''}`}
+          className={`PowerSelect ${className} ${disabled ? 'PowerSelect--disabled' : ''} ${isOpen ? 'PowerSelect--open' : ''} ${focused ? 'PowerSelect--focused' : ''} ${searchTerm ? 'PowerSelect__WithSearch' : ''}`}
           tabIndex={tabIndex}
           onFocus={() => {
             let triggerInput = this.powerselect.querySelector('input');

@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { PowerSelectMultiple } from 'src';
 import { countries } from '../constants';
 
-const CustomOptionComponnet = ({ option }) =>
+const CustomOptionComponnet = ({ option }) => (
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </div>;
+  </div>
+);
 
 export default class ArrayOfObjectsDemo extends Component {
   state = {

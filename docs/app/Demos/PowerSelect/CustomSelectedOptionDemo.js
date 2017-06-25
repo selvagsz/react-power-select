@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { countries } from '../constants';
 
-const CustomOptionComponent = ({ option }) =>
+const CustomOptionComponent = ({ option }) => (
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </div>;
+  </div>
+);
 
-const CustomSelectedOptionComponent = ({ option }) =>
+const CustomSelectedOptionComponent = ({ option }) => (
   <b style={{ color: 'orange' }}>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </b>;
+  </b>
+);
 
 export default class CustomSelectedOptionDemo extends Component {
   state = {

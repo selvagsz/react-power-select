@@ -12,8 +12,10 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
-import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
+import MultiSelectArrayOfObjects
+  from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption
+  from './PowerSelectMultiple/CustomSelectedOption';
 
 import Snippet from './Snippet';
 

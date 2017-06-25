@@ -80,13 +80,14 @@ export default class MultiSelect extends Component {
     return (
       <Select
         className={`${className} PowerSelectMultiple`}
-        onRef={powerselect => (this.powerselect = powerselect)}
-        selectTriggerComponent={props =>
+        onRef={powerselect => this.powerselect = powerselect}
+        selectTriggerComponent={props => (
           <MultiSelectTrigger
             {...props}
             showOptionClose={showOptionClose}
             onOptionCloseClick={this.removeOption}
-          />}
+          />
+        )}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
         closeOnOptionClick={false}
