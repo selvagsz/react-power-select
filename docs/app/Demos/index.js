@@ -12,17 +12,29 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
-import MultiSelectArrayOfObjects
-  from './PowerSelectMultiple/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption
-  from './PowerSelectMultiple/CustomSelectedOption';
+import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
 
 import Snippet from './Snippet';
 
 export default () => {
   return (
     <div>
-      <header className="header">React Power Select</header>
+      <header className="header">
+        <div style={{display: 'inline-block'}}>
+          React Power Select
+          <div className="text-right">
+            <a
+              className="github-button"
+              href="https://github.com/selvagsz/react-power-select"
+              data-show-count="true"
+              aria-label="Star selvagsz/react-power-select on GitHub"
+            >
+              Star
+            </a>
+          </div>
+        </div>
+      </header>
       <div className="container">
 
         <section>
