@@ -12,8 +12,10 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
-import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
+import MultiSelectArrayOfObjects
+  from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption
+  from './PowerSelectMultiple/CustomSelectedOption';
 
 import Snippet from './Snippet';
 
@@ -21,7 +23,7 @@ export default () => {
   return (
     <div>
       <header className="header">
-        <div style={{display: 'inline-block'}}>
+        <div style={{ display: 'inline-block' }}>
           React Power Select
           <div className="text-right">
             <a

@@ -43,7 +43,7 @@ export default class MultiSelect extends Component {
     );
   }
 
-  handleBackspacePress = (event, select) => {
+  handleBackspacePress = (event, { select }) => {
     let { selected, onChange } = this.props;
     let value = event.target.value;
 

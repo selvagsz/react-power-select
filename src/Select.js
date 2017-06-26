@@ -98,7 +98,7 @@ export default class Select extends Component {
       isOpen: true,
     });
 
-    this.props.onOpen();
+    this.props.onOpen({ select: this.getPublicApi() });
   };
 
   close = () => {
@@ -108,7 +108,7 @@ export default class Select extends Component {
       filteredOptions: null,
       searchTerm: null,
     });
-    this.props.onClose();
+    this.props.onClose({ select: this.getPublicApi() });
   };
 
   toggle = event => {
@@ -167,7 +167,7 @@ export default class Select extends Component {
   handleSearchInputChange = event => {
     let value = event.target.value;
     this.search(value, this.open);
-    this.props.onSearchInputChange(event);
+    this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
   handleDownArrow(event, index) {
@@ -191,7 +191,7 @@ export default class Select extends Component {
       this.close();
     }
     if (highlightedIndex === -1) {
-      this.props.onEnter(event, this.getPublicApi());
+      this.props.onEnter(event, { select: this.getPublicApi() });
     }
   }
 
@@ -204,7 +204,7 @@ export default class Select extends Component {
   }
 
   handleBackspacePress(event, highlightedIndex) {
-    this.props.onBackspacePress(event, this.getPublicApi());
+    this.props.onBackspacePress(event, { select: this.getPublicApi() });
   }
 
   handleKeyDown = (...args) => {
@@ -251,17 +251,17 @@ export default class Select extends Component {
 
   handleFocus = event => {
     this.setFocusedState(true);
-    this.props.onFocus(event);
+    this.props.onFocus(event, { select: this.getPublicApi() });
   };
 
   handleBlur = event => {
     this.setFocusedState(false);
-    this.props.onBlur(event);
+    this.props.onBlur(event, { select: this.getPublicApi() });
   };
 
   handleClick = event => {
     this.toggle(event);
-    this.props.onClick(event);
+    this.props.onClick(event, { select: this.getPublicApi() });
   };
 
   handleOptionClick = option => {
