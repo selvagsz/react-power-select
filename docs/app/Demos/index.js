@@ -19,8 +19,6 @@ import MultiSelectCustomSelectedOption
 
 import Snippet from './Snippet';
 
-debugger;
-
 export default () => {
   return (
     <div>
@@ -83,20 +81,8 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[4, 10], [29, 29]]}
+                highlightLines={[[4, 10], [30, 30]]}
                 snippetName="PowerSelectCustomOptionDemo"
-              />
-            </div>
-          </div>
-
-          <div className="Section">
-            <div className="Section__Demo">
-              <HighlightSearchDemo />
-            </div>
-            <div className="Section__Code">
-              <Snippet
-                highlightLines={[[4, 32], [51, 51]]}
-                snippetName="PowerSelectHighlightSearch"
               />
             </div>
           </div>
@@ -107,7 +93,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[4, 15], [34, 34]]}
+                highlightLines={[[11, 17], [36, 36]]}
                 snippetName="PowerSelectCustomSelectedOptionDemo"
               />
             </div>
@@ -119,7 +105,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[13, 16], [27, 36]]}
+                highlightLines={[[13, 16], [27, 37]]}
                 snippetName="PowerSelectAfterOptionsDemo"
               />
             </div>
@@ -131,7 +117,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[45, 61]]}
+                highlightLines={[[46, 61]]}
                 snippetName="PowerSelectBeforeOptionsDemo"
               />
             </div>
@@ -158,7 +144,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[27, 27]]}
+                highlightLines={[[28, 28]]}
                 snippetName="TypeAheadArrayOfObjectsDemo"
               />
             </div>
@@ -185,7 +171,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[27, 27]]}
+                highlightLines={[[28, 28]]}
                 snippetName="PowerSelectMultipleArrayOfObjectsDemo"
               />
             </div>
@@ -197,8 +183,23 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[10, 31], [51, 51]]}
+                highlightLines={[[12, 33], [53, 53]]}
                 snippetName="PowerSelectMultipleCustomSelectedOption"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h1>More Receipes</h1>
+          <div className="Section">
+            <div className="Section__Demo">
+              <HighlightSearchDemo />
+            </div>
+            <div className="Section__Code">
+              <Snippet
+                highlightLines={[[4, 32], [51, 51]]}
+                snippetName="PowerSelectHighlightSearch"
               />
             </div>
           </div>

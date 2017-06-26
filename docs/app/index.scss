@@ -21,9 +21,9 @@ body {
     position: absolute;
     background: linear-gradient(39deg,#f761e4,#ffd9bb);
     z-index: 0;
-    transform: rotate(-45deg);
+    transform: rotate(-60deg);
     margin-top: 3%;
-    margin-left: -14%;
+    margin-left: -20%;
     z-index: 1;
   }
 
@@ -67,6 +67,7 @@ header {
   border-radius: 4px;
   box-shadow: 0 0 20px -9px #333;
   background-color: #fff;
+  padding: 30px;
 }
 
 .demo {
@@ -78,8 +79,6 @@ header {
 }
 
 section {
-  padding: 30px 30px 0;
-
   > h1 {
     position: relative;
     margin-bottom: 35px;
@@ -177,8 +176,8 @@ section {
 }
 
 .Section {
-  margin-bottom: 45px;
-  padding-bottom: 45px;
+  margin-bottom: 60px;
+  padding-bottom: 60px;
   border-bottom: 1px solid #eaeaea;
 }
 
