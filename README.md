@@ -11,16 +11,22 @@ A highly composable &amp; reusable select components
 npm i react-power-select --save
 ```
 
+Import the CSS in your bundle
+
+```js
+import 'react-power-select/dist/react-power-select.css'
+```
+
 # Usage
 
 ```js
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { PowerSelect } from 'react-power-select'
 
 export default class Demo extends Component {
   state = {};
 
-  handleChange({ option }) {
+  handleChange = ({ option }) => {
     this.setState({
       selectedOption: option
     })
