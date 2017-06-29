@@ -10,7 +10,12 @@
     "build:docs": "webpack --config docs/app/webpack.config.js",
     "build": "npm run clean && npm run build:commonjs && webpack && rm -rf dist/css.js",
     "prepublish": "npm run build",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "pretty-lint": "prettier --single-quote --trailing-comma es5 --write && git add"
+  },
+  "lint-staged": {
+    "src/**/*.js": "pretty-lint",
+    "docs/app/Demos/**/*.js": "pretty-lint"
   },
   "repository": {
     "type": "git",
@@ -34,12 +39,6 @@
     "dist"
   ],
   "homepage": "https://github.com/selvagsz/react-power-select#readme",
-  "lint-staged": {
-    "*.js": [
-      "prettier --single-quote --trailing-comma es5 --write docs/!(app).js 'src/**/*.js' 'docs/app/Demos/**/*.js'",
-      "git add"
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",

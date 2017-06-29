@@ -13,24 +13,10 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   padding-bottom: 100px;
 
-  &::before {
-    content: '';
-    width: 25%;
-    height: 190px;
-    display: block;
-    position: absolute;
-    background: linear-gradient(39deg,#f761e4,#ffd9bb);
-    z-index: 0;
-    transform: rotate(-60deg);
-    margin-top: 3%;
-    margin-left: -20%;
-    z-index: 1;
-  }
-
   &::after {
     content: '';
     display: block;
-    background: linear-gradient(90deg,#c76eff,rgb(248, 162, 180));
+    background: linear-gradient(90deg,#D5247B,#F09F4D);
     width: 100%;
     position: absolute;
     top: 0;
@@ -48,16 +34,57 @@ html, body {
   z-index: 3;
 }
 
+.github-button {
+  visibility: hidden;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.social {
+  display: block;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  color: #aaa;
+  font-size: 24px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    + a {
+      margin-left: 10px;
+    }
+  }
+
+  .icon {
+    cursor: pointer;
+
+    &:hover {
+      color: #666;
+    }
+  }
+
+}
+
 header {
   font-size: 45px;
   color: #fff;
-  padding: 80px 10px 40px;
+  padding: 80px 10px 25px;
   text-align: center;
   z-index: 1;
   position: relative;
   font-weight: 800;
   letter-spacing: 4px;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .container {
