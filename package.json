@@ -69,6 +69,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "react-tether": "^0.5.7"
   }
 }

@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
