@@ -80,9 +80,9 @@ export default class DropdownMenu extends Component {
           renderComponent(beforeOptionsComponent, { select })}
         <div
           className="PowerSelect__Options"
-          ref={optionsList => this.optionsList = optionsList}
+          ref={optionsList => (this.optionsList = optionsList)}
         >
-          {options.map((option, idx) => (
+          {options.map((option, idx) =>
             <OptionWrapper
               key={idx}
               option={option}
@@ -94,7 +94,7 @@ export default class DropdownMenu extends Component {
                 onOptionClick(idx, option);
               }}
             />
-          ))}
+          )}
         </div>
         {afterOptionsComponent &&
           renderComponent(afterOptionsComponent, { select })}

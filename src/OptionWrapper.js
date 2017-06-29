@@ -1,3 +1,4 @@
+import React from 'react';
 import Option from './Option';
 
 export default ({
@@ -7,9 +8,11 @@ export default ({
   isHighlighted,
   onOptionClick,
   select,
-}) => (
+}) =>
   <div
-    className={`PowerSelect__Option ${isHighlighted ? 'PowerSelect__Option--highlighted' : ''}`}
+    className={`PowerSelect__Option ${isHighlighted
+      ? 'PowerSelect__Option--highlighted'
+      : ''}`}
     onClick={onOptionClick}
   >
     <Option
@@ -18,5 +21,4 @@ export default ({
       optionComponent={optionComponent}
       select={select}
     />
-  </div>
-);
+  </div>;

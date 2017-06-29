@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Select from '../Select';
 import SearchInput from './SearchInput';
 

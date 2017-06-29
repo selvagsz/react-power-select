@@ -10,12 +10,17 @@
     "build:docs": "webpack --config docs/app/webpack.config.js",
     "build": "npm run clean && npm run build:commonjs && webpack && rm -rf dist/css.js",
     "prepublish": "npm run build",
-    "precommit": "lint-staged",
-    "pretty-lint": "prettier --single-quote --trailing-comma es5 --write && git add"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/**/*.js": "pretty-lint",
-    "docs/app/Demos/**/*.js": "pretty-lint"
+    "src/**/*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ],
+    "docs/app/Demos/**/*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
