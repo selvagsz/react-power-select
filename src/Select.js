@@ -171,10 +171,32 @@ export default class Select extends Component {
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
+  validateAndHighlightOption({
+    options = [],
+    event,
+    highlightedIndex,
+    recursiveFn,
+  }) {
+    let isValidOptionAvailable = !!options.find(option => !option.disabled);
+    if (isValidOptionAvailable) {
+      let highlightedOption = options[highlightedIndex];
+      if (highlightedOption.disabled) {
+        return recursiveFn.call(this, event, highlightedIndex);
+      }
+      this.highlightOption(highlightedIndex);
+    }
+  }
+
   handleDownArrow(event, index) {
     let options = this.state.filteredOptions || this.props.options;
     let highlightedIndex = index < options.length - 1 ? ++index : 0;
-    this.highlightOption(highlightedIndex);
+
+    this.validateAndHighlightOption({
+      options,
+      event,
+      highlightedIndex,
+      recursiveFn: this.handleDownArrow,
+    });
   }
 
   handleUpArrow(event, index) {
@@ -182,7 +204,13 @@ export default class Select extends Component {
     let highlightedIndex = index > 0 && index <= options.length
       ? --index
       : options.length - 1;
-    this.highlightOption(highlightedIndex);
+
+    this.validateAndHighlightOption({
+      options,
+      event,
+      highlightedIndex,
+      recursiveFn: this.handleUpArrow,
+    });
   }
 
   handleEnterPress(event, highlightedIndex) {

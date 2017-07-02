@@ -62,9 +62,14 @@
   cursor: pointer;
   padding: 8px 12px;
 
-  &:hover {
+  &:not(.PowerSelect__Option--disabled):hover {
     background-color: #fbfbfb;
   }
+}
+
+.PowerSelect__Option--disabled {
+  color: #999;
+  cursor: not-allowed;
 }
 
 .PowerSelect__Option--highlighted {
