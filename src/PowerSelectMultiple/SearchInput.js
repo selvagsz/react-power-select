@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class MultiSelectSearchInput extends Component {
+export default class SearchInput extends Component {
   state = {
     length: 0,
   };
@@ -26,6 +26,6 @@ export default class MultiSelectSearchInput extends Component {
   }
 }
 
-MultiSelectSearchInput.defaultProps = {
+SearchInput.defaultProps = {
   onChange: () => {},
 };

@@ -12,10 +12,8 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
-import MultiSelectArrayOfObjects
-  from './PowerSelectMultiple/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption
-  from './PowerSelectMultiple/CustomSelectedOption';
+import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
 
 import Snippet from './Snippet';
 
@@ -38,7 +36,6 @@ export default () => {
         </div>
       </header>
       <div className="container">
-
         <section>
           <h1>Power Select</h1>
           <div className="Section">

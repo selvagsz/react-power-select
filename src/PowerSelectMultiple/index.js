@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from '../Select';
 import MultiSelectTrigger from './SelectTrigger';
 
-export default class MultiSelect extends Component {
+export default class PowerSelectMultiple extends Component {
   state = {};
 
   componentWillMount() {
@@ -97,6 +97,7 @@ export default class MultiSelect extends Component {
   }
 }
 
-MultiSelect.defaultProps = {
+PowerSelectMultiple.displayName = 'PowerSelectMultiple';
+PowerSelectMultiple.defaultProps = {
   showOptionClose: true,
 };

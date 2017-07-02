@@ -377,6 +377,7 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
+Select.displayName = 'Select';
 Select.defaultProps = {
   options: [],
   disabled: false,

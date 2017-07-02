@@ -1,26 +1,32 @@
-import React, { isValidElement, cloneElement } from 'react';
+import React, { Component } from 'react';
+import RenderOption from './RenderOption';
 
-export default props => {
-  let { option, optionLabelPath, optionComponent, select } = props;
-  let OptionComponent = optionComponent;
+export default class Option extends Component {
+  render() {
+    let {
+      option,
+      select,
+      optionLabelPath,
+      optionComponent,
+      isHighlighted,
+      onOptionClick,
+      children,
+    } = this.props;
 
-  if (isValidElement(OptionComponent)) {
-    return cloneElement(OptionComponent, props);
+    return (
+      <div
+        className={`PowerSelect__Option ${isHighlighted
+          ? 'PowerSelect__Option--highlighted'
+          : ''}`}
+        onClick={onOptionClick}
+      >
+        <RenderOption
+          option={option}
+          optionLabelPath={optionLabelPath}
+          optionComponent={optionComponent}
+          select={select}
+        />
+      </div>
+    );
   }
-
-  if (OptionComponent) {
-    return <OptionComponent {...props} />;
-  }
-
-  if (typeof option === 'object') {
-    if (optionLabelPath) {
-      return <span>{option[optionLabelPath]}</span>;
-    }
-  }
-
-  if (typeof option === 'string') {
-    return <span>{option}</span>;
-  }
-
-  return null;
-};
+}
