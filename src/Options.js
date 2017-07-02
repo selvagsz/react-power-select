@@ -68,7 +68,6 @@ export default class Options extends Component {
               optionComponent={optionComponent}
               isHighlighted={highlightedIndex === index}
               onOptionClick={() => {
-                debugger;
                 onOptionClick(index, option);
               }}
             />

@@ -265,8 +265,8 @@ export default class Select extends Component {
     this.props.onClick(event, { select: this.getPublicApi() });
   };
 
-  handleOptionClick = option => {
-    this.selectOption(option);
+  handleOptionClick = (highlightedIndex, option) => {
+    this.selectOption(highlightedIndex, option);
     this.focusField();
 
     if (this.props.closeOnOptionClick) {
