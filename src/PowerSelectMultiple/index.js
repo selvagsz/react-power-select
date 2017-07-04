@@ -24,9 +24,8 @@ export default class PowerSelectMultiple extends Component {
     });
 
     if (select.searchTerm) {
-      this.filterOptions(this.props.options, options, () => {
-        select.search('');
-      });
+      select.search('');
+      select.focus();
     }
   };
 
@@ -35,12 +34,7 @@ export default class PowerSelectMultiple extends Component {
       option => selected.indexOf(option) === -1
     );
 
-    this.setState(
-      {
-        filteredOptions,
-      },
-      callback
-    );
+    this.setState({ filteredOptions }, callback);
   }
 
   handleBackspacePress = (event, { select }) => {
@@ -54,7 +48,7 @@ export default class PowerSelectMultiple extends Component {
         select,
       });
       select.open();
-      this.focusSearchInput();
+      select.focus();
     }
   };
 
@@ -65,14 +59,8 @@ export default class PowerSelectMultiple extends Component {
       options,
       select,
     });
-    this.focusSearchInput();
+    select.focus();
   };
-
-  focusSearchInput() {
-    setTimeout(() => {
-      this.powerselect.querySelector('.PowerSelect__TriggerInput').focus();
-    }, 0);
-  }
 
   render() {
     let { className, options, onChange, showOptionClose, ...rest } = this.props;

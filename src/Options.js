@@ -28,11 +28,14 @@ export default class Options extends Component {
       let $option = this.optionsList.querySelector(
         `[data-option-index="${optionIndex}"]`
       );
-      let $optionOffsetHeight = $option.offsetHeight;
-      let $optionOffsetTop = $option.offsetTop;
+      let delta = 0;
 
-      let delta =
-        $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
+      if ($option) {
+        let $optionOffsetHeight = $option.offsetHeight;
+        let $optionOffsetTop = $option.offsetTop;
+        delta =
+          $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
+      }
 
       if (delta > 0) {
         this.optionsList.scrollTop = delta;

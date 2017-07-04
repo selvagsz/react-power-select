@@ -129,9 +129,11 @@ export default class Select extends Component {
     this.setState({ focused });
   }
 
-  focusField() {
-    this.powerselect.focus();
-  }
+  focusField = () => {
+    setTimeout(() => {
+      this.powerselect.focus();
+    });
+  };
 
   search = (searchTerm, callback) => {
     let {
@@ -139,14 +141,17 @@ export default class Select extends Component {
       optionLabelPath,
       searchIndices = optionLabelPath,
     } = this.props;
+    let filteredOptions = null;
 
-    let filteredOptions = options.filter(option => {
-      return this.props.matcher({
-        option,
-        searchTerm,
-        searchIndices,
+    if (searchTerm) {
+      filteredOptions = options.filter(option => {
+        return this.props.matcher({
+          option,
+          searchTerm,
+          searchIndices,
+        });
       });
-    });
+    }
 
     if (!searchTerm || !filteredOptions.length) {
       let highlightedIndex = -1;
@@ -314,6 +319,7 @@ export default class Select extends Component {
       close: this.close,
       toggle: this.toggle,
       search: this.search,
+      focus: this.focusField,
       isOpen,
       searchTerm,
     };
