@@ -19,7 +19,6 @@ const actions = {
   40: 'handleDownArrow',
   13: 'handleEnterPress',
   9: 'handleTabPress',
-  8: 'handleBackspacePress',
 };
 
 const noop = () => {};
@@ -260,6 +259,8 @@ export default class Select extends Component {
 
       action.apply(this, args);
     }
+
+    this.props.onKeyDown(event, { select: this.getPublicApi() });
   };
 
   handleEscapePress(event) {
@@ -431,11 +432,11 @@ Select.defaultProps = {
   onFocus: noop,
   onBlur: noop,
   onClick: noop,
+  onKeyDown: noop,
   onEnter: noop,
   onOpen: noop,
   onClose: noop,
 
   closeOnOptionClick: true,
   onSearchInputChange: noop,
-  onBackspacePress: noop,
 };

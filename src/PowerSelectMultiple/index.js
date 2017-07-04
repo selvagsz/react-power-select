@@ -37,18 +37,20 @@ export default class PowerSelectMultiple extends Component {
     this.setState({ filteredOptions }, callback);
   }
 
-  handleBackspacePress = (event, { select }) => {
-    let { selected, onChange } = this.props;
-    let value = event.target.value;
+  handleKeyDown = (event, { select }) => {
+    if (event.which === 8) {
+      let { selected, onChange } = this.props;
+      let value = event.target.value;
 
-    if (value === '' && selected.length) {
-      let options = selected.slice(0, selected.length - 1);
-      onChange({
-        options,
-        select,
-      });
-      select.open();
-      select.focus();
+      if (value === '' && selected.length) {
+        let options = selected.slice(0, selected.length - 1);
+        onChange({
+          options,
+          select,
+        });
+        select.open();
+        select.focus();
+      }
     }
   };
 
@@ -78,7 +80,7 @@ export default class PowerSelectMultiple extends Component {
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
         closeOnOptionClick={false}
-        onBackspacePress={this.handleBackspacePress}
+        onKeyDown={this.handleKeyDown}
         {...rest}
       />
     );
