@@ -20,7 +20,10 @@ export default class Options extends Component {
   }
 
   scrollTo({ options, highlightedOption }) {
-    if (highlightedOption !== this.props.highlightedOption) {
+    if (
+      highlightedOption &&
+      highlightedOption !== this.props.highlightedOption
+    ) {
       let optionIndex = getOptionIndex(options, highlightedOption);
       let $option = this.optionsList.querySelector(
         `[data-option-index="${optionIndex}"]`
@@ -45,7 +48,7 @@ export default class Options extends Component {
       select,
       optionLabelPath,
       optionComponent,
-      highlightedIndex,
+      highlightedOption,
       onOptionClick,
     } = this.props;
 
@@ -63,7 +66,7 @@ export default class Options extends Component {
               select={select}
               optionLabelPath={optionLabelPath}
               optionComponent={optionComponent}
-              isHighlighted={highlightedIndex === index}
+              isHighlighted={option === highlightedOption}
               onOptionClick={() => {
                 onOptionClick(index, option);
               }}
