@@ -17,6 +17,7 @@ export default class DropdownMenu extends Component {
       select,
       handleKeyDown,
       highlightedIndex,
+      highlightedOption,
       minWidth,
       beforeOptionsComponent,
       afterOptionsComponent,
@@ -37,6 +38,7 @@ export default class DropdownMenu extends Component {
         <Options
           select={select}
           highlightedIndex={highlightedIndex}
+          highlightedOption={highlightedOption}
           {...otherProps}
         />
 

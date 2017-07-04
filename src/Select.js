@@ -63,8 +63,12 @@ export default class Select extends Component {
   }
 
   highlightOption(highlightedIndex) {
+    let options = this.state.filteredOptions || this.props.options;
+    let highlightedOption = options[highlightedIndex];
+
     this.setState({
       highlightedIndex,
+      highlightedOption,
     });
   }
 
@@ -335,7 +339,7 @@ export default class Select extends Component {
     let filteredOptions = this.state.filteredOptions || options;
     let SelectTrigger = this.props.selectTriggerComponent;
     let selectApi = this.getPublicApi();
-    let { highlightedIndex, focused } = this.state;
+    let { highlightedIndex, highlightedOption, focused } = this.state;
 
     return (
       <Dropdown>
@@ -386,6 +390,7 @@ export default class Select extends Component {
             onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
             highlightedIndex={highlightedIndex}
+            highlightedOption={highlightedOption}
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}

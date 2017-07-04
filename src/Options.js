@@ -1,39 +1,35 @@
 import React, { Component } from 'react';
 import Option from './Option';
+import { getOptionIndex } from './utils';
 
 export default class Options extends Component {
-  componentWillReceiveProps(nextProps) {
-    this.scrollTo(nextProps.highlightedIndex);
+  componentWillReceiveProps({ options, highlightedOption }) {
+    this.scrollTo({ options, highlightedOption });
   }
 
   componentDidMount() {
+    let { options, highlightedOption } = this.props;
     this.optionsListOffsetHeight = this.optionsList.offsetHeight;
-    this.stashOptionOffsetHeight();
-    this.scrollTo(this.props.highlightedIndex);
+    this.scrollTo({ options, highlightedOption });
   }
 
   componentDidUpdate() {
-    if (!this.optionOffsetHeight) {
-      this.stashOptionOffsetHeight();
-    }
-
     if (!this.optionsListOffsetHeight) {
       this.optionsListOffsetHeight = this.optionsList.offsetHeight;
     }
   }
 
-  stashOptionOffsetHeight() {
-    let option = document.querySelector('.PowerSelect__Option');
-    this.optionOffsetHeight = (option && option.offsetHeight) || 0;
-  }
+  scrollTo({ options, highlightedOption }) {
+    if (highlightedOption !== this.props.highlightedOption) {
+      let optionIndex = getOptionIndex(options, highlightedOption);
+      let $option = this.optionsList.querySelector(
+        `[data-option-index="${optionIndex}"]`
+      );
+      let $optionOffsetHeight = $option.offsetHeight;
+      let $optionOffsetTop = $option.offsetTop;
 
-  scrollTo(newHighlightedIndex) {
-    if (newHighlightedIndex !== this.props.highlightedIndex) {
-      let optionOffsetHeight = this.optionOffsetHeight;
       let delta =
-        optionOffsetHeight * newHighlightedIndex +
-        optionOffsetHeight -
-        this.optionsListOffsetHeight;
+        $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
 
       if (delta > 0) {
         this.optionsList.scrollTop = delta;
@@ -62,6 +58,7 @@ export default class Options extends Component {
           return (
             <Option
               key={index}
+              optionIndex={index}
               option={option}
               select={select}
               optionLabelPath={optionLabelPath}

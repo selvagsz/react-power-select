@@ -6,6 +6,7 @@ export default class Option extends Component {
     let {
       option,
       select,
+      optionIndex,
       optionLabelPath,
       optionComponent,
       isHighlighted,
@@ -19,6 +20,7 @@ export default class Option extends Component {
         className={`PowerSelect__Option ${isDisabled
           ? 'PowerSelect__Option--disabled'
           : ''} ${isHighlighted ? 'PowerSelect__Option--highlighted' : ''}`}
+        data-option-index={optionIndex}
         onClick={() => {
           if (isDisabled) {
             return false;
