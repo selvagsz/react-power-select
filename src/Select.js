@@ -6,19 +6,18 @@ import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
 import { matcher } from './utils';
 
-const KEYCODES = {
+const KEY_CODES = {
   UP_ARROW: 38,
   DOWN_ARROW: 40,
   ENTER: 13,
   TAB: 9,
-  BACK_SPACE: 8,
 };
 
 const actions = {
-  38: 'handleUpArrow',
-  40: 'handleDownArrow',
-  13: 'handleEnterPress',
-  9: 'handleTabPress',
+  [KEY_CODES.UP_ARROW]: 'handleUpArrow',
+  [KEY_CODES.DOWN_ARROW]: 'handleDownArrow',
+  [KEY_CODES.ENTER]: 'handleEnterPress',
+  [KEY_CODES.TAB]: 'handleTabPress',
 };
 
 const noop = () => {};
@@ -240,17 +239,13 @@ export default class Select extends Component {
     }
   }
 
-  handleBackspacePress(event, highlightedIndex) {
-    this.props.onBackspacePress(event, { select: this.getPublicApi() });
-  }
-
   handleKeyDown = (...args) => {
     let [event] = args;
     let keyCode = event.which;
     let action = this[actions[keyCode]];
     if (action) {
       if (
-        (keyCode === KEYCODES.UP_ARROW || keyCode === KEYCODES.DOWN_ARROW) &&
+        (keyCode === KEY_CODES.UP_ARROW || keyCode === KEY_CODES.DOWN_ARROW) &&
         !this.state.isOpen
       ) {
         this.open();
@@ -259,7 +254,6 @@ export default class Select extends Component {
 
       action.apply(this, args);
     }
-
     this.props.onKeyDown(event, { select: this.getPublicApi() });
   };
 
