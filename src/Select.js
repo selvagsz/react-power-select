@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
-import { matcher } from './utils';
+import { matcher, flattenOptions } from './utils';
 
 const KEY_CODES = {
   UP_ARROW: 38,
@@ -24,7 +24,7 @@ const noop = () => {};
 
 export default class Select extends Component {
   state = {
-    highlightedIndex: null,
+    highlightedOption: null,
     isOpen: false,
     focused: false,
     filteredOptions: null,
@@ -35,6 +35,14 @@ export default class Select extends Component {
     handleEscapePress: ::this.handleEscapePress,
     handleDocumentClick: ::this.handleDocumentClick,
   };
+
+  componentWillMount() {
+    this.flattenOptions(this.props.options);
+  }
+
+  componentWillReceiveProps({ options }) {
+    this.flattenOptions(options);
+  }
 
   componentDidMount() {
     document.addEventListener(
@@ -60,26 +68,29 @@ export default class Select extends Component {
     );
   }
 
-  highlightOption(highlightedIndex) {
-    let options = this.state.filteredOptions || this.props.options;
-    let highlightedOption = options[highlightedIndex];
-
+  flattenOptions(options) {
     this.setState({
-      highlightedIndex,
+      _flattenedOptions: flattenOptions(options),
+    });
+  }
+
+  getVisibleOptions() {
+    return this.state.filteredOptions || this.state._flattenedOptions;
+  }
+
+  setHighlightedOption(highlightedOption) {
+    this.setState({
       highlightedOption,
     });
   }
 
-  selectOption = (highlightedIndex, option) => {
-    let options = this.state.filteredOptions || this.props.options;
-    let selectedOption = option || options[highlightedIndex];
-    this.highlightOption(highlightedIndex);
-    if (selectedOption) {
-      this.props.onChange({
-        option: selectedOption,
-        select: this.getPublicApi(),
-      });
-    }
+  selectOption = option => {
+    this.setHighlightedOption(option);
+    this.props.onChange({
+      select: this.getPublicApi(),
+      option,
+    });
+
     this.setState({
       searchTerm: null,
     });
@@ -90,22 +101,18 @@ export default class Select extends Component {
       return;
     }
 
-    let highlightedIndex = this.state.highlightedIndex;
     let { options, selected } = this.props;
-    highlightedIndex = highlightedIndex !== null
-      ? highlightedIndex
-      : options.indexOf(selected);
+    let highlightedOption = options.find(option => option === selected);
 
-    this.highlightOption(highlightedIndex);
+    this.setHighlightedOption(highlightedOption);
     this.setState({
       isOpen: true,
     });
-
     this.props.onOpen({ select: this.getPublicApi() });
   };
 
   close = () => {
-    this.highlightOption(null);
+    this.setHighlightedOption(null);
     this.setState({
       isOpen: false,
       filteredOptions: null,
@@ -152,14 +159,13 @@ export default class Select extends Component {
     }
 
     if (!searchTerm || !filteredOptions.length) {
-      let highlightedIndex = -1;
-      this.highlightOption(highlightedIndex);
+      this.setHighlightedOption(null);
     }
 
     if (searchTerm && filteredOptions.length) {
       // let firstOption = filteredOptions[0]
       // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
-      this.highlightOption(0);
+      this.setHighlightedOption(options[0]);
       // }
     }
 
@@ -178,63 +184,52 @@ export default class Select extends Component {
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
-  validateAndHighlightOption({
-    options = [],
-    event,
-    highlightedIndex,
-    recursiveFn,
-  }) {
+  validateAndHighlightOption(highlightedOption, counter) {
+    let options = this.getVisibleOptions();
     let isValidOptionAvailable = !!options.find(option => !option.disabled);
+
     if (isValidOptionAvailable) {
-      let highlightedOption = options[highlightedIndex];
-      if (highlightedOption.disabled) {
-        return recursiveFn.call(this, event, highlightedIndex);
+      let currentIndex = options.indexOf(highlightedOption);
+      let nextIndex = currentIndex + counter;
+      nextIndex = nextIndex === -1
+        ? options.length - 1
+        : nextIndex === options.length ? 0 : nextIndex;
+
+      let newHighlightedOption = options[nextIndex];
+      if (newHighlightedOption && newHighlightedOption.disabled) {
+        return this.validateAndHighlightOption.call(
+          this,
+          newHighlightedOption,
+          counter
+        );
       }
-      this.highlightOption(highlightedIndex);
+      this.setHighlightedOption(newHighlightedOption);
     }
   }
 
-  handleDownArrow(event, index) {
-    let options = this.state.filteredOptions || this.props.options;
-    let highlightedIndex = index < options.length - 1 ? ++index : 0;
-
-    this.validateAndHighlightOption({
-      options,
-      event,
-      highlightedIndex,
-      recursiveFn: this.handleDownArrow,
-    });
+  handleDownArrow(event, highlightedOption) {
+    this.validateAndHighlightOption(highlightedOption, 1);
   }
 
-  handleUpArrow(event, index) {
-    let options = this.state.filteredOptions || this.props.options;
-    let highlightedIndex = index > 0 && index <= options.length
-      ? --index
-      : options.length - 1;
-
-    this.validateAndHighlightOption({
-      options,
-      event,
-      highlightedIndex,
-      recursiveFn: this.handleUpArrow,
-    });
+  handleUpArrow(event, highlightedOption) {
+    this.validateAndHighlightOption(highlightedOption, -1);
   }
 
-  handleEnterPress(event, highlightedIndex) {
+  handleEnterPress(event, highlightedOption) {
     if (this.state.isOpen) {
-      this.selectOption(highlightedIndex);
+      this.selectOption(highlightedOption);
       this.focusField();
       this.close();
     }
-    if (highlightedIndex === -1) {
+    if (!highlightedOption) {
       this.props.onEnter(event, { select: this.getPublicApi() });
     }
   }
 
-  handleTabPress(event, highlightedIndex) {
+  handleTabPress(event, highlightedOption) {
     this.setFocusedState(false);
     if (this.state.isOpen) {
-      this.selectOption(highlightedIndex);
+      this.selectOption(highlightedOption);
       this.close();
     }
   }
@@ -276,7 +271,6 @@ export default class Select extends Component {
       }
 
       if (isOpen) {
-        // this.selectOption(this.state.highlightedIndex)
         this.close();
       }
     }
@@ -297,8 +291,8 @@ export default class Select extends Component {
     this.props.onClick(event, { select: this.getPublicApi() });
   };
 
-  handleOptionClick = (highlightedIndex, option) => {
-    this.selectOption(highlightedIndex, option);
+  handleOptionClick = highlightedOption => {
+    this.selectOption(highlightedOption);
     this.focusField();
 
     if (this.props.closeOnOptionClick) {
@@ -325,7 +319,6 @@ export default class Select extends Component {
       onRef,
       className,
       tabIndex,
-      options,
       selected,
       optionLabelPath,
       optionComponent,
@@ -336,11 +329,10 @@ export default class Select extends Component {
       afterOptionsComponent,
     } = this.props;
 
-    let { isOpen, searchTerm } = this.state;
-    let filteredOptions = this.state.filteredOptions || options;
+    let { isOpen, searchTerm, highlightedOption, focused } = this.state;
     let SelectTrigger = this.props.selectTriggerComponent;
+    let options = this.getVisibleOptions();
     let selectApi = this.getPublicApi();
-    let { highlightedIndex, highlightedOption, focused } = this.state;
 
     return (
       <Dropdown>
@@ -364,7 +356,7 @@ export default class Select extends Component {
             }
           }}
           onKeyDown={event => {
-            this.handleKeyDown(event, highlightedIndex);
+            this.handleKeyDown(event, highlightedOption);
           }}
         >
           <SelectTrigger
@@ -384,13 +376,12 @@ export default class Select extends Component {
         {isOpen &&
           <DropdownMenu
             minWidth={this.powerselect.offsetWidth}
-            options={filteredOptions}
+            options={options}
             selected={selected}
             optionLabelPath={optionLabelPath}
             optionComponent={optionComponent}
             onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
-            highlightedIndex={highlightedIndex}
             highlightedOption={highlightedOption}
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}

@@ -16,7 +16,6 @@ export default class DropdownMenu extends Component {
     let {
       select,
       handleKeyDown,
-      highlightedIndex,
       highlightedOption,
       minWidth,
       beforeOptionsComponent,
@@ -27,7 +26,8 @@ export default class DropdownMenu extends Component {
     return (
       <div
         className="PowerSelect__Menu"
-        onKeyDown={event => handleKeyDown(event, highlightedIndex)}
+        tabIndex="1"
+        onKeyDown={event => handleKeyDown(event, highlightedOption)}
         style={{
           minWidth: `${minWidth}px`,
         }}
@@ -37,7 +37,6 @@ export default class DropdownMenu extends Component {
 
         <Options
           select={select}
-          highlightedIndex={highlightedIndex}
           highlightedOption={highlightedOption}
           {...otherProps}
         />

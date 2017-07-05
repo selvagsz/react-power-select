@@ -71,7 +71,7 @@ export default class Options extends Component {
               optionComponent={optionComponent}
               isHighlighted={option === highlightedOption}
               onOptionClick={() => {
-                onOptionClick(index, option);
+                onOptionClick(option);
               }}
             />
           );

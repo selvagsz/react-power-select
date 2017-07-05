@@ -18,7 +18,7 @@ export default class SearchInput extends Component {
     let { onChange, ...rest } = this.props;
     return (
       <input
-        size={this.state.length + 1}
+        size={this.state.length + 2}
         onChange={this.handleOnChange}
         {...rest}
       />

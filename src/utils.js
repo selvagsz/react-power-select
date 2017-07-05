@@ -47,3 +47,15 @@ export const getOptionIndex = (options, option) => {
 
   return paths.join('.');
 };
+
+export const flattenOptions = options => {
+  return (function traverse(options, flattenedOptions = []) {
+    return options.reduce((prev, curr) => {
+      if (isOptGroup(curr)) {
+        return traverse(curr.options, prev);
+      }
+      prev.push(curr);
+      return prev;
+    }, flattenedOptions);
+  })(options);
+};

@@ -27,6 +27,10 @@ export default class PowerSelectMultiple extends Component {
       select.search('');
       select.focus();
     }
+
+    if (options.length === this.props.options.length) {
+      select.close();
+    }
   };
 
   filterOptions(options, selected, callback) {
