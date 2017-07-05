@@ -237,6 +237,7 @@ export default class Select extends Component {
   }
 
   handleKeyDown = (...args) => {
+    debugger;
     let [event] = args;
     let keyCode = event.which;
     let action = this[actions[keyCode]];
@@ -358,6 +359,7 @@ export default class Select extends Component {
             }
           }}
           onKeyDown={event => {
+            event.preventDefault();
             this.handleKeyDown(event, highlightedOption);
           }}
         >

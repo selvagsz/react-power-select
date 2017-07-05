@@ -27,7 +27,10 @@ export default class DropdownMenu extends Component {
       <div
         className="PowerSelect__Menu"
         tabIndex="1"
-        onKeyDown={event => handleKeyDown(event, highlightedOption)}
+        onKeyDown={event => {
+          event.preventDefault();
+          handleKeyDown(event, highlightedOption);
+        }}
         style={{
           minWidth: `${minWidth}px`,
         }}
