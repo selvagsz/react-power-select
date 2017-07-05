@@ -75,7 +75,11 @@ export default class Select extends Component {
   }
 
   getVisibleOptions() {
-    return this.state.filteredOptions || this.state._flattenedOptions;
+    return this.state.filteredOptions || this.props.options;
+  }
+
+  getFlattenedOptions() {
+    return this.state._flattenedOptions;
   }
 
   setHighlightedOption(highlightedOption) {
@@ -102,8 +106,11 @@ export default class Select extends Component {
     }
 
     if (this.state.highlightedOption === null) {
-      let { options, selected } = this.props;
-      let highlightedOption = options.find(option => option === selected);
+      let { selected } = this.props;
+      let flattenOptions = this.getFlattenedOptions();
+      let highlightedOption = flattenOptions.find(
+        option => option === selected
+      );
       this.setHighlightedOption(highlightedOption);
     }
 
@@ -187,7 +194,7 @@ export default class Select extends Component {
   };
 
   validateAndHighlightOption(highlightedOption, counter) {
-    let options = this.getVisibleOptions();
+    let options = this.getFlattenedOptions();
     let isValidOptionAvailable = !!options.find(option => !option.disabled);
 
     if (isValidOptionAvailable) {

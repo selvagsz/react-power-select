@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Option from './Option';
-import { getOptionIndex } from './utils';
+import { getOptionIndex, isOptGroup } from './utils';
 
 export default class Options extends Component {
   componentWillReceiveProps({ options, highlightedOption }) {
@@ -20,10 +20,7 @@ export default class Options extends Component {
   }
 
   scrollTo({ options, highlightedOption }) {
-    if (
-      highlightedOption &&
-      highlightedOption !== this.props.highlightedOption
-    ) {
+    if (highlightedOption) {
       let optionIndex = getOptionIndex(options, highlightedOption);
       let $option = this.optionsList.querySelector(
         `[data-option-index="${optionIndex}"]`
@@ -45,9 +42,8 @@ export default class Options extends Component {
     }
   }
 
-  render() {
+  renderOptions(options) {
     let {
-      options,
       select,
       optionLabelPath,
       optionComponent,
@@ -55,27 +51,42 @@ export default class Options extends Component {
       onOptionClick,
     } = this.props;
 
+    return options.map((option, index) => {
+      if (isOptGroup(option)) {
+        return (
+          <div className="PowerSelect__OptGroup" key={index}>
+            <div className="PowerSelect__OptGroup__Label">{option.label}</div>
+            {this.renderOptions(option.options)}
+          </div>
+        );
+      }
+
+      return (
+        <Option
+          key={index}
+          optionIndex={getOptionIndex(this.props.options, option)}
+          option={option}
+          select={select}
+          optionLabelPath={optionLabelPath}
+          optionComponent={optionComponent}
+          isHighlighted={option === highlightedOption}
+          onOptionClick={() => {
+            onOptionClick(option);
+          }}
+        />
+      );
+    });
+  }
+
+  render() {
+    let { options } = this.props;
+
     return (
       <div
         className="PowerSelect__Options"
         ref={optionsList => (this.optionsList = optionsList)}
       >
-        {options.map((option, index) => {
-          return (
-            <Option
-              key={index}
-              optionIndex={index}
-              option={option}
-              select={select}
-              optionLabelPath={optionLabelPath}
-              optionComponent={optionComponent}
-              isHighlighted={option === highlightedOption}
-              onOptionClick={() => {
-                onOptionClick(option);
-              }}
-            />
-          );
-        })}
+        {this.renderOptions(options)}
       </div>
     );
   }

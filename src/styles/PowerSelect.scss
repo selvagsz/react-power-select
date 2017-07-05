@@ -59,6 +59,17 @@
   overflow: auto;
 }
 
+.PowerSelect__OptGroup {
+  padding-left: 8px;
+}
+
+.PowerSelect__OptGroup__Label {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #666;
+  padding: 8px 0 4px;
+}
+
 .PowerSelect__Option {
   cursor: pointer;
   padding: 8px 12px;
