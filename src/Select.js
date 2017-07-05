@@ -101,10 +101,12 @@ export default class Select extends Component {
       return;
     }
 
-    let { options, selected } = this.props;
-    let highlightedOption = options.find(option => option === selected);
+    if (this.state.highlightedOption === null) {
+      let { options, selected } = this.props;
+      let highlightedOption = options.find(option => option === selected);
+      this.setHighlightedOption(highlightedOption);
+    }
 
-    this.setHighlightedOption(highlightedOption);
     this.setState({
       isOpen: true,
     });
@@ -159,13 +161,13 @@ export default class Select extends Component {
     }
 
     if (!searchTerm || !filteredOptions.length) {
-      this.setHighlightedOption(null);
+      this.setHighlightedOption({});
     }
 
     if (searchTerm && filteredOptions.length) {
       // let firstOption = filteredOptions[0]
       // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
-      this.setHighlightedOption(options[0]);
+      this.setHighlightedOption(filteredOptions[0]);
       // }
     }
 
