@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import RenderOption from './RenderOption';
 
 export default class Option extends Component {
@@ -17,9 +18,10 @@ export default class Option extends Component {
 
     return (
       <div
-        className={`PowerSelect__Option ${isDisabled
-          ? 'PowerSelect__Option--disabled'
-          : ''} ${isHighlighted ? 'PowerSelect__Option--highlighted' : ''}`}
+        className={cx('PowerSelect__Option', {
+          'PowerSelect__Option--disabled': isDisabled,
+          'PowerSelect__Option--highlighted': isHighlighted,
+        })}
         data-option-index={optionIndex}
         onClick={() => {
           if (isDisabled) {

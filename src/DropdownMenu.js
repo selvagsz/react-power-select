@@ -28,7 +28,9 @@ export default class DropdownMenu extends Component {
         className="PowerSelect__Menu"
         tabIndex="1"
         onKeyDown={event => {
-          event.preventDefault();
+          if (event.target === event.currentTarget) {
+            event.preventDefault();
+          }
           handleKeyDown(event, highlightedOption);
         }}
         style={{

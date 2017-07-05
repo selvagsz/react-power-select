@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
@@ -237,7 +237,6 @@ export default class Select extends Component {
   }
 
   handleKeyDown = (...args) => {
-    debugger;
     let [event] = args;
     let keyCode = event.which;
     let action = this[actions[keyCode]];
@@ -346,11 +345,12 @@ export default class Select extends Component {
               onRef(powerselect);
             }
           }}
-          className={`PowerSelect ${className} ${disabled
-            ? 'PowerSelect--disabled'
-            : ''} ${isOpen ? 'PowerSelect--open' : ''} ${focused
-            ? 'PowerSelect--focused'
-            : ''} ${searchTerm ? 'PowerSelect__WithSearch' : ''}`}
+          className={cx('PowerSelect', className, {
+            'PowerSelect--disabled': disabled,
+            'PowerSelect--open': isOpen,
+            'PowerSelect--focused': focused,
+            PowerSelect__WithSearch: searchTerm,
+          })}
           tabIndex={tabIndex}
           onFocus={() => {
             let triggerInput = this.powerselect.querySelector('input');
@@ -359,7 +359,7 @@ export default class Select extends Component {
             }
           }}
           onKeyDown={event => {
-            event.preventDefault();
+            event.stopPropagation();
             this.handleKeyDown(event, highlightedOption);
           }}
         >
