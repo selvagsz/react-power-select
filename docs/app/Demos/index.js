@@ -14,6 +14,7 @@ import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
 import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
 import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
+import TaggedInputDemo from './PowerSelectMultiple/TaggedInput';
 
 import Snippet from './Snippet';
 
@@ -211,6 +212,18 @@ export default () => {
               <Snippet
                 highlightLines={[[4, 32], [51, 51]]}
                 snippetName="PowerSelectHighlightSearch"
+              />
+            </div>
+          </div>
+
+          <div className="Section">
+            <div className="Section__Demo">
+              <TaggedInputDemo />
+            </div>
+            <div className="Section__Code">
+              <Snippet
+                highlightLines={[[11, 22], [37, 50]]}
+                snippetName="PowerSelectMultipleTaggedInput"
               />
             </div>
           </div>

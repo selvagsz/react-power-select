@@ -236,3 +236,9 @@ section {
     float: none;
   }
 }
+
+.TaggedInput {
+  .PowerSelect__TriggerStatus {
+    visibility: hidden;
+  }
+}
