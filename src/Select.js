@@ -69,12 +69,10 @@ export default class Select extends Component {
   }
 
   flattenOptions(options) {
-    let { optGroup, flattenedOptions, optGroupWeakMap } = flattenOptions(
-      options
-    );
+    let { optGroup, flattenedOptions, optGroupMap } = flattenOptions(options);
 
     this.optGroup = optGroup;
-    this._optGroupWeakMap = optGroupWeakMap;
+    this._optGroupMap = optGroupMap;
     this.setState({
       _flattenedOptions: flattenedOptions,
     });
@@ -187,7 +185,7 @@ export default class Select extends Component {
       this.setHighlightedOption({});
     }
 
-    let { flattenedOptions } = flattenOptions(filteredOptions);
+    let { flattenedOptions } = flattenOptions(filteredOptions || []);
     if (searchTerm && filteredOptions.length) {
       // let firstOption = filteredOptions[0]
       // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
@@ -213,7 +211,7 @@ export default class Select extends Component {
 
   validateAndHighlightOption(highlightedOption, counter) {
     let options = this.getFlattenedOptions();
-    let _optGroupWeakMap = this._optGroupWeakMap;
+    let optGroupMap = this._optGroupMap;
     let isValidOptionAvailable = !!options.find(option => !option.disabled);
     if (this.optGroup) {
       isValidOptionAvailable = this.props.options.find(
@@ -233,7 +231,7 @@ export default class Select extends Component {
           : nextIndex === options.length ? 0 : nextIndex;
 
         let newHighlightedOption = options[nextIndex];
-        let group = _optGroupWeakMap.get(newHighlightedOption);
+        let group = optGroupMap.get(newHighlightedOption);
 
         if (
           newHighlightedOption &&

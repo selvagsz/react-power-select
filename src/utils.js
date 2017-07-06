@@ -50,7 +50,7 @@ export const getOptionIndex = (options, option) => {
 
 export const flattenOptions = options => {
   let optGroup = false;
-  let optGroupWeakMap = new WeakMap();
+  let optGroupMap = new Map();
   let flattenedOptions = (function traverse(
     options,
     flattenedOptions = [],
@@ -62,7 +62,7 @@ export const flattenOptions = options => {
         return traverse(currentOption.options, prev, currentOption);
       }
       prev.push(currentOption);
-      optGroupWeakMap.set(currentOption, group);
+      optGroupMap.set(currentOption, group);
       return prev;
     }, flattenedOptions);
   })(options);
@@ -70,6 +70,6 @@ export const flattenOptions = options => {
   return {
     optGroup,
     flattenedOptions,
-    optGroupWeakMap,
+    optGroupMap,
   };
 };
