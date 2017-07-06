@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import Option from './Option';
 import { getOptionIndex, isOptGroup } from './utils';
 
@@ -42,7 +43,7 @@ export default class Options extends Component {
     }
   }
 
-  renderOptions(options) {
+  renderOptions(options, optGroupDisabled = false) {
     let {
       select,
       optionLabelPath,
@@ -52,11 +53,18 @@ export default class Options extends Component {
     } = this.props;
 
     return options.map((option, index) => {
+      let optionIndex = getOptionIndex(this.props.options, option);
       if (isOptGroup(option)) {
         return (
-          <div className="PowerSelect__OptGroup" key={index}>
+          <div
+            key={index}
+            data-group-index={optionIndex}
+            className={cx('PowerSelect__OptGroup', {
+              'PowerSelect__OptGroup--disabled': !!option.disabled,
+            })}
+          >
             <div className="PowerSelect__OptGroup__Label">{option.label}</div>
-            {this.renderOptions(option.options)}
+            {this.renderOptions(option.options, option.disabled)}
           </div>
         );
       }
@@ -64,9 +72,10 @@ export default class Options extends Component {
       return (
         <Option
           key={index}
-          optionIndex={getOptionIndex(this.props.options, option)}
+          optionIndex={optionIndex}
           option={option}
           select={select}
+          disabled={optGroupDisabled}
           optionLabelPath={optionLabelPath}
           optionComponent={optionComponent}
           isHighlighted={option === highlightedOption}

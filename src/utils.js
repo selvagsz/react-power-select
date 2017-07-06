@@ -49,13 +49,27 @@ export const getOptionIndex = (options, option) => {
 };
 
 export const flattenOptions = options => {
-  return (function traverse(options, flattenedOptions = []) {
-    return options.reduce((prev, curr) => {
-      if (isOptGroup(curr)) {
-        return traverse(curr.options, prev);
+  let optGroup = false;
+  let optGroupWeakMap = new WeakMap();
+  let flattenedOptions = (function traverse(
+    options,
+    flattenedOptions = [],
+    group = {}
+  ) {
+    return options.reduce((prev, currentOption) => {
+      if (isOptGroup(currentOption)) {
+        optGroup = true;
+        return traverse(currentOption.options, prev, currentOption);
       }
-      prev.push(curr);
+      prev.push(currentOption);
+      optGroupWeakMap.set(currentOption, group);
       return prev;
     }, flattenedOptions);
   })(options);
+
+  return {
+    optGroup,
+    flattenedOptions,
+    optGroupWeakMap,
+  };
 };

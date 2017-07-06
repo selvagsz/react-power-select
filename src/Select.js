@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
-import { matcher, flattenOptions } from './utils';
+import { matcher, isOptGroup, flattenOptions } from './utils';
 
 const KEY_CODES = {
   UP_ARROW: 38,
@@ -69,8 +69,14 @@ export default class Select extends Component {
   }
 
   flattenOptions(options) {
+    let { optGroup, flattenedOptions, optGroupWeakMap } = flattenOptions(
+      options
+    );
+
+    this.optGroup = optGroup;
+    this._optGroupWeakMap = optGroupWeakMap;
     this.setState({
-      _flattenedOptions: flattenOptions(options),
+      _flattenedOptions: flattenedOptions,
     });
   }
 
@@ -107,8 +113,8 @@ export default class Select extends Component {
 
     if (this.state.highlightedOption === null) {
       let { selected } = this.props;
-      let flattenOptions = this.getFlattenedOptions();
-      let highlightedOption = flattenOptions.find(
+      let flattenedOptions = this.getFlattenedOptions();
+      let highlightedOption = flattenedOptions.find(
         option => option === selected
       );
       this.setHighlightedOption(highlightedOption);
@@ -153,28 +159,39 @@ export default class Select extends Component {
     let {
       options,
       optionLabelPath,
+      matcher,
       searchIndices = optionLabelPath,
     } = this.props;
     let filteredOptions = null;
 
     if (searchTerm) {
-      filteredOptions = options.filter(option => {
-        return this.props.matcher({
-          option,
-          searchTerm,
-          searchIndices,
-        });
-      });
+      filteredOptions = (function doFilter(options) {
+        let a = [];
+        for (let i = 0, len = options.length; i < len; i++) {
+          let option = options[i];
+          if (isOptGroup(option)) {
+            let copy = { ...option };
+            copy.options = doFilter(option.options);
+            if (copy.options.length) {
+              a.push(copy);
+            }
+          } else if (matcher({ option, searchTerm, searchIndices })) {
+            a.push(option);
+          }
+        }
+        return a;
+      })(options);
     }
 
     if (!searchTerm || !filteredOptions.length) {
       this.setHighlightedOption({});
     }
 
+    let { flattenedOptions } = flattenOptions(filteredOptions);
     if (searchTerm && filteredOptions.length) {
       // let firstOption = filteredOptions[0]
       // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
-      this.setHighlightedOption(filteredOptions[0]);
+      this.setHighlightedOption(flattenedOptions[0]);
       // }
     }
 
@@ -182,6 +199,7 @@ export default class Select extends Component {
       {
         filteredOptions,
         searchTerm,
+        _flattenedOptions: flattenedOptions,
       },
       callback
     );
@@ -195,23 +213,38 @@ export default class Select extends Component {
 
   validateAndHighlightOption(highlightedOption, counter) {
     let options = this.getFlattenedOptions();
+    let _optGroupWeakMap = this._optGroupWeakMap;
     let isValidOptionAvailable = !!options.find(option => !option.disabled);
+    if (this.optGroup) {
+      isValidOptionAvailable = this.props.options.find(
+        option => !option.disabled
+      );
+    }
 
     if (isValidOptionAvailable) {
-      let currentIndex = options.indexOf(highlightedOption);
-      let nextIndex = currentIndex + counter;
-      nextIndex = nextIndex === -1
-        ? options.length - 1
-        : nextIndex === options.length ? 0 : nextIndex;
+      let newHighlightedOption = (function highlightOption(
+        highlightedOption,
+        counter
+      ) {
+        let currentIndex = options.indexOf(highlightedOption);
+        let nextIndex = currentIndex + counter;
+        nextIndex = nextIndex === -1
+          ? options.length - 1
+          : nextIndex === options.length ? 0 : nextIndex;
 
-      let newHighlightedOption = options[nextIndex];
-      if (newHighlightedOption && newHighlightedOption.disabled) {
-        return this.validateAndHighlightOption.call(
-          this,
-          newHighlightedOption,
-          counter
-        );
-      }
+        let newHighlightedOption = options[nextIndex];
+        let group = _optGroupWeakMap.get(newHighlightedOption);
+
+        if (
+          newHighlightedOption &&
+          (newHighlightedOption.disabled || group.disabled)
+        ) {
+          return highlightOption(newHighlightedOption, counter);
+        }
+
+        return newHighlightedOption;
+      })(highlightedOption, counter);
+
       this.setHighlightedOption(newHighlightedOption);
     }
   }

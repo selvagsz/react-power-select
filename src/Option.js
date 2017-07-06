@@ -7,6 +7,7 @@ export default class Option extends Component {
     let {
       option,
       select,
+      disabled,
       optionIndex,
       optionLabelPath,
       optionComponent,
@@ -14,7 +15,7 @@ export default class Option extends Component {
       onOptionClick,
     } = this.props;
 
-    let isDisabled = option.disabled;
+    let isDisabled = disabled || option.disabled;
 
     return (
       <div
