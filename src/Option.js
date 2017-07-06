@@ -14,9 +14,7 @@ export default class Option extends Component {
       isHighlighted,
       onOptionClick,
     } = this.props;
-
     let isDisabled = disabled || option.disabled;
-
     return (
       <div
         className={cx('PowerSelect__Option', {

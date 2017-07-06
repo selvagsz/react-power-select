@@ -10,13 +10,20 @@ import { PowerSelectMultiple } from 'src';
 // }
 
 class TaggedInput extends Component {
-  handleOptionsChange = (value, select) => {
+  handleChange = ({ options, select }) => {
+    this.props.onChange({
+      items: options,
+      select,
+    });
+  };
+
+  handleSearchInputChange = (value, select) => {
     if (value.length > 1 && value.charAt(value.length - 1) === ',') {
-      let data = this.props.data.slice();
-      data.push(value.slice(0, -1));
+      let items = this.props.items.slice();
+      items.push(value.slice(0, -1));
 
       this.props.onChange({
-        data,
+        items,
         select,
       });
 
@@ -26,14 +33,15 @@ class TaggedInput extends Component {
   };
 
   render() {
-    let { data, selected, options, onSearchInputChange, ...rest } = this.props;
+    let { items, onChange, onSearchInputChange, ...rest } = this.props;
     return (
       <PowerSelectMultiple
         className="TaggedInput"
-        selected={data}
-        options={data}
+        selected={items}
+        options={items}
+        onChange={this.handleChange}
         onSearchInputChange={(event, { select }) => {
-          this.handleOptionsChange(event.target.value, select);
+          this.handleSearchInputChange(event.target.value, select);
           if (onSearchInputChange) {
             onSearchInputChange((event, { select }));
           }
@@ -44,20 +52,24 @@ class TaggedInput extends Component {
   }
 }
 
+TaggedInput.defaultProps = {
+  items: [],
+};
+
 export default class TaggedInputDemo extends Component {
   state = {
     urls: [],
   };
 
-  handleChange = ({ data }) => {
-    this.setState({ urls: data });
+  handleChange = ({ items }) => {
+    this.setState({ urls: items });
   };
 
   render() {
     return (
       <div className="demo">
         <h3>Tagged Input Component</h3>
-        <TaggedInput data={this.state.urls} onChange={this.handleChange} />
+        <TaggedInput items={this.state.urls} onChange={this.handleChange} />
       </div>
     );
   }

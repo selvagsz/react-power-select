@@ -4,7 +4,14 @@ import cx from 'classnames';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
-import { matcher, isOptGroup, flattenOptions } from './utils';
+import {
+  matcher,
+  isOptGroup,
+  flattenOptions,
+  filterOptions,
+  getNextValidOption,
+  isValidOptionPresent,
+} from './utils';
 
 const KEY_CODES = {
   UP_ARROW: 38,
@@ -69,9 +76,10 @@ export default class Select extends Component {
   }
 
   flattenOptions(options) {
-    let { optGroup, flattenedOptions, optGroupMap } = flattenOptions(options);
-
-    this.optGroup = optGroup;
+    let { isOptGroupOptions, flattenedOptions, optGroupMap } = flattenOptions(
+      options
+    );
+    this.isOptGroupOptions = isOptGroupOptions;
     this._optGroupMap = optGroupMap;
     this.setState({
       _flattenedOptions: flattenedOptions,
@@ -94,11 +102,12 @@ export default class Select extends Component {
 
   selectOption = option => {
     this.setHighlightedOption(option);
-    this.props.onChange({
-      select: this.getPublicApi(),
-      option,
-    });
-
+    if (option) {
+      this.props.onChange({
+        select: this.getPublicApi(),
+        option,
+      });
+    }
     this.setState({
       searchTerm: null,
     });
@@ -108,7 +117,6 @@ export default class Select extends Component {
     if (this.props.disabled) {
       return;
     }
-
     if (this.state.highlightedOption === null) {
       let { selected } = this.props;
       let flattenedOptions = this.getFlattenedOptions();
@@ -117,7 +125,6 @@ export default class Select extends Component {
       );
       this.setHighlightedOption(highlightedOption);
     }
-
     this.setState({
       isOpen: true,
     });
@@ -161,38 +168,27 @@ export default class Select extends Component {
       searchIndices = optionLabelPath,
     } = this.props;
     let filteredOptions = null;
-
     if (searchTerm) {
-      filteredOptions = (function doFilter(options) {
-        let a = [];
-        for (let i = 0, len = options.length; i < len; i++) {
-          let option = options[i];
-          if (isOptGroup(option)) {
-            let copy = { ...option };
-            copy.options = doFilter(option.options);
-            if (copy.options.length) {
-              a.push(copy);
-            }
-          } else if (matcher({ option, searchTerm, searchIndices })) {
-            a.push(option);
-          }
-        }
-        return a;
-      })(options);
+      filteredOptions = filterOptions({
+        options,
+        searchTerm,
+        searchIndices,
+        matcher,
+      });
     }
-
     if (!searchTerm || !filteredOptions.length) {
-      this.setHighlightedOption({});
+      this.setHighlightedOption(null);
     }
-
     let { flattenedOptions } = flattenOptions(filteredOptions || []);
-    if (searchTerm && filteredOptions.length) {
-      // let firstOption = filteredOptions[0]
-      // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
-      this.setHighlightedOption(flattenedOptions[0]);
-      // }
+    if (searchTerm && flattenedOptions.length) {
+      let firstOption = flattenedOptions[0];
+      let optionLabel = typeof firstOption === 'string'
+        ? firstOption
+        : firstOption[optionLabelPath] || '';
+      if (searchTerm.toLowerCase() === optionLabel.toLowerCase()) {
+        this.setHighlightedOption(firstOption);
+      }
     }
-
     this.setState(
       {
         filteredOptions,
@@ -205,53 +201,32 @@ export default class Select extends Component {
 
   handleSearchInputChange = event => {
     let value = event.target.value;
-    this.search(value, this.open);
+    this.search(value);
+    this.open();
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
   validateAndHighlightOption(highlightedOption, counter) {
     let options = this.getFlattenedOptions();
-    let optGroupMap = this._optGroupMap;
-    let isValidOptionAvailable = !!options.find(option => !option.disabled);
-    if (this.optGroup) {
-      isValidOptionAvailable = this.props.options.find(
-        option => !option.disabled
-      );
-    }
-
+    let isValidOptionAvailable = isValidOptionPresent(options);
     if (isValidOptionAvailable) {
-      let newHighlightedOption = (function highlightOption(
-        highlightedOption,
-        counter
-      ) {
-        let currentIndex = options.indexOf(highlightedOption);
-        let nextIndex = currentIndex + counter;
-        nextIndex = nextIndex === -1
-          ? options.length - 1
-          : nextIndex === options.length ? 0 : nextIndex;
-
-        let newHighlightedOption = options[nextIndex];
-        let group = optGroupMap.get(newHighlightedOption);
-
-        if (
-          newHighlightedOption &&
-          (newHighlightedOption.disabled || group.disabled)
-        ) {
-          return highlightOption(newHighlightedOption, counter);
-        }
-
-        return newHighlightedOption;
-      })(highlightedOption, counter);
-
-      this.setHighlightedOption(newHighlightedOption);
+      let nextValidOption = getNextValidOption({
+        options,
+        counter,
+        currentOption: highlightedOption,
+        optGroupMap: this._optGroupMap,
+      });
+      this.setHighlightedOption(nextValidOption);
     }
   }
 
   handleDownArrow(event, highlightedOption) {
+    event.preventDefault();
     this.validateAndHighlightOption(highlightedOption, 1);
   }
 
   handleUpArrow(event, highlightedOption) {
+    event.preventDefault();
     this.validateAndHighlightOption(highlightedOption, -1);
   }
 
@@ -260,9 +235,6 @@ export default class Select extends Component {
       this.selectOption(highlightedOption);
       this.focusField();
       this.close();
-    }
-    if (!highlightedOption) {
-      this.props.onEnter(event, { select: this.getPublicApi() });
     }
   }
 
@@ -286,7 +258,6 @@ export default class Select extends Component {
         this.open();
         return;
       }
-
       action.apply(this, args);
     }
     this.props.onKeyDown(event, { select: this.getPublicApi() });
@@ -301,7 +272,6 @@ export default class Select extends Component {
   handleDocumentClick(event) {
     let $target = event.target;
     let powerselect = this.powerselect;
-
     if (
       !(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))
     ) {
@@ -309,7 +279,6 @@ export default class Select extends Component {
       if (focused) {
         this.setFocusedState(false);
       }
-
       if (isOpen) {
         this.close();
       }
@@ -334,7 +303,6 @@ export default class Select extends Component {
   handleOptionClick = highlightedOption => {
     this.selectOption(highlightedOption);
     this.focusField();
-
     if (this.props.closeOnOptionClick) {
       this.close();
     }
@@ -342,7 +310,6 @@ export default class Select extends Component {
 
   getPublicApi() {
     let { isOpen, searchTerm } = this.state;
-
     return {
       open: this.open,
       close: this.close,
@@ -356,7 +323,6 @@ export default class Select extends Component {
 
   render() {
     let {
-      onRef,
       className,
       tabIndex,
       selected,
@@ -379,9 +345,6 @@ export default class Select extends Component {
         <div
           ref={powerselect => {
             this.powerselect = powerselect;
-            if (onRef) {
-              onRef(powerselect);
-            }
           }}
           className={cx('PowerSelect', className, {
             'PowerSelect--disabled': disabled,
@@ -397,7 +360,6 @@ export default class Select extends Component {
             }
           }}
           onKeyDown={event => {
-            event.stopPropagation();
             this.handleKeyDown(event, highlightedOption);
           }}
         >
@@ -444,7 +406,6 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-Select.displayName = 'Select';
 Select.defaultProps = {
   options: [],
   disabled: false,
@@ -460,7 +421,6 @@ Select.defaultProps = {
   onBlur: noop,
   onClick: noop,
   onKeyDown: noop,
-  onEnter: noop,
   onOpen: noop,
   onClose: noop,
 

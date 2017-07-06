@@ -17,19 +17,13 @@ export default class PowerSelectMultiple extends Component {
     let { selected, onChange } = this.props;
     let options = selected.slice();
     options.push(option);
-
     onChange({
       options,
       select,
     });
-
     if (select.searchTerm) {
       select.search('');
       select.focus();
-    }
-
-    if (options.length === this.props.options.length) {
-      select.close();
     }
   };
 
@@ -37,7 +31,6 @@ export default class PowerSelectMultiple extends Component {
     let filteredOptions = options.filter(
       option => selected.indexOf(option) === -1
     );
-
     this.setState({ filteredOptions }, callback);
   }
 
@@ -45,7 +38,6 @@ export default class PowerSelectMultiple extends Component {
     if (event.which === 8) {
       let { selected, onChange } = this.props;
       let value = event.target.value;
-
       if (value === '' && selected.length) {
         let options = selected.slice(0, selected.length - 1);
         onChange({
@@ -70,11 +62,10 @@ export default class PowerSelectMultiple extends Component {
 
   render() {
     let { className, options, onChange, showOptionClose, ...rest } = this.props;
-
     return (
       <Select
         className={`${className} PowerSelectMultiple`}
-        onRef={powerselect => (this.powerselect = powerselect)}
+        ref={powerselect => (this.powerselect = powerselect)}
         selectTriggerComponent={props =>
           <MultiSelectTrigger
             {...props}

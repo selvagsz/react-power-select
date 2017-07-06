@@ -37,6 +37,11 @@ export default () => {
         </div>
       </header>
       <div className="container">
+        {/*}
+        <section>
+          <ArrayOfObjectsDemo />
+        </section>
+*/}
         <section>
           <h1>Power Select</h1>
           <div className="Section">
@@ -105,7 +110,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[11, 17], [36, 36]]}
+                highlightLines={[[11, 17], [37, 37]]}
                 snippetName="PowerSelectCustomSelectedOptionDemo"
               />
             </div>
@@ -222,7 +227,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[11, 45], [60, 63]]}
+                highlightLines={[[11, 57], [72, 72]]}
                 snippetName="PowerSelectMultipleTaggedInput"
               />
             </div>

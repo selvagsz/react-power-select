@@ -27,14 +27,12 @@ export default class Options extends Component {
         `[data-option-index="${optionIndex}"]`
       );
       let delta = 0;
-
       if ($option) {
         let $optionOffsetHeight = $option.offsetHeight;
         let $optionOffsetTop = $option.offsetTop;
         delta =
           $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
       }
-
       if (delta > 0) {
         this.optionsList.scrollTop = delta;
       } else {
@@ -51,7 +49,6 @@ export default class Options extends Component {
       highlightedOption,
       onOptionClick,
     } = this.props;
-
     return options.map((option, index) => {
       let optionIndex = getOptionIndex(this.props.options, option);
       if (isOptGroup(option)) {
@@ -68,7 +65,6 @@ export default class Options extends Component {
           </div>
         );
       }
-
       return (
         <Option
           key={index}
@@ -89,7 +85,6 @@ export default class Options extends Component {
 
   render() {
     let { options } = this.props;
-
     return (
       <div
         className="PowerSelect__Options"

@@ -11,25 +11,20 @@ export default props => {
   } = props;
   let value = null;
   let SelectedOptionComponent = selectedOptionComponent;
-
   if (isValidElement(SelectedOptionComponent)) {
     return cloneElement(SelectedOptionComponent, props);
   }
-
   if (SelectedOptionComponent) {
     return <SelectedOptionComponent {...props} />;
   }
-
   if (typeof option === 'object') {
     if (optionLabelPath) {
       value = option[optionLabelPath];
     }
   }
-
   if (typeof option === 'string') {
     value = option;
   }
-
   return (
     <li className="PowerSelectMultiple__SelectedOption">
       <span className="PowerSelectMultiple__SelectedOption__Label">

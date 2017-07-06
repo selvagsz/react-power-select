@@ -5,7 +5,6 @@ const renderComponent = (Component, props) => {
   if (isValidElement(Component)) {
     return cloneElement(Component, props);
   }
-
   if (Component) {
     return <Component {...props} />;
   }
@@ -22,15 +21,11 @@ export default class DropdownMenu extends Component {
       afterOptionsComponent,
       ...otherProps
     } = this.props;
-
     return (
       <div
         className="PowerSelect__Menu"
         tabIndex="1"
         onKeyDown={event => {
-          if (event.target === event.currentTarget) {
-            event.preventDefault();
-          }
           handleKeyDown(event, highlightedOption);
         }}
         style={{

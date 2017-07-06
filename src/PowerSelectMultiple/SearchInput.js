@@ -10,7 +10,6 @@ export default class SearchInput extends Component {
     this.setState({
       length: value.length,
     });
-
     this.props.onChange(event);
   };
 
