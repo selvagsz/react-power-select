@@ -1,7 +1,7 @@
 import React, { Component, isValidElement, cloneElement } from 'react';
 
 export default ({ option, select, optionLabelPath, optionComponent }) => {
-  let publicProps = { option, select };
+  let publicProps = { option, select, optionLabelPath };
   let OptionComponent = optionComponent;
 
   if (isValidElement(OptionComponent)) {
