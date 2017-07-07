@@ -117,9 +117,14 @@ export default class Select extends Component {
     if (this.props.disabled) {
       return;
     }
+    let flattenedOptions = this.getFlattenedOptions();
+    if (this.props.closeDropdownOnEmpty && !flattenedOptions.length) {
+      return this.setState({
+        isOpen: false,
+      });
+    }
     if (this.state.highlightedOption === null) {
       let { selected } = this.props;
-      let flattenedOptions = this.getFlattenedOptions();
       let highlightedOption = flattenedOptions.find(
         option => option === selected
       );
@@ -303,7 +308,7 @@ export default class Select extends Component {
   handleOptionClick = highlightedOption => {
     this.selectOption(highlightedOption);
     this.focusField();
-    if (this.props.closeOnOptionClick) {
+    if (this.props.closeOnSelect) {
       this.close();
     }
   };
@@ -313,7 +318,6 @@ export default class Select extends Component {
     return {
       open: this.open,
       close: this.close,
-      toggle: this.toggle,
       search: this.search,
       focus: this.focusField,
       isOpen,
@@ -410,6 +414,8 @@ Select.defaultProps = {
   options: [],
   disabled: false,
   tabIndex: 0,
+  closeOnSelect: true,
+  closeDropdownOnEmpty: false,
   selectTriggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
@@ -423,7 +429,5 @@ Select.defaultProps = {
   onKeyDown: noop,
   onOpen: noop,
   onClose: noop,
-
-  closeOnOptionClick: true,
   onSearchInputChange: noop,
 };

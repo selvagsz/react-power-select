@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { PowerSelectMultiple } from 'src';
 
-// Hide the caret via css
+// Hide the caret via CSS
 
 // .TaggedInput {
+//   // Hides the caret
 //   .PowerSelect__TriggerStatus {
 //     visibility: hidden;
 //   }
+
+//   // Removes the padding allocated for caret
+//   .PowerSelectMultiple__SelectedOptions {
+//     padding-right: 0;
+//   }
 // }
 
+// TaggedInput Component - composed on top of PowerSelectMultiple
 class TaggedInput extends Component {
   handleChange = ({ options, select }) => {
     this.props.onChange({
@@ -40,6 +47,7 @@ class TaggedInput extends Component {
         selected={items}
         options={items}
         onChange={this.handleChange}
+        closeDropdownOnEmpty={true}
         onSearchInputChange={(event, { select }) => {
           this.handleSearchInputChange(event.target.value, select);
           if (onSearchInputChange) {

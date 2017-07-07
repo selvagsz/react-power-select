@@ -74,7 +74,7 @@ export default class PowerSelectMultiple extends Component {
           />}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
-        closeOnOptionClick={false}
+        closeOnSelect={false}
         onKeyDown={this.handleKeyDown}
         {...rest}
       />

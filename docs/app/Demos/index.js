@@ -224,10 +224,13 @@ export default () => {
           <div className="Section">
             <div className="Section__Demo">
               <TaggedInputDemo />
+              <div className="help">
+                Type some text & type <code>','</code>
+              </div>
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[11, 57], [72, 72]]}
+                highlightLines={[[18, 65], [80, 80]]}
                 snippetName="PowerSelectMultipleTaggedInput"
               />
             </div>
