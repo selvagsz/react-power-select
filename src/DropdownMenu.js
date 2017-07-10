@@ -11,6 +11,21 @@ const renderComponent = (Component, props) => {
 };
 
 export default class DropdownMenu extends Component {
+  componentWillMount() {
+    this.validateAndClose(this.props.options);
+  }
+
+  componentWillReceiveProps({ options }) {
+    this.validateAndClose(options);
+  }
+
+  validateAndClose(options) {
+    let { beforeOptionsComponent, afterOptionsComponent, select } = this.props;
+    if (!beforeOptionsComponent && !afterOptionsComponent && !options.length) {
+      select.close();
+    }
+  }
+
   render() {
     let {
       select,

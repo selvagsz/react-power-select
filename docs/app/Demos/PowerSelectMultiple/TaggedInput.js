@@ -39,10 +39,6 @@ class TaggedInput extends Component {
     }
   };
 
-  _close = (event, { select }) => {
-    select.close();
-  };
-
   render() {
     let { items, onChange, onSearchInputChange, ...rest } = this.props;
     return (
@@ -51,11 +47,7 @@ class TaggedInput extends Component {
         selected={items}
         options={items}
         onChange={this.handleChange}
-        onClick={this._close}
-        onFocus={this._close}
-        onSearchInputChange={(...args) => {
-          this._close(...args);
-          let [event, { select }] = args;
+        onSearchInputChange={(event, { select }) => {
           this.handleSearchInputChange(event.target.value, select);
           if (onSearchInputChange) {
             onSearchInputChange((event, { select }));
