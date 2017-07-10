@@ -20,3 +20,5 @@ export default class TypeAhead extends Component {
     );
   }
 }
+
+TypeAhead.displayName = 'TypeAhead';

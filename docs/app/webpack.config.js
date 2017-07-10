@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const multi = require('multi-loader');
-
+const argv = require('minimist')(process.argv.slice(2));
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackConfig = {
@@ -78,23 +78,36 @@ webpackConfig.module.rules = [
 // ------------------------------------
 // Plugins
 // ------------------------------------
-webpackConfig.plugins = [
+const plugins = (webpackConfig.plugins = [
   new webpack.ProvidePlugin({
     React: 'react',
   }),
+]);
 
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false,
-    },
-    output: {
-      comments: false,
-    },
-  }),
+if (argv.env === 'production') {
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    })
+  );
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false,
+      },
+    })
+  );
+}
 
+plugins.push(
   new HtmlWebpackPlugin({
     template: './docs/app/index.html',
-  }),
-];
+  })
+);
 
 module.exports = webpackConfig;

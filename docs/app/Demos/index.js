@@ -12,10 +12,9 @@ import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
-import MultiSelectArrayOfObjects
-  from './PowerSelectMultiple/ArrayOfObjectsDemo';
-import MultiSelectCustomSelectedOption
-  from './PowerSelectMultiple/CustomSelectedOption';
+import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
+import MultiSelectCustomSelectedOption from './PowerSelectMultiple/CustomSelectedOption';
+import TaggedInputDemo from './PowerSelectMultiple/TaggedInput';
 
 import Snippet from './Snippet';
 
@@ -38,7 +37,11 @@ export default () => {
         </div>
       </header>
       <div className="container">
-
+        {/*}
+        <section>
+          <ArrayOfObjectsDemo />
+        </section>
+*/}
         <section>
           <h1>Power Select</h1>
           <div className="Section">
@@ -107,7 +110,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[11, 17], [36, 36]]}
+                highlightLines={[[11, 17], [37, 37]]}
                 snippetName="PowerSelectCustomSelectedOptionDemo"
               />
             </div>
@@ -214,6 +217,21 @@ export default () => {
               <Snippet
                 highlightLines={[[4, 32], [51, 51]]}
                 snippetName="PowerSelectHighlightSearch"
+              />
+            </div>
+          </div>
+
+          <div className="Section">
+            <div className="Section__Demo">
+              <TaggedInputDemo />
+              <div className="help">
+                Type some text & type <code>','</code>
+              </div>
+            </div>
+            <div className="Section__Code">
+              <Snippet
+                highlightLines={[[18, 65], [80, 80]]}
+                snippetName="PowerSelectMultipleTaggedInput"
               />
             </div>
           </div>

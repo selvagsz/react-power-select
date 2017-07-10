@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from '../Select';
 import MultiSelectTrigger from './SelectTrigger';
 
-export default class MultiSelect extends Component {
+export default class PowerSelectMultiple extends Component {
   state = {};
 
   componentWillMount() {
@@ -17,16 +17,13 @@ export default class MultiSelect extends Component {
     let { selected, onChange } = this.props;
     let options = selected.slice();
     options.push(option);
-
     onChange({
       options,
       select,
     });
-
     if (select.searchTerm) {
-      this.filterOptions(this.props.options, options, () => {
-        select.search('');
-      });
+      select.search('');
+      select.focus();
     }
   };
 
@@ -34,27 +31,22 @@ export default class MultiSelect extends Component {
     let filteredOptions = options.filter(
       option => selected.indexOf(option) === -1
     );
-
-    this.setState(
-      {
-        filteredOptions,
-      },
-      callback
-    );
+    this.setState({ filteredOptions }, callback);
   }
 
-  handleBackspacePress = (event, { select }) => {
-    let { selected, onChange } = this.props;
-    let value = event.target.value;
-
-    if (value === '' && selected.length) {
-      let options = selected.slice(0, selected.length - 1);
-      onChange({
-        options,
-        select,
-      });
-      select.open();
-      this.focusSearchInput();
+  handleKeyDown = (event, { select }) => {
+    if (event.which === 8) {
+      let { selected, onChange } = this.props;
+      let value = event.target.value;
+      if (value === '' && selected.length) {
+        let options = selected.slice(0, selected.length - 1);
+        onChange({
+          options,
+          select,
+        });
+        select.open();
+        select.focus();
+      }
     }
   };
 
@@ -65,38 +57,29 @@ export default class MultiSelect extends Component {
       options,
       select,
     });
-    this.focusSearchInput();
+    select.focus();
   };
 
-  focusSearchInput() {
-    setTimeout(() => {
-      this.powerselect.querySelector('.PowerSelect__TriggerInput').focus();
-    }, 0);
-  }
-
   render() {
-    let { className, options, onChange, showOptionClose, ...rest } = this.props;
-
+    let { className, options, onChange, ...rest } = this.props;
     return (
       <Select
         className={`${className} PowerSelectMultiple`}
-        onRef={powerselect => (this.powerselect = powerselect)}
+        ref={powerselect => (this.powerselect = powerselect)}
         selectTriggerComponent={props =>
           <MultiSelectTrigger
             {...props}
-            showOptionClose={showOptionClose}
+            showOptionClose={true}
             onOptionCloseClick={this.removeOption}
           />}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
-        closeOnOptionClick={false}
-        onBackspacePress={this.handleBackspacePress}
+        closeOnSelect={false}
+        onKeyDown={this.handleKeyDown}
         {...rest}
       />
     );
   }
 }
 
-MultiSelect.defaultProps = {
-  showOptionClose: true,
-};
+PowerSelectMultiple.displayName = 'PowerSelectMultiple';

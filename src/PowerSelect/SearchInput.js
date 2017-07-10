@@ -22,7 +22,6 @@ export default class SearchInput extends Component {
         <input
           ref="before-options-input"
           className="PowerSelect__SearchInput"
-          placeholder={this.props.searchPlaceholder}
           onChange={e => props.select.search(e.target.value)}
         />
       </div>

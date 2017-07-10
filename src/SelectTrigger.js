@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Option from './Option';
+import RenderOption from './RenderOption';
 
 export default ({
   selectedOption,
@@ -13,9 +13,9 @@ export default ({
     <div className="PowerSelect__Trigger" onClick={onClick}>
       <span className="PowerSelect__TriggerLabel">
         {selectedOption
-          ? <Option
-              optionLabelPath={optionLabelPath}
+          ? <RenderOption
               option={selectedOption}
+              optionLabelPath={optionLabelPath}
               optionComponent={selectedOptionComponent}
               select={select}
             />

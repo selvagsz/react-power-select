@@ -30,9 +30,7 @@ export default class SelectTrigger extends Component {
       handleOnBlur,
       selectedOptionComponent,
     } = this.props;
-
     let selected = selectedOption || [];
-
     return (
       <div className="PowerSelect__Trigger" onClick={onClick}>
         <div className="PowerSelectMultiple__OptionsContainer">
@@ -65,7 +63,6 @@ export default class SelectTrigger extends Component {
               />
             </li>
           </ul>
-
           <span className="PowerSelect__TriggerStatus" />
         </div>
       </div>

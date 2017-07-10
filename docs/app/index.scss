@@ -99,8 +99,6 @@ header {
 }
 
 .demo {
-  margin: 30px 0;
-
   h3 {
     margin-bottom: 12px;
   }
@@ -109,7 +107,7 @@ header {
 section {
   > h1 {
     position: relative;
-    margin-bottom: 35px;
+    margin-bottom: 50px;
 
     &::before {
       content: '';
@@ -219,6 +217,12 @@ section {
   background-color: rgba(255, 255, 0, 0.3);
 }
 
+.help {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
 @media (max-width: 875px) {
   .container {
     margin: 0 10px;
@@ -234,5 +238,17 @@ section {
   .Section__Demo {
     width: 100%;
     float: none;
+  }
+}
+
+.TaggedInput {
+  // Hides the caret
+  .PowerSelect__TriggerStatus {
+    visibility: hidden;
+  }
+
+  // Removes the padding allocated for caret
+  .PowerSelectMultiple__SelectedOptions {
+    padding-right: 0;
   }
 }

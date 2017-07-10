@@ -54,17 +54,34 @@
 }
 
 .PowerSelect__Options {
+  position: relative;
   max-height: 238px;
   overflow: auto;
+}
+
+.PowerSelect__OptGroup {
+  padding-left: 8px;
+}
+
+.PowerSelect__OptGroup__Label {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #666;
+  padding: 8px 0 4px;
 }
 
 .PowerSelect__Option {
   cursor: pointer;
   padding: 8px 12px;
 
-  &:hover {
+  &:not(.PowerSelect__Option--disabled):hover {
     background-color: #fbfbfb;
   }
+}
+
+.PowerSelect__Option--disabled {
+  color: #999;
+  cursor: not-allowed;
 }
 
 .PowerSelect__Option--highlighted {

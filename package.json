@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --config docs/app/webpack.config.js --content-base docs/index.html",
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
-    "build:docs": "webpack --config docs/app/webpack.config.js",
+    "build:docs": "webpack --config docs/app/webpack.config.js --env production",
     "build": "npm run clean && npm run build:commonjs && webpack && rm -rf dist/css.js",
     "prepublish": "npm run build",
     "precommit": "lint-staged"
@@ -57,6 +57,7 @@
     "html-webpack-plugin": "^2.28.0",
     "husky": "^0.13.4",
     "lint-staged": "^3.6.1",
+    "minimist": "^1.2.0",
     "multi-loader": "^0.1.0",
     "node-sass": "^4.5.3",
     "prettier": "^1.4.4",
@@ -69,6 +70,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "prop-types": "^15.5.10",
     "react-tether": "^0.5.7"
   }

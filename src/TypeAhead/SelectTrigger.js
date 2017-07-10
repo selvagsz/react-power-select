@@ -21,7 +21,6 @@ export default class SelectTrigger extends Component {
     let { selectedOption, selectedOptionLabelPath, optionLabelPath } = props;
     let value = '';
     selectedOptionLabelPath = selectedOptionLabelPath || optionLabelPath;
-
     if (selectedOption) {
       if (typeof selectedOption === 'string') {
         value = selectedOption;
@@ -29,7 +28,6 @@ export default class SelectTrigger extends Component {
         value = selectedOption[selectedOptionLabelPath];
       }
     }
-
     return value;
   }
 
@@ -43,7 +41,6 @@ export default class SelectTrigger extends Component {
       handleOnFocus,
       handleOnBlur,
     } = this.props;
-
     return (
       <div className="PowerSelect__Trigger" onClick={onClick}>
         <input

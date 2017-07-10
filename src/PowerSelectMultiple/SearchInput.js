@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class MultiSelectSearchInput extends Component {
+export default class SearchInput extends Component {
   state = {
     length: 0,
   };
@@ -10,7 +10,6 @@ export default class MultiSelectSearchInput extends Component {
     this.setState({
       length: value.length,
     });
-
     this.props.onChange(event);
   };
 
@@ -18,7 +17,7 @@ export default class MultiSelectSearchInput extends Component {
     let { onChange, ...rest } = this.props;
     return (
       <input
-        size={this.state.length + 1}
+        size={this.state.length + 2}
         onChange={this.handleOnChange}
         {...rest}
       />
@@ -26,6 +25,6 @@ export default class MultiSelectSearchInput extends Component {
   }
 }
 
-MultiSelectSearchInput.defaultProps = {
+SearchInput.defaultProps = {
   onChange: () => {},
 };

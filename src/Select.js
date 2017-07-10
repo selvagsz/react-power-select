@@ -1,32 +1,37 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
-import { matcher } from './utils';
+import {
+  matcher,
+  isOptGroup,
+  flattenOptions,
+  filterOptions,
+  getNextValidOption,
+  isValidOptionPresent,
+} from './utils';
 
-const KEYCODES = {
+const KEY_CODES = {
   UP_ARROW: 38,
   DOWN_ARROW: 40,
   ENTER: 13,
   TAB: 9,
-  BACK_SPACE: 8,
 };
 
 const actions = {
-  38: 'handleUpArrow',
-  40: 'handleDownArrow',
-  13: 'handleEnterPress',
-  9: 'handleTabPress',
-  8: 'handleBackspacePress',
+  [KEY_CODES.UP_ARROW]: 'handleUpArrow',
+  [KEY_CODES.DOWN_ARROW]: 'handleDownArrow',
+  [KEY_CODES.ENTER]: 'handleEnterPress',
+  [KEY_CODES.TAB]: 'handleTabPress',
 };
 
 const noop = () => {};
 
 export default class Select extends Component {
   state = {
-    highlightedIndex: null,
+    highlightedOption: null,
     isOpen: false,
     focused: false,
     filteredOptions: null,
@@ -37,6 +42,14 @@ export default class Select extends Component {
     handleEscapePress: ::this.handleEscapePress,
     handleDocumentClick: ::this.handleDocumentClick,
   };
+
+  componentWillMount() {
+    this.flattenOptions(this.props.options);
+  }
+
+  componentWillReceiveProps({ options }) {
+    this.flattenOptions(options);
+  }
 
   componentDidMount() {
     document.addEventListener(
@@ -62,20 +75,37 @@ export default class Select extends Component {
     );
   }
 
-  highlightOption(highlightedIndex) {
+  flattenOptions(options) {
+    let { isOptGroupOptions, flattenedOptions, optGroupMap } = flattenOptions(
+      options
+    );
+    this.isOptGroupOptions = isOptGroupOptions;
+    this._optGroupMap = optGroupMap;
     this.setState({
-      highlightedIndex,
+      _flattenedOptions: flattenedOptions,
     });
   }
 
-  selectOption = (highlightedIndex, option) => {
-    let options = this.state.filteredOptions || this.props.options;
-    let selectedOption = option || options[highlightedIndex];
-    this.highlightOption(highlightedIndex);
-    if (selectedOption) {
+  getVisibleOptions() {
+    return this.state.filteredOptions || this.props.options;
+  }
+
+  getFlattenedOptions() {
+    return this.state._flattenedOptions;
+  }
+
+  setHighlightedOption(highlightedOption) {
+    this.setState({
+      highlightedOption,
+    });
+  }
+
+  selectOption = option => {
+    this.setHighlightedOption(option);
+    if (option) {
       this.props.onChange({
-        option: selectedOption,
         select: this.getPublicApi(),
+        option,
       });
     }
     this.setState({
@@ -87,23 +117,27 @@ export default class Select extends Component {
     if (this.props.disabled) {
       return;
     }
-
-    let highlightedIndex = this.state.highlightedIndex;
-    let { options, selected } = this.props;
-    highlightedIndex = highlightedIndex !== null
-      ? highlightedIndex
-      : options.indexOf(selected);
-
-    this.highlightOption(highlightedIndex);
+    let flattenedOptions = this.getFlattenedOptions();
+    if (this.props.closeDropdownOnEmpty && !flattenedOptions.length) {
+      return this.setState({
+        isOpen: false,
+      });
+    }
+    if (this.state.highlightedOption === null) {
+      let { selected } = this.props;
+      let highlightedOption = flattenedOptions.find(
+        option => option === selected
+      );
+      this.setHighlightedOption(highlightedOption);
+    }
     this.setState({
       isOpen: true,
     });
-
     this.props.onOpen({ select: this.getPublicApi() });
   };
 
   close = () => {
-    this.highlightOption(null);
+    this.setHighlightedOption(null);
     this.setState({
       isOpen: false,
       filteredOptions: null,
@@ -125,41 +159,48 @@ export default class Select extends Component {
     this.setState({ focused });
   }
 
-  focusField() {
-    this.powerselect.focus();
-  }
+  focusField = () => {
+    setTimeout(() => {
+      this.powerselect.focus();
+    });
+  };
 
   search = (searchTerm, callback) => {
     let {
       options,
       optionLabelPath,
+      matcher,
       searchIndices = optionLabelPath,
     } = this.props;
-
-    let filteredOptions = options.filter(option => {
-      return this.props.matcher({
-        option,
+    let filteredOptions = null;
+    if (searchTerm) {
+      filteredOptions = filterOptions({
+        options,
         searchTerm,
         searchIndices,
+        matcher,
       });
-    });
-
-    if (!searchTerm || !filteredOptions.length) {
-      let highlightedIndex = -1;
-      this.highlightOption(highlightedIndex);
     }
+    if (!searchTerm || !filteredOptions.length) {
+      this.setHighlightedOption(null);
+    }
+    let { flattenedOptions } = flattenOptions(filteredOptions || []);
+    if (searchTerm && flattenedOptions.length) {
+      this.setHighlightedOption(flattenedOptions[0]);
 
-    if (searchTerm && filteredOptions.length) {
-      // let firstOption = filteredOptions[0]
-      // if (searchTerm.toLowerCase() === firstOption.toLowerCase() || (optionLabelPath && searchTerm.toLowerCase() === (firstOption[optionLabelPath] || '').toLowerCase())) {
-      this.highlightOption(0);
+      // let firstOption = flattenedOptions[0];
+      // let optionLabel = typeof firstOption === 'string'
+      //   ? firstOption
+      //   : firstOption[optionLabelPath] || '';
+      // if (searchTerm.toLowerCase() === optionLabel.toLowerCase()) {
+      //   this.setHighlightedOption(firstOption);
       // }
     }
-
     this.setState(
       {
         filteredOptions,
         searchTerm,
+        _flattenedOptions: flattenedOptions,
       },
       callback
     );
@@ -167,45 +208,49 @@ export default class Select extends Component {
 
   handleSearchInputChange = event => {
     let value = event.target.value;
-    this.search(value, this.open);
+    this.search(value);
+    this.open();
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
-  handleDownArrow(event, index) {
-    let options = this.state.filteredOptions || this.props.options;
-    let highlightedIndex = index < options.length - 1 ? ++index : 0;
-    this.highlightOption(highlightedIndex);
+  validateAndHighlightOption(highlightedOption, counter) {
+    let options = this.getFlattenedOptions();
+    let isValidOptionAvailable = isValidOptionPresent(options);
+    if (isValidOptionAvailable) {
+      let nextValidOption = getNextValidOption({
+        options,
+        counter,
+        currentOption: highlightedOption,
+        optGroupMap: this._optGroupMap,
+      });
+      this.setHighlightedOption(nextValidOption);
+    }
   }
 
-  handleUpArrow(event, index) {
-    let options = this.state.filteredOptions || this.props.options;
-    let highlightedIndex = index > 0 && index <= options.length
-      ? --index
-      : options.length - 1;
-    this.highlightOption(highlightedIndex);
+  handleDownArrow(event, highlightedOption) {
+    event.preventDefault();
+    this.validateAndHighlightOption(highlightedOption, 1);
   }
 
-  handleEnterPress(event, highlightedIndex) {
+  handleUpArrow(event, highlightedOption) {
+    event.preventDefault();
+    this.validateAndHighlightOption(highlightedOption, -1);
+  }
+
+  handleEnterPress(event, highlightedOption) {
     if (this.state.isOpen) {
-      this.selectOption(highlightedIndex);
+      this.selectOption(highlightedOption);
       this.focusField();
       this.close();
     }
-    if (highlightedIndex === -1) {
-      this.props.onEnter(event, { select: this.getPublicApi() });
-    }
   }
 
-  handleTabPress(event, highlightedIndex) {
+  handleTabPress(event, highlightedOption) {
     this.setFocusedState(false);
     if (this.state.isOpen) {
-      this.selectOption(highlightedIndex);
+      this.selectOption(highlightedOption);
       this.close();
     }
-  }
-
-  handleBackspacePress(event, highlightedIndex) {
-    this.props.onBackspacePress(event, { select: this.getPublicApi() });
   }
 
   handleKeyDown = (...args) => {
@@ -214,15 +259,15 @@ export default class Select extends Component {
     let action = this[actions[keyCode]];
     if (action) {
       if (
-        (keyCode === KEYCODES.UP_ARROW || keyCode === KEYCODES.DOWN_ARROW) &&
+        (keyCode === KEY_CODES.UP_ARROW || keyCode === KEY_CODES.DOWN_ARROW) &&
         !this.state.isOpen
       ) {
         this.open();
         return;
       }
-
       action.apply(this, args);
     }
+    this.props.onKeyDown(event, { select: this.getPublicApi() });
   };
 
   handleEscapePress(event) {
@@ -234,7 +279,6 @@ export default class Select extends Component {
   handleDocumentClick(event) {
     let $target = event.target;
     let powerselect = this.powerselect;
-
     if (
       !(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))
     ) {
@@ -242,9 +286,7 @@ export default class Select extends Component {
       if (focused) {
         this.setFocusedState(false);
       }
-
       if (isOpen) {
-        // this.selectOption(this.state.highlightedIndex)
         this.close();
       }
     }
@@ -265,23 +307,21 @@ export default class Select extends Component {
     this.props.onClick(event, { select: this.getPublicApi() });
   };
 
-  handleOptionClick = option => {
-    this.selectOption(option);
+  handleOptionClick = highlightedOption => {
+    this.selectOption(highlightedOption);
     this.focusField();
-
-    if (this.props.closeOnOptionClick) {
+    if (this.props.closeOnSelect) {
       this.close();
     }
   };
 
   getPublicApi() {
     let { isOpen, searchTerm } = this.state;
-
     return {
       open: this.open,
       close: this.close,
-      toggle: this.toggle,
       search: this.search,
+      focus: this.focusField,
       isOpen,
       searchTerm,
     };
@@ -289,10 +329,8 @@ export default class Select extends Component {
 
   render() {
     let {
-      onRef,
       className,
       tabIndex,
-      options,
       selected,
       optionLabelPath,
       optionComponent,
@@ -303,26 +341,23 @@ export default class Select extends Component {
       afterOptionsComponent,
     } = this.props;
 
-    let { isOpen, searchTerm } = this.state;
-    let filteredOptions = this.state.filteredOptions || options;
+    let { isOpen, searchTerm, highlightedOption, focused } = this.state;
     let SelectTrigger = this.props.selectTriggerComponent;
+    let options = this.getVisibleOptions();
     let selectApi = this.getPublicApi();
-    let { highlightedIndex, focused } = this.state;
 
     return (
       <Dropdown>
         <div
           ref={powerselect => {
             this.powerselect = powerselect;
-            if (onRef) {
-              onRef(powerselect);
-            }
           }}
-          className={`PowerSelect ${className} ${disabled
-            ? 'PowerSelect--disabled'
-            : ''} ${isOpen ? 'PowerSelect--open' : ''} ${focused
-            ? 'PowerSelect--focused'
-            : ''} ${searchTerm ? 'PowerSelect__WithSearch' : ''}`}
+          className={cx('PowerSelect', className, {
+            'PowerSelect--disabled': disabled,
+            'PowerSelect--open': isOpen,
+            'PowerSelect--focused': focused,
+            PowerSelect__WithSearch: searchTerm,
+          })}
           tabIndex={tabIndex}
           onFocus={() => {
             let triggerInput = this.powerselect.querySelector('input');
@@ -331,7 +366,7 @@ export default class Select extends Component {
             }
           }}
           onKeyDown={event => {
-            this.handleKeyDown(event, highlightedIndex);
+            this.handleKeyDown(event, highlightedOption);
           }}
         >
           <SelectTrigger
@@ -351,13 +386,13 @@ export default class Select extends Component {
         {isOpen &&
           <DropdownMenu
             minWidth={this.powerselect.offsetWidth}
-            options={filteredOptions}
+            options={options}
             selected={selected}
             optionLabelPath={optionLabelPath}
             optionComponent={optionComponent}
             onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
-            highlightedIndex={highlightedIndex}
+            highlightedOption={highlightedOption}
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
@@ -381,6 +416,8 @@ Select.defaultProps = {
   options: [],
   disabled: false,
   tabIndex: 0,
+  closeOnSelect: true,
+  closeDropdownOnEmpty: false,
   selectTriggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
@@ -391,11 +428,8 @@ Select.defaultProps = {
   onFocus: noop,
   onBlur: noop,
   onClick: noop,
-  onEnter: noop,
+  onKeyDown: noop,
   onOpen: noop,
   onClose: noop,
-
-  closeOnOptionClick: true,
   onSearchInputChange: noop,
-  onBackspacePress: noop,
 };
