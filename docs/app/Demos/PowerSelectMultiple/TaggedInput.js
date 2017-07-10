@@ -34,9 +34,13 @@ class TaggedInput extends Component {
         select,
       });
 
-      select.search('');
+      select.resetSearch();
       select.focus();
     }
+  };
+
+  _close = (event, { select }) => {
+    select.close();
   };
 
   render() {
@@ -47,8 +51,11 @@ class TaggedInput extends Component {
         selected={items}
         options={items}
         onChange={this.handleChange}
-        closeDropdownOnEmpty={true}
-        onSearchInputChange={(event, { select }) => {
+        onClick={this._close}
+        onFocus={this._close}
+        onSearchInputChange={(...args) => {
+          this._close(...args);
+          let [event, { select }] = args;
           this.handleSearchInputChange(event.target.value, select);
           if (onSearchInputChange) {
             onSearchInputChange((event, { select }));

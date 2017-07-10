@@ -22,7 +22,7 @@ export default class PowerSelectMultiple extends Component {
       select,
     });
     if (select.searchTerm) {
-      select.search('');
+      select.resetSearch();
       select.focus();
     }
   };

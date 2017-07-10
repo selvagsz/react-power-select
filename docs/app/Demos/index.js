@@ -243,7 +243,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[18, 65], [80, 80]]}
+                highlightLines={[[18, 68], [87, 87]]}
                 snippetName="PowerSelectMultipleTaggedInput"
               />
             </div>

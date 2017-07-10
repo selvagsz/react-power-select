@@ -118,11 +118,6 @@ export default class Select extends Component {
       return;
     }
     let flattenedOptions = this.getFlattenedOptions();
-    if (this.props.closeDropdownOnEmpty && !flattenedOptions.length) {
-      return this.setState({
-        isOpen: false,
-      });
-    }
     if (this.state.highlightedOption === null) {
       let { selected } = this.props;
       let highlightedOption = flattenedOptions.find(
@@ -137,22 +132,32 @@ export default class Select extends Component {
   };
 
   close = () => {
-    this.setHighlightedOption(null);
     this.setState({
       isOpen: false,
-      filteredOptions: null,
-      searchTerm: null,
     });
     this.props.onClose({ select: this.getPublicApi() });
+  };
+
+  resetSearchAndClose = () => {
+    this.resetSearch();
+    this.close();
   };
 
   toggle = event => {
     event && event.stopPropagation();
     if (this.state.isOpen) {
-      this.close();
+      this.resetSearchAndClose();
     } else {
       this.open();
     }
+  };
+
+  resetSearch = () => {
+    this.setHighlightedOption(null);
+    this.setState({
+      searchTerm: null,
+      filteredOptions: null,
+    });
   };
 
   setFocusedState(focused) {
@@ -187,14 +192,6 @@ export default class Select extends Component {
     let { flattenedOptions } = flattenOptions(filteredOptions || []);
     if (searchTerm && flattenedOptions.length) {
       this.setHighlightedOption(flattenedOptions[0]);
-
-      // let firstOption = flattenedOptions[0];
-      // let optionLabel = typeof firstOption === 'string'
-      //   ? firstOption
-      //   : firstOption[optionLabelPath] || '';
-      // if (searchTerm.toLowerCase() === optionLabel.toLowerCase()) {
-      //   this.setHighlightedOption(firstOption);
-      // }
     }
     this.setState(
       {
@@ -241,7 +238,7 @@ export default class Select extends Component {
     if (this.state.isOpen) {
       this.selectOption(highlightedOption);
       this.focusField();
-      this.close();
+      this.resetSearchAndClose();
     }
   }
 
@@ -249,7 +246,7 @@ export default class Select extends Component {
     this.setFocusedState(false);
     if (this.state.isOpen) {
       this.selectOption(highlightedOption);
-      this.close();
+      this.resetSearchAndClose();
     }
   }
 
@@ -272,7 +269,7 @@ export default class Select extends Component {
 
   handleEscapePress(event) {
     if (event.which === 27) {
-      this.close();
+      this.resetSearchAndClose();
     }
   }
 
@@ -287,7 +284,7 @@ export default class Select extends Component {
         this.setFocusedState(false);
       }
       if (isOpen) {
-        this.close();
+        this.resetSearchAndClose();
       }
     }
   }
@@ -311,7 +308,7 @@ export default class Select extends Component {
     this.selectOption(highlightedOption);
     this.focusField();
     if (this.props.closeOnSelect) {
-      this.close();
+      this.resetSearchAndClose();
     }
   };
 
@@ -321,6 +318,7 @@ export default class Select extends Component {
       open: this.open,
       close: this.close,
       search: this.search,
+      resetSearch: this.resetSearch,
       focus: this.focusField,
       isOpen,
       searchTerm,
@@ -417,7 +415,6 @@ Select.defaultProps = {
   disabled: false,
   tabIndex: 0,
   closeOnSelect: true,
-  closeDropdownOnEmpty: false,
   selectTriggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
