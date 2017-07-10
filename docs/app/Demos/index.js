@@ -1,6 +1,7 @@
 import PlainArrayDemo from './PowerSelect/PlainArrayDemo';
 import WithoutSearchDemo from './PowerSelect/WithoutSearchDemo';
 import ArrayOfObjectsDemo from './PowerSelect/ArrayOfObjectsDemo';
+import OptGroupDemo from './PowerSelect/OptGroupDemo';
 import HighlightSearchDemo from './PowerSelect/HighlightSearch';
 import SearchFieldsDemo from './PowerSelect/SearchFieldsDemo';
 import CustomOptionDemo from './PowerSelect/CustomOptionDemo';
@@ -64,6 +65,18 @@ export default () => {
               <Snippet
                 highlightLines={[[21, 21]]}
                 snippetName="PowerSelectArrayOfObjectsDemo"
+              />
+            </div>
+          </div>
+
+          <div className="Section">
+            <div className="Section__Demo">
+              <OptGroupDemo />
+            </div>
+            <div className="Section__Code">
+              <Snippet
+                highlightLines={[[4, 11], [40, 40]]}
+                snippetName="PowerSelectOptGroupDemo"
               />
             </div>
           </div>
