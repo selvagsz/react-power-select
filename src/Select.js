@@ -186,13 +186,15 @@ export default class Select extends Component {
     }
     let { flattenedOptions } = flattenOptions(filteredOptions || []);
     if (searchTerm && flattenedOptions.length) {
-      let firstOption = flattenedOptions[0];
-      let optionLabel = typeof firstOption === 'string'
-        ? firstOption
-        : firstOption[optionLabelPath] || '';
-      if (searchTerm.toLowerCase() === optionLabel.toLowerCase()) {
-        this.setHighlightedOption(firstOption);
-      }
+      this.setHighlightedOption(flattenedOptions[0]);
+
+      // let firstOption = flattenedOptions[0];
+      // let optionLabel = typeof firstOption === 'string'
+      //   ? firstOption
+      //   : firstOption[optionLabelPath] || '';
+      // if (searchTerm.toLowerCase() === optionLabel.toLowerCase()) {
+      //   this.setHighlightedOption(firstOption);
+      // }
     }
     this.setState(
       {

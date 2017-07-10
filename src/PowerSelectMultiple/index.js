@@ -61,7 +61,7 @@ export default class PowerSelectMultiple extends Component {
   };
 
   render() {
-    let { className, options, onChange, showOptionClose, ...rest } = this.props;
+    let { className, options, onChange, ...rest } = this.props;
     return (
       <Select
         className={`${className} PowerSelectMultiple`}
@@ -69,7 +69,7 @@ export default class PowerSelectMultiple extends Component {
         selectTriggerComponent={props =>
           <MultiSelectTrigger
             {...props}
-            showOptionClose={showOptionClose}
+            showOptionClose={true}
             onOptionCloseClick={this.removeOption}
           />}
         options={this.state.filteredOptions}
@@ -83,6 +83,3 @@ export default class PowerSelectMultiple extends Component {
 }
 
 PowerSelectMultiple.displayName = 'PowerSelectMultiple';
-PowerSelectMultiple.defaultProps = {
-  showOptionClose: true,
-};
