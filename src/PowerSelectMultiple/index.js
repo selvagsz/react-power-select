@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import Select from '../Select';
 import MultiSelectTrigger from './SelectTrigger';
 
@@ -64,7 +65,7 @@ export default class PowerSelectMultiple extends Component {
     let { className, options, onChange, ...rest } = this.props;
     return (
       <Select
-        className={`${className} PowerSelectMultiple`}
+        className={cx('PowerSelectMultiple', className)}
         ref={powerselect => (this.powerselect = powerselect)}
         triggerComponent={props =>
           <MultiSelectTrigger
