@@ -151,8 +151,7 @@
 // MultiSelect
 .PowerSelectMultiple__SelectedOptions {
   list-style: none;
-  padding-left: 0;
-  padding-right: 22px;
+  padding: 2px 22px 2px 0;
   display: inline-block;
 
   > li {
@@ -161,7 +160,7 @@
 }
 
 .PowerSelectMultiple__SelectedOption {
-  margin: 4px 0px 4px 4px;
+  margin: 2px 0 2px 4px;
   background-color: #ebeeff;
   border: 1px solid #c6cfff;
 }
@@ -188,14 +187,14 @@
   .PowerSelect__Trigger {
     white-space: normal;
     height: auto;
-    min-height: 34px;
+    min-height: 28px;
   }
 
   .PowerSelect__TriggerInput {
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 34px;
+    height: 28px;
     margin-left: 4px;
   }
 }
