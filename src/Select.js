@@ -340,7 +340,7 @@ export default class Select extends Component {
     } = this.props;
 
     let { isOpen, searchTerm, highlightedOption, focused } = this.state;
-    let SelectTrigger = this.props.selectTriggerComponent;
+    let Trigger = this.props.triggerComponent;
     let options = this.getVisibleOptions();
     let selectApi = this.getPublicApi();
 
@@ -367,7 +367,7 @@ export default class Select extends Component {
             this.handleKeyDown(event, highlightedOption);
           }}
         >
-          <SelectTrigger
+          <Trigger
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
@@ -415,7 +415,7 @@ Select.defaultProps = {
   disabled: false,
   tabIndex: 0,
   closeOnSelect: true,
-  selectTriggerComponent: SelectTrigger,
+  triggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
   selectedOptionComponent: null,

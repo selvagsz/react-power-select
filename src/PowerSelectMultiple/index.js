@@ -66,7 +66,7 @@ export default class PowerSelectMultiple extends Component {
       <Select
         className={`${className} PowerSelectMultiple`}
         ref={powerselect => (this.powerselect = powerselect)}
-        selectTriggerComponent={props =>
+        triggerComponent={props =>
           <MultiSelectTrigger
             {...props}
             showOptionClose={true}

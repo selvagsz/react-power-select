@@ -7,7 +7,7 @@ export default class TypeAhead extends Component {
     let { selectedOptionLabelPath, ...rest } = this.props;
     return (
       <Select
-        selectTriggerComponent={props => {
+        triggerComponent={props => {
           return (
             <TypeAheadSelectTrigger
               {...props}
