@@ -8,7 +8,7 @@ export default class TypeAhead extends Component {
     if (event.which === 27) {
       if (!select.searchTerm) {
         onChange({
-          option: '',
+          option: undefined,
           select,
         });
       }
