@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { countries } from '../constants';
 
-const Loader = ({ loadingText = '' }) => (
+const Loader = ({ loadingText = '' }) =>
   <div className="spinner">
     {loadingText}
     <div className="bounce1" />
     <div className="bounce2" />
     <div className="bounce3" />
-  </div>
-);
+  </div>;
 
 export default class BeforeOptionsDemo extends Component {
   state = {
@@ -54,7 +53,7 @@ export default class BeforeOptionsDemo extends Component {
                   value={select.searchTerm || ''}
                   autoFocus={true}
                   onChange={event => {
-                    select.search(event.target.value);
+                    select.actions.search(event.target.value);
                   }}
                 />
               </div>

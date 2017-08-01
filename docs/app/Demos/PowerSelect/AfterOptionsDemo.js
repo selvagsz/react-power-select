@@ -24,17 +24,16 @@ export default class AfterOptionsDemo extends Component {
           selected={this.state.selectedCountry}
           optionLabelPath="name"
           onChange={this.handleChange}
-          afterOptionsComponent={({ select }) => (
+          afterOptionsComponent={({ select }) =>
             <a
               className="quick-create"
               onClick={() => {
                 this.handleNewClick();
-                select.close();
+                select.actions.close();
               }}
             >
               + Add New
-            </a>
-          )}
+            </a>}
         />
       </div>
     );

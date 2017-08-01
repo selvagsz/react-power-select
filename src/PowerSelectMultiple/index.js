@@ -23,8 +23,8 @@ export default class PowerSelectMultiple extends Component {
       select,
     });
     if (select.searchTerm) {
-      select.resetSearch();
-      select.focus();
+      select.actions.search('');
+      select.actions.focus();
     }
   };
 
@@ -45,8 +45,8 @@ export default class PowerSelectMultiple extends Component {
           options,
           select,
         });
-        select.open();
-        select.focus();
+        select.actions.open();
+        select.actions.focus();
       }
     }
   };
@@ -58,7 +58,7 @@ export default class PowerSelectMultiple extends Component {
       options,
       select,
     });
-    select.focus();
+    select.actions.focus();
   };
 
   render() {

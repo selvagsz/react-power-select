@@ -311,15 +311,17 @@ export default class Select extends Component {
   };
 
   getPublicApi() {
-    let { isOpen, searchTerm } = this.state;
+    let { isOpen, searchTerm, highlightedOption } = this.state;
     return {
-      open: this.open,
-      close: this.close,
-      search: this.search,
-      resetSearch: this.resetSearch,
-      focus: this.focusField,
       isOpen,
       searchTerm,
+      highlightedOption,
+      actions: {
+        open: this.open,
+        close: this.close,
+        search: this.search,
+        focus: this.focusField,
+      },
     };
   }
 

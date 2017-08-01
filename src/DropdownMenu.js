@@ -22,7 +22,7 @@ export default class DropdownMenu extends Component {
   validateAndClose(options) {
     let { beforeOptionsComponent, afterOptionsComponent, select } = this.props;
     if (!beforeOptionsComponent && !afterOptionsComponent && !options.length) {
-      select.close();
+      select.actions.close();
     }
   }
 

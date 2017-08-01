@@ -34,8 +34,8 @@ class TaggedInput extends Component {
         select,
       });
 
-      select.resetSearch();
-      select.focus();
+      select.actions.search('');
+      select.actions.focus();
     }
   };
 

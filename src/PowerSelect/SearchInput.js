@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 
 export default class SearchInput extends Component {
   componentDidMount() {
-    let input = this.refs['before-options-input'];
-    setTimeout(function() {
-      input.focus();
+    setTimeout(() => {
+      this.input.focus();
     }, 0);
   }
 
   componentWillMount() {
     let searchTerm = this.props.searchTerm;
     if (searchTerm !== undefined) {
-      this.props.select.search(searchTerm);
+      this.props.select.actions.search(searchTerm);
     }
   }
 
@@ -20,9 +19,9 @@ export default class SearchInput extends Component {
     return (
       <div className="PowerSelect__SearchInputContainer">
         <input
-          ref="before-options-input"
+          ref={input => (this.input = input)}
           className="PowerSelect__SearchInput"
-          onChange={e => props.select.search(e.target.value)}
+          onChange={e => props.select.actions.search(e.target.value)}
         />
       </div>
     );
