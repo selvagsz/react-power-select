@@ -102,12 +102,10 @@ export default class Select extends Component {
 
   selectOption = option => {
     this.setHighlightedOption(option);
-    if (option) {
-      this.props.onChange({
-        select: this.getPublicApi(),
-        option,
-      });
-    }
+    this.props.onChange({
+      select: this.getPublicApi(),
+      option,
+    });
     this.setState({
       searchTerm: null,
     });
@@ -177,22 +175,21 @@ export default class Select extends Component {
       matcher,
       searchIndices = optionLabelPath,
     } = this.props;
-    let filteredOptions = null;
-    if (searchTerm) {
-      filteredOptions = filterOptions({
-        options,
-        searchTerm,
-        searchIndices,
-        matcher,
-      });
-    }
-    if (!searchTerm || !filteredOptions.length) {
-      this.setHighlightedOption(null);
-    }
+    searchTerm = searchTerm || '';
+    let filteredOptions = filterOptions({
+      options,
+      searchTerm,
+      searchIndices,
+      matcher,
+    });
+
     let { flattenedOptions } = flattenOptions(filteredOptions || []);
     if (searchTerm && flattenedOptions.length) {
       this.setHighlightedOption(flattenedOptions[0]);
+    } else {
+      this.setHighlightedOption(null);
     }
+
     this.setState(
       {
         filteredOptions,
@@ -205,8 +202,8 @@ export default class Select extends Component {
 
   handleSearchInputChange = event => {
     let value = event.target.value;
-    this.search(value);
     this.open();
+    this.search(value);
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
@@ -270,6 +267,7 @@ export default class Select extends Component {
   handleEscapePress(event) {
     if (event.which === 27) {
       this.resetSearchAndClose();
+      this.focusField();
     }
   }
 

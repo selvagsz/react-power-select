@@ -22,12 +22,7 @@ export default class Option extends Component {
           'PowerSelect__Option--highlighted': isHighlighted,
         })}
         data-option-index={optionIndex}
-        onClick={() => {
-          if (isDisabled) {
-            return false;
-          }
-          onOptionClick();
-        }}
+        onClick={isDisabled ? null : onOptionClick}
       >
         <RenderOption
           option={option}
