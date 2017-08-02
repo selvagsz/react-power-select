@@ -16,12 +16,14 @@ export default class PowerSelectMultiple extends Component {
 
   handleOnChange = ({ option, select }) => {
     let { selected, onChange } = this.props;
-    let options = selected.slice();
-    options.push(option);
-    onChange({
-      options,
-      select,
-    });
+    if (option) {
+      let options = selected.slice();
+      options.push(option);
+      onChange({
+        options,
+        select,
+      });
+    }
     if (select.searchTerm) {
       select.actions.search('');
       select.actions.focus();

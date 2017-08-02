@@ -137,7 +137,7 @@ export default class Select extends Component {
   };
 
   resetSearchAndClose = () => {
-    this.resetSearch();
+    this.search('');
     this.close();
   };
 
@@ -222,6 +222,7 @@ export default class Select extends Component {
   }
 
   handleDownArrow(event, highlightedOption) {
+    debugger;
     event.preventDefault();
     this.validateAndHighlightOption(highlightedOption, 1);
   }
