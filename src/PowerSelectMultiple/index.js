@@ -63,6 +63,19 @@ export default class PowerSelectMultiple extends Component {
     select.actions.focus();
   };
 
+  handleClearClick = (event, { select }) => {
+    event.stopPropagation();
+    this.props.onChange({
+      options: [],
+      select,
+    });
+    if (select.searchTerm) {
+      select.actions.search('');
+    }
+    select.actions.close();
+    select.actions.focus();
+  };
+
   render() {
     let { className, options, onChange, ...rest } = this.props;
     return (
@@ -74,6 +87,7 @@ export default class PowerSelectMultiple extends Component {
             {...props}
             showOptionClose={true}
             onOptionCloseClick={this.removeOption}
+            onClearClick={this.handleClearClick}
           />}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}

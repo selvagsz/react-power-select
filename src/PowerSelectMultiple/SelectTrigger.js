@@ -16,6 +16,10 @@ export default class SelectTrigger extends Component {
     });
   }
 
+  handleClearClick = event => {
+    this.props.onClearClick(event, { select: this.props.select });
+  };
+
   render() {
     let {
       selectedOption,
@@ -24,6 +28,7 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
+      showClear,
       onClick,
       handleOnChange,
       handleKeyDown,
@@ -77,6 +82,13 @@ export default class SelectTrigger extends Component {
           <div className="PowerSelect__Trigger__RHS">
             {renderComponent(triggerRHSComponent, { select })}
           </div>}
+
+        {showClear &&
+          selected.length > 0 &&
+          <span
+            className="PowerSelect__Clear"
+            onClick={this.handleClearClick}
+          />}
         <span className="PowerSelect__TriggerStatus" />
       </div>
     );

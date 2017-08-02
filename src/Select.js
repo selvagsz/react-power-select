@@ -95,7 +95,6 @@ export default class Select extends Component {
   }
 
   setHighlightedOption(highlightedOption) {
-    debugger;
     this.setState({
       highlightedOption,
     });
@@ -222,7 +221,6 @@ export default class Select extends Component {
   }
 
   handleDownArrow(event, highlightedOption) {
-    debugger;
     event.preventDefault();
     this.validateAndHighlightOption(highlightedOption, 1);
   }
@@ -303,6 +301,12 @@ export default class Select extends Component {
     this.props.onClick(event, { select: this.getPublicApi() });
   };
 
+  handleClearClick = event => {
+    this.selectOption(undefined);
+    this.resetSearchAndClose();
+    event.stopPropagation();
+  };
+
   handleOptionClick = highlightedOption => {
     this.selectOption(highlightedOption);
     this.focusField();
@@ -332,6 +336,7 @@ export default class Select extends Component {
       dropdownPortalClassName,
       tabIndex,
       selected,
+      showClear,
       optionLabelPath,
       optionComponent,
       placeholder,
@@ -380,8 +385,10 @@ export default class Select extends Component {
             placeholder={placeholder}
             disabled={disabled}
             searchTerm={searchTerm}
+            showClear={showClear}
             handleOnChange={this.handleSearchInputChange}
             onClick={this.handleClick}
+            onClearClick={this.handleClearClick}
             handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
             select={selectApi}
@@ -420,6 +427,7 @@ Select.defaultProps = {
   options: [],
   disabled: false,
   tabIndex: 0,
+  showClear: true,
   closeOnSelect: true,
   optionLabelPath: null,
   optionComponent: null,

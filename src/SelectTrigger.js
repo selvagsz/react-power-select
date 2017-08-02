@@ -10,6 +10,8 @@ export default ({
   triggerRHSComponent,
   placeholder,
   onClick,
+  showClear,
+  onClearClick,
   select,
 }) => {
   return (
@@ -34,6 +36,10 @@ export default ({
         <div className="PowerSelect__Trigger__RHS">
           {renderComponent(triggerRHSComponent, { select })}
         </div>}
+
+      {showClear &&
+        selectedOption &&
+        <span className="PowerSelect__Clear" onClick={onClearClick} />}
 
       <span className="PowerSelect__TriggerStatus" />
     </div>

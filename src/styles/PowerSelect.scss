@@ -151,27 +151,43 @@
 }
 
 .PowerSelect__TriggerStatus {
-  border-top: 4px solid #ccc;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  position: absolute;
-  right: 8px;
-  top: 50%;
+  padding: 0 8px;
+  &::before {
+    content: '';
+    border-top: 4px solid #ccc;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    position: relative;
+    top: 40%;
+  }
+}
+
+.PowerSelect__Clear {
+  padding: 4px;
+  color: #888;
+  &:hover {
+    color: #333;
+  }
+  &::before {
+    content: '×'
+  }
 }
 
 .PowerSelect__TriggerLabel,
 .PowerSelect__TriggerInputContainer,
-.PowerSelectMultiple__OptionsContainer {
+.PowerSelectMultiple__OptionsContainer,
+.PowerSelect__Clear,
+.PowerSelect__TriggerStatus {
   display: table-cell;
   width: 100%;
   vertical-align: middle;
+  height: 32px;
 }
 
 
 // MultiSelect
 .PowerSelectMultiple__OptionsContainer {
   padding-top: 3px;
-  padding-left: 4px;
 }
 
 .PowerSelectMultiple__SelectedOptions {
@@ -218,7 +234,6 @@
   .PowerSelect__Trigger {
     white-space: normal;
     height: auto;
-    min-height: 32px;
   }
 
   .PowerSelect__TriggerInput {
