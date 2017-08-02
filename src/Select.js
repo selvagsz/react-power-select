@@ -95,6 +95,7 @@ export default class Select extends Component {
   }
 
   setHighlightedOption(highlightedOption) {
+    debugger;
     this.setState({
       highlightedOption,
     });
@@ -137,7 +138,7 @@ export default class Select extends Component {
   };
 
   resetSearchAndClose = () => {
-    this.search('');
+    this.search(null);
     this.close();
   };
 
@@ -175,10 +176,9 @@ export default class Select extends Component {
       matcher,
       searchIndices = optionLabelPath,
     } = this.props;
-    searchTerm = searchTerm || '';
     let filteredOptions = filterOptions({
       options,
-      searchTerm,
+      searchTerm: searchTerm || '',
       searchIndices,
       matcher,
     });
@@ -336,6 +336,8 @@ export default class Select extends Component {
       placeholder,
       disabled,
       selectedOptionComponent,
+      triggerLHSComponent,
+      triggerRHSComponent,
       beforeOptionsComponent,
       afterOptionsComponent,
     } = this.props;
@@ -372,6 +374,8 @@ export default class Select extends Component {
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
+            triggerLHSComponent={triggerLHSComponent}
+            triggerRHSComponent={triggerRHSComponent}
             placeholder={placeholder}
             disabled={disabled}
             searchTerm={searchTerm}
@@ -416,9 +420,11 @@ Select.defaultProps = {
   disabled: false,
   tabIndex: 0,
   closeOnSelect: true,
-  triggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
+  triggerComponent: SelectTrigger,
+  triggerLHSComponent: null,
+  triggerRHSComponent: null,
   selectedOptionComponent: null,
   beforeOptionsComponent: null,
   afterOptionsComponent: null,

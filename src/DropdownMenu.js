@@ -1,14 +1,6 @@
-import React, { Component, isValidElement, cloneElement } from 'react';
+import React, { Component } from 'react';
+import { renderComponent } from './utils';
 import Options from './Options';
-
-const renderComponent = (Component, props) => {
-  if (isValidElement(Component)) {
-    return cloneElement(Component, props);
-  }
-  if (Component) {
-    return <Component {...props} />;
-  }
-};
 
 export default class DropdownMenu extends Component {
   componentWillMount() {
@@ -43,9 +35,7 @@ export default class DropdownMenu extends Component {
         onKeyDown={event => {
           handleKeyDown(event, highlightedOption);
         }}
-        style={{
-          minWidth: `${minWidth}px`,
-        }}
+        style={{ minWidth }}
       >
         {beforeOptionsComponent &&
           renderComponent(beforeOptionsComponent, { select })}

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { renderComponent } from '../utils';
+import AutoResizeInput from '../AutoResizeInput';
 
 export default class SelectTrigger extends Component {
   state = {};
@@ -31,8 +33,16 @@ export default class SelectTrigger extends Component {
     return value;
   }
 
+  handleInputChange = event => {
+    this.setState({
+      value: event.target.value,
+    });
+    this.props.handleOnChange(event);
+  };
+
   render() {
     let {
+      select,
       placeholder,
       disabled,
       onClick,
@@ -40,21 +50,35 @@ export default class SelectTrigger extends Component {
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
+      triggerLHSComponent,
+      triggerRHSComponent,
     } = this.props;
     return (
       <div className="PowerSelect__Trigger" onClick={onClick}>
-        <input
-          className="PowerSelect__TriggerInput"
-          autoComplete="off"
-          spellCheck="false"
-          placeholder={placeholder}
-          value={this.state.value}
-          disabled={disabled}
-          onChange={handleOnChange}
-          onKeyDown={handleKeyDown}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
-        />
+        {triggerLHSComponent &&
+          <div className="PowerSelect__Trigger__LHS">
+            {renderComponent(triggerLHSComponent, { select })}
+          </div>}
+
+        <div className="PowerSelect__TriggerInputContainer">
+          <AutoResizeInput
+            className="PowerSelect__TriggerInput"
+            autoComplete="off"
+            spellCheck="false"
+            placeholder={placeholder}
+            value={this.state.value}
+            disabled={disabled}
+            onChange={this.handleInputChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleOnFocus}
+            onBlur={handleOnBlur}
+          />
+        </div>
+
+        {triggerRHSComponent &&
+          <div className="PowerSelect__Trigger__RHS">
+            {renderComponent(triggerRHSComponent, { select })}
+          </div>}
         <span className="PowerSelect__TriggerStatus" />
       </div>
     );

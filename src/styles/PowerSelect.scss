@@ -1,7 +1,7 @@
 .PowerSelect {
   cursor: pointer;
   border: 1px solid #ccc;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: #fff;
 
   &:focus {
@@ -38,7 +38,7 @@
 
 .PowerSelect__Trigger {
   position: relative;
-  height: 34px;
+  height: 32px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -106,7 +106,7 @@
   height: 32px;
   padding: 4px 8px;
   line-height: 1.4;
-  font-size: 14px;
+  font-size: inherit;
   border: 1px solid #ccc;
   border-radius: 2px;
   cursor: pointer;
@@ -118,24 +118,36 @@
 }
 
 .PowerSelect__TriggerInput {
-  display: block;
-  height: 34px;
-  width: 100%;
+  display: inline-block;
+  height: 32px;
   border: none;
   cursor: pointer;
-  padding: 4px 22px 4px 12px;
-  font-size: 14px;
+  padding: 4px 22px 4px 8px;
+  font-size: inherit;
 
   &:focus {
     outline: none;
   }
 }
 
+.PowerSelect__Trigger__LHS,
+.PowerSelect__Trigger__RHS {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.PowerSelect__Trigger__LHS {
+  padding-left: 8px;
+}
+
+.PowerSelect__Trigger__RHS {
+  padding-right: 24px;
+  padding-left: 8px;
+}
+
 .PowerSelect__TriggerLabel {
-  display: block;
-  line-height: 24px;
-  height: 100%;
-  padding: 5px 22px 5px 12px;
+  padding: 6px 22px 6px 8px;
 }
 
 .PowerSelect__TriggerStatus {
@@ -147,37 +159,56 @@
   top: 50%;
 }
 
+.PowerSelect__TriggerLabel,
+.PowerSelect__TriggerInputContainer,
+.PowerSelectMultiple__OptionsContainer {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+
 
 // MultiSelect
+.PowerSelectMultiple__OptionsContainer {
+  padding-top: 3px;
+  padding-left: 4px;
+}
+
 .PowerSelectMultiple__SelectedOptions {
   list-style: none;
-  padding: 2px 22px 2px 0;
-  display: inline-block;
+  padding-left: 0;
+  display: block;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 
   > li {
-    display: inline-block;
+    display: block;
+    float: left;
+    margin-bottom: 3px;
   }
 }
 
 .PowerSelectMultiple__SelectedOption {
-  margin: 2px 0 2px 4px;
+  line-height: 24px;
+  margin-left: 4px;
   background-color: #ebeeff;
   border: 1px solid #c6cfff;
 }
 
-.PowerSelectMultiple__SelectedOption__Label {
-  padding: 2px 6px;
-  display: inline-block;
-  vertical-align: middle;
+.PowerSelectMultiple__SelectedOption__Label,
+.PowerSelectMultiple__SelectedOption__Close {
+  padding: 0 6px;
+  display: block;
+  float: left;
 }
 
 .PowerSelectMultiple__SelectedOption__Close {
-  padding: 2px 6px;
   border-left: 1px solid #c6cfff;
   cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
-
   &:hover {
     background-color: #dce1ff;
   }
@@ -187,14 +218,14 @@
   .PowerSelect__Trigger {
     white-space: normal;
     height: auto;
-    min-height: 28px;
+    min-height: 32px;
   }
 
   .PowerSelect__TriggerInput {
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 28px;
+    height: 26px;
     margin-left: 4px;
   }
 }

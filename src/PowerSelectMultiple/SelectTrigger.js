@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Option from '../Option';
-import MultiSelectSearchInput from './SearchInput';
+import AutoResizeInput from '../AutoResizeInput';
 import SelectedOption from './SelectedOption';
+import { renderComponent } from '../utils';
 
 export default class SelectTrigger extends Component {
   state = {
@@ -29,10 +30,17 @@ export default class SelectTrigger extends Component {
       handleOnFocus,
       handleOnBlur,
       selectedOptionComponent,
+      triggerLHSComponent,
+      triggerRHSComponent,
     } = this.props;
     let selected = selectedOption || [];
     return (
       <div className="PowerSelect__Trigger" onClick={onClick}>
+        {triggerLHSComponent &&
+          <div className="PowerSelect__Trigger__LHS">
+            {renderComponent(triggerLHSComponent, { select })}
+          </div>}
+
         <div className="PowerSelectMultiple__OptionsContainer">
           <ul className="PowerSelectMultiple__SelectedOptions">
             {selected.map((selectedOption, index) => {
@@ -49,7 +57,7 @@ export default class SelectTrigger extends Component {
               );
             })}
             <li>
-              <MultiSelectSearchInput
+              <AutoResizeInput
                 className="PowerSelect__TriggerInput"
                 autoComplete="off"
                 spellCheck="false"
@@ -63,8 +71,13 @@ export default class SelectTrigger extends Component {
               />
             </li>
           </ul>
-          <span className="PowerSelect__TriggerStatus" />
         </div>
+
+        {triggerRHSComponent &&
+          <div className="PowerSelect__Trigger__RHS">
+            {renderComponent(triggerRHSComponent, { select })}
+          </div>}
+        <span className="PowerSelect__TriggerStatus" />
       </div>
     );
   }
