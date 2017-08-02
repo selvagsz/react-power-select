@@ -87,6 +87,13 @@ header {
   line-height: 1.1;
 }
 
+.header__note {
+  padding: 4px;
+  background-color: #ededed;
+  color: #d5247b;
+  font-size: 16px;
+}
+
 .container {
   max-width: 875px;
   margin: auto;

@@ -24,6 +24,7 @@ export default class AfterOptionsDemo extends Component {
           selected={this.state.selectedCountry}
           optionLabelPath="name"
           onChange={this.handleChange}
+          placeholder="Select your country"
           afterOptionsComponent={({ select }) =>
             <a
               className="quick-create"

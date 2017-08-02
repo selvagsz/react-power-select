@@ -24,7 +24,11 @@ export default () => {
     <div>
       <header className="header">
         <div style={{ display: 'inline-block' }}>
-          React Power Select
+          <div>React Power Select</div>
+          <div>
+            <code className="header__note">#TIL {'{}'} !== {'{}'}</code>
+          </div>
+
           <div className="text-right">
             <a
               className="github-button"
@@ -38,11 +42,6 @@ export default () => {
         </div>
       </header>
       <div className="container">
-        {/*}
-        <section>
-          <ArrayOfObjectsDemo />
-        </section>
-*/}
         <section>
           <h1>Power Select</h1>
           <div className="Section">
@@ -51,7 +50,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[10, 12], [19, 23]]}
+                highlightLines={[[10, 12], [19, 24]]}
                 snippetName="PowerSelectPlainArrayDemo"
               />
             </div>
