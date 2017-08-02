@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import { renderComponent } from './utils';
 import RenderOption from './RenderOption';
 
@@ -15,7 +16,12 @@ export default ({
   select,
 }) => {
   return (
-    <div className="PowerSelect__Trigger" onClick={onClick}>
+    <div
+      className={cx('PowerSelect__Trigger', {
+        'PowerSelect__Trigger--empty': !selectedOption,
+      })}
+      onClick={onClick}
+    >
       {triggerLHSComponent &&
         <div className="PowerSelect__Trigger__LHS">
           {renderComponent(triggerLHSComponent, { select })}
@@ -38,7 +44,6 @@ export default ({
         </div>}
 
       {showClear &&
-        selectedOption &&
         <span className="PowerSelect__Clear" onClick={onClearClick} />}
 
       <span className="PowerSelect__TriggerStatus" />

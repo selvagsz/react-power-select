@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import { renderComponent } from '../utils';
 import AutoResizeInput from '../AutoResizeInput';
 
@@ -55,8 +56,15 @@ export default class SelectTrigger extends Component {
       triggerLHSComponent,
       triggerRHSComponent,
     } = this.props;
+    let value = this.state.value;
+
     return (
-      <div className="PowerSelect__Trigger" onClick={onClick}>
+      <div
+        className={cx('PowerSelect__Trigger', {
+          'PowerSelect__Trigger--empty': !value,
+        })}
+        onClick={onClick}
+      >
         {triggerLHSComponent &&
           <div className="PowerSelect__Trigger__LHS">
             {renderComponent(triggerLHSComponent, { select })}
@@ -68,7 +76,7 @@ export default class SelectTrigger extends Component {
             autoComplete="off"
             spellCheck="false"
             placeholder={placeholder}
-            value={this.state.value}
+            value={value}
             disabled={disabled}
             onChange={this.handleInputChange}
             onKeyDown={handleKeyDown}
@@ -83,7 +91,6 @@ export default class SelectTrigger extends Component {
           </div>}
 
         {showClear &&
-          this.state.value &&
           <span className="PowerSelect__Clear" onClick={onClearClick} />}
 
         <span className="PowerSelect__TriggerStatus" />

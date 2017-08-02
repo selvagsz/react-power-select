@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import Option from '../Option';
 import AutoResizeInput from '../AutoResizeInput';
 import SelectedOption from './SelectedOption';
@@ -40,7 +41,12 @@ export default class SelectTrigger extends Component {
     } = this.props;
     let selected = selectedOption || [];
     return (
-      <div className="PowerSelect__Trigger" onClick={onClick}>
+      <div
+        className={cx('PowerSelect__Trigger', {
+          'PowerSelect__Trigger--empty': !selected.length,
+        })}
+        onClick={onClick}
+      >
         {triggerLHSComponent &&
           <div className="PowerSelect__Trigger__LHS">
             {renderComponent(triggerLHSComponent, { select })}
@@ -84,7 +90,6 @@ export default class SelectTrigger extends Component {
           </div>}
 
         {showClear &&
-          selected.length > 0 &&
           <span
             className="PowerSelect__Clear"
             onClick={this.handleClearClick}

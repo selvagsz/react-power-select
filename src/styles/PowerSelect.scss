@@ -31,7 +31,7 @@
   border-bottom-left-radius: 0;
   border-bottom: 0;
 
-  .PowerSelect__TriggerStatus {
+  .PowerSelect__TriggerStatus::before {
     transform: rotate(-180deg);
   }
 }
@@ -124,6 +124,8 @@
   cursor: pointer;
   padding: 4px 22px 4px 8px;
   font-size: inherit;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 
   &:focus {
     outline: none;
@@ -139,26 +141,32 @@
 
 .PowerSelect__Trigger__LHS {
   padding-left: 8px;
+  padding-right: 4px;
 }
 
 .PowerSelect__Trigger__RHS {
-  padding-right: 24px;
-  padding-left: 8px;
+  padding-right: 4px;
+  padding-left: 4px;
 }
 
 .PowerSelect__TriggerLabel {
   padding: 6px 22px 6px 8px;
 }
 
+.PowerSelect__Trigger__LHS + .PowerSelect__TriggerLabel {
+  padding-left: 4px;
+}
+
 .PowerSelect__TriggerStatus {
-  padding: 0 8px;
+  padding-right: 8px;
+  padding-left: 4px;
+
   &::before {
     content: '';
+    display: block;
     border-top: 4px solid #ccc;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    position: relative;
-    top: 40%;
   }
 }
 
@@ -170,6 +178,12 @@
   }
   &::before {
     content: '×'
+  }
+}
+
+.PowerSelect__Trigger--empty {
+  .PowerSelect__Clear {
+    visibility: hidden;
   }
 }
 
@@ -210,7 +224,7 @@
 
 .PowerSelectMultiple__SelectedOption {
   line-height: 24px;
-  margin-left: 4px;
+  margin-left: 3px;
   background-color: #ebeeff;
   border: 1px solid #c6cfff;
 }
