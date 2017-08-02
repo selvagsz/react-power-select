@@ -329,6 +329,7 @@ export default class Select extends Component {
   render() {
     let {
       className,
+      dropdownPortalClassName,
       tabIndex,
       selected,
       optionLabelPath,
@@ -348,7 +349,7 @@ export default class Select extends Component {
     let selectApi = this.getPublicApi();
 
     return (
-      <Dropdown>
+      <Dropdown className={dropdownPortalClassName}>
         <div
           ref={powerselect => {
             this.powerselect = powerselect;
