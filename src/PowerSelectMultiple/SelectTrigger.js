@@ -67,12 +67,12 @@ export default class SelectTrigger extends Component {
                 />
               );
             })}
-            <li>
+            <li className="PowerSelectMultiple_TriggerInputContainer">
               <AutoResizeInput
                 className="PowerSelect__TriggerInput"
                 autoComplete="off"
                 spellCheck="false"
-                placeholder={placeholder}
+                placeholder={selected.length ? '' : placeholder}
                 value={this.state.value}
                 disabled={disabled}
                 onChange={handleOnChange}

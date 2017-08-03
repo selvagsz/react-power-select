@@ -20,6 +20,7 @@ export default class ArrayOfObjectsDemo extends Component {
           selected={this.state.selectedCountry}
           optionLabelPath="name"
           onChange={this.handleChange}
+          placeholder="Select your country"
         />
       </div>
     );

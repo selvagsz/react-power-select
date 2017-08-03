@@ -42,6 +42,7 @@ export default class BeforeOptionsDemo extends Component {
           optionLabelPath="name"
           onChange={this.handleChange}
           onOpen={this.handleOpen}
+          placeholder="Select your country"
           beforeOptionsComponent={({ select }) => {
             if (this.state.loading) {
               return <Loader loadingText="Loading countries" />;

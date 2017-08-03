@@ -34,6 +34,7 @@ export default class CustomSelectedOptionDemo extends Component {
           optionComponent={<CustomOptionComponent />}
           selectedOptionComponent={<CustomSelectedOptionComponent />}
           onChange={this.handleChange}
+          placeholder="Select your country"
         />
       </div>
     );

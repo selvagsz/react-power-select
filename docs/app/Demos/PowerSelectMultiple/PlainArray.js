@@ -20,6 +20,7 @@ export default class PlainArrayDemo extends Component {
             options={frameworks}
             selected={this.state.selectedFrameworks}
             onChange={this.handleChange}
+            placeholder="Select your favourite frameworks"
           />
         </div>
       </div>

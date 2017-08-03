@@ -1,3 +1,9 @@
+@mixin placeholder() {
+  color: #ccc;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
 *,
 *::before,
 *::after {
@@ -10,24 +16,30 @@ html {
 }
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Lato', sans-serif;
   padding-bottom: 100px;
-
-  &::after {
-    content: '';
-    display: block;
-    background: linear-gradient(90deg,#D5247B,#F09F4D);
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 278px;
-  }
 }
 
 html, body {
-  background-color: #fafafa;
+  background-color: rgba(249, 249, 249, 0.44);
+}
+
+::-webkit-input-placeholder {
+  @include placeholder()
+}
+::-moz-placeholder {
+  @include placeholder()
+}
+:-ms-input-placeholder {
+  @include placeholder()
+}
+:-moz-placeholder {
+  @include placeholder()
+}
+
+section.header {
+  background: linear-gradient(180deg,#2432da,#4a94ff);
+  padding: 80px;
 }
 
 .tether-element {
@@ -78,20 +90,18 @@ html, body {
 header {
   font-size: 45px;
   color: #fff;
-  padding: 80px 10px 25px;
   text-align: center;
-  z-index: 1;
-  position: relative;
-  font-family: monospace;
-  font-weight: 800;
-  line-height: 1.1;
 }
 
 .header__note {
-  padding: 4px;
+  display: inline-block;
+  padding: 8px 16px;
   background-color: #ededed;
   color: #d5247b;
   font-size: 16px;
+  border-radius: 2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .container {
@@ -99,8 +109,6 @@ header {
   margin: auto;
   z-index: 1;
   position: relative;
-  border-radius: 4px;
-  box-shadow: 0 0 20px -9px #333;
   background-color: #fff;
   padding: 30px;
 }
@@ -122,7 +130,7 @@ section {
       left: 0;
       width: 40px;
       top: 100%;
-      border: 2px solid #cb72fa;
+      border: 2px solid #e8e7e7;
       margin-top: 8px;
     }
   }
@@ -228,6 +236,12 @@ section {
   color: #aaa;
   font-size: 13px;
   margin-top: 8px;
+}
+
+.PowerSelect__Trigger__RHS {
+  svg + svg {
+    margin-left: 12px;
+  }
 }
 
 @media (max-width: 875px) {

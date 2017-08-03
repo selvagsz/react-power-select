@@ -76,7 +76,11 @@ export default class TaggedInputDemo extends Component {
     return (
       <div className="demo">
         <h3>Tagged Input Component</h3>
-        <TaggedInput items={this.state.urls} onChange={this.handleChange} />
+        <TaggedInput
+          items={this.state.urls}
+          onChange={this.handleChange}
+          placholder="Enter your site urls"
+        />
       </div>
     );
   }

@@ -50,6 +50,7 @@ export default class ArrayOfObjectsDemo extends Component {
           optionComponent={<CustomOptionComponnet />}
           selectedOptionComponent={<CustomSelectedOptionComponent />}
           onChange={this.handleChange}
+          placeholder="Select your favourite countries"
         />
       </div>
     );
