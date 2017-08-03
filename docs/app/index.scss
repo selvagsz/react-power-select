@@ -38,8 +38,20 @@ html, body {
 }
 
 section.header {
-  background: linear-gradient(180deg,#2432da,#4a94ff);
-  padding: 80px;
+  background: linear-gradient(180deg,rgba(90, 62, 144, 0.99),#774aff);
+  padding: 150px 80px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('https://68.media.tumblr.com/d78eb7bd6eafe022ea6cc2176f1b41c0/tumblr_nkwxd8cKHg1r82eito1_500.gif');
+    opacity: 0.03;
+  }
 }
 
 .tether-element {
@@ -266,7 +278,11 @@ section {
 .TaggedInput {
   // Hides the caret
   .PowerSelect__TriggerStatus {
-    visibility: hidden;
+    display: none;
+  }
+
+  .PowerSelect__Clear {
+    padding-right: 8px;
   }
 
   // Removes the padding allocated for caret

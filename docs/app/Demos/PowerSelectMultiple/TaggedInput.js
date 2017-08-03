@@ -6,7 +6,7 @@ import { PowerSelectMultiple } from 'src';
 // .TaggedInput {
 //   // Hides the caret
 //   .PowerSelect__TriggerStatus {
-//     visibility: hidden;
+//     display: none;
 //   }
 
 //   // Removes the padding allocated for caret
