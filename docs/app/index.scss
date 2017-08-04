@@ -39,8 +39,26 @@ html, body {
 
 section.header {
   background: linear-gradient(180deg,rgba(90, 62, 144, 0.99),#774aff);
-  padding: 150px 80px;
+  padding: 125px 20px;
   position: relative;
+  z-index: 1;
+
+  .header__container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .header__desc {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
 
   &::before {
     content: '';

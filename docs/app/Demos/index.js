@@ -23,25 +23,23 @@ export default () => {
   return (
     <div>
       <section className="header">
-        <header>
-          <div style={{ display: 'inline-block' }}>
-            <div>React Power Select</div>
-            <div className="header__note">
-              <code>#RMR {'{}'} !== {'{}'}</code>
-            </div>
-
-            <div className="text-right">
-              <a
-                className="github-button"
-                href="https://github.com/selvagsz/react-power-select"
-                data-show-count="true"
-                aria-label="Star selvagsz/react-power-select on GitHub"
-              >
-                Star
-              </a>
-            </div>
+        <div className="header__container">
+          <h1>React Power Select</h1>
+          <div className="header__desc">
+            Highly composable & resusable select/autocomplete components
           </div>
-        </header>
+
+          <div className="text-right">
+            <a
+              className="github-button"
+              href="https://github.com/selvagsz/react-power-select"
+              data-show-count="true"
+              aria-label="Star selvagsz/react-power-select on GitHub"
+            >
+              Star
+            </a>
+          </div>
+        </div>
       </section>
       <div className="container">
         <section>
