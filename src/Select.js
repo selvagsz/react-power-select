@@ -304,6 +304,7 @@ export default class Select extends Component {
   handleClearClick = event => {
     this.selectOption(undefined);
     this.resetSearchAndClose();
+    this.focusField();
     event.stopPropagation();
   };
 
@@ -316,11 +317,10 @@ export default class Select extends Component {
   };
 
   getPublicApi() {
-    let { isOpen, searchTerm, highlightedOption } = this.state;
+    let { isOpen, searchTerm } = this.state;
     return {
       isOpen,
       searchTerm,
-      highlightedOption,
       actions: {
         open: this.open,
         close: this.close,

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import cx from 'classnames';
-import Option from '../Option';
 import AutoResizeInput from '../AutoResizeInput';
 import SelectedOption from './SelectedOption';
-import { renderComponent } from '../utils';
+import TriggerWrapper from '../TriggerWrapper';
 
 export default class SelectTrigger extends Component {
   state = {
@@ -29,29 +27,21 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
-      showClear,
-      onClick,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
       selectedOptionComponent,
-      triggerLHSComponent,
-      triggerRHSComponent,
+      ...rest
     } = this.props;
     let selected = selectedOption || [];
     return (
-      <div
-        className={cx('PowerSelect__Trigger', {
-          'PowerSelect__Trigger--empty': !selected.length,
-        })}
-        onClick={onClick}
+      <TriggerWrapper
+        {...rest}
+        value={selected.length}
+        select={select}
+        onClearClick={this.handleClearClick}
       >
-        {triggerLHSComponent &&
-          <div className="PowerSelect__Trigger__LHS">
-            {renderComponent(triggerLHSComponent, { select })}
-          </div>}
-
         <div className="PowerSelectMultiple__OptionsContainer">
           <ul className="PowerSelectMultiple__SelectedOptions">
             {selected.map((selectedOption, index) => {
@@ -83,19 +73,7 @@ export default class SelectTrigger extends Component {
             </li>
           </ul>
         </div>
-
-        {triggerRHSComponent &&
-          <div className="PowerSelect__Trigger__RHS">
-            {renderComponent(triggerRHSComponent, { select })}
-          </div>}
-
-        {showClear &&
-          <span
-            className="PowerSelect__Clear"
-            onClick={this.handleClearClick}
-          />}
-        <span className="PowerSelect__TriggerStatus" />
-      </div>
+      </TriggerWrapper>
     );
   }
 }

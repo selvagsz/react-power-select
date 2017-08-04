@@ -1,6 +1,6 @@
 import React, { isValidElement, cloneElement } from 'react';
 
-export default props => {
+export default function SelectedOption(props) {
   let {
     option,
     optionLabelPath,
@@ -43,4 +43,4 @@ export default props => {
         : null}
     </li>
   );
-};
+}

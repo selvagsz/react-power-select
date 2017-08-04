@@ -51,6 +51,9 @@ export default class PowerSelectMultiple extends Component {
         select.actions.focus();
       }
     }
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event, { select });
+    }
   };
 
   removeOption = ({ option, select }) => {
@@ -89,11 +92,11 @@ export default class PowerSelectMultiple extends Component {
             onOptionCloseClick={this.removeOption}
             onClearClick={this.handleClearClick}
           />}
+        {...rest}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
         closeOnSelect={false}
         onKeyDown={this.handleKeyDown}
-        {...rest}
       />
     );
   }

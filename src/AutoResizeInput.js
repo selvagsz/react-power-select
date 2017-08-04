@@ -18,7 +18,7 @@ export default class AutoResizeInput extends Component {
   }
 
   render() {
-    return <input size={this.state.length + 2} {...this.props} />;
+    return <input size={this.state.length} {...this.props} />;
   }
 }
 

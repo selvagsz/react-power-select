@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import cx from 'classnames';
-import { renderComponent } from '../utils';
+import TriggerWrapper from '../TriggerWrapper';
 import AutoResizeInput from '../AutoResizeInput';
 
 export default class SelectTrigger extends Component {
@@ -46,30 +45,16 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
-      showClear,
-      onClick,
-      onClearClick,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
-      triggerLHSComponent,
-      triggerRHSComponent,
+      ...rest
     } = this.props;
     let value = this.state.value;
 
     return (
-      <div
-        className={cx('PowerSelect__Trigger', {
-          'PowerSelect__Trigger--empty': !value,
-        })}
-        onClick={onClick}
-      >
-        {triggerLHSComponent &&
-          <div className="PowerSelect__Trigger__LHS">
-            {renderComponent(triggerLHSComponent, { select })}
-          </div>}
-
+      <TriggerWrapper value={value} select={select} {...rest}>
         <div className="PowerSelect__TriggerInputContainer">
           <AutoResizeInput
             className="PowerSelect__TriggerInput"
@@ -84,17 +69,7 @@ export default class SelectTrigger extends Component {
             onBlur={handleOnBlur}
           />
         </div>
-
-        {triggerRHSComponent &&
-          <div className="PowerSelect__Trigger__RHS">
-            {renderComponent(triggerRHSComponent, { select })}
-          </div>}
-
-        {showClear &&
-          <span className="PowerSelect__Clear" onClick={onClearClick} />}
-
-        <span className="PowerSelect__TriggerStatus" />
-      </div>
+      </TriggerWrapper>
     );
   }
 }
