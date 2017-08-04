@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TriggerWrapper from '../TriggerWrapper';
+import AutoResizeInput from '../AutoResizeInput';
 
 export default class SelectTrigger extends Component {
   state = {};
@@ -31,32 +33,43 @@ export default class SelectTrigger extends Component {
     return value;
   }
 
+  handleInputChange = event => {
+    this.setState({
+      value: event.target.value,
+    });
+    this.props.handleOnChange(event);
+  };
+
   render() {
     let {
+      select,
       placeholder,
       disabled,
-      onClick,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
+      ...rest
     } = this.props;
+    let value = this.state.value;
+
     return (
-      <div className="PowerSelect__Trigger" onClick={onClick}>
-        <input
-          className="PowerSelect__TriggerInput"
-          autoComplete="off"
-          spellCheck="false"
-          placeholder={placeholder}
-          value={this.state.value}
-          disabled={disabled}
-          onChange={handleOnChange}
-          onKeyDown={handleKeyDown}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
-        />
-        <span className="PowerSelect__TriggerStatus" />
-      </div>
+      <TriggerWrapper value={value} select={select} {...rest}>
+        <div className="PowerSelect__TriggerInputContainer">
+          <AutoResizeInput
+            className="PowerSelect__TriggerInput"
+            autoComplete="off"
+            spellCheck="false"
+            placeholder={placeholder}
+            value={value}
+            disabled={disabled}
+            onChange={this.handleInputChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleOnFocus}
+            onBlur={handleOnBlur}
+          />
+        </div>
+      </TriggerWrapper>
     );
   }
 }

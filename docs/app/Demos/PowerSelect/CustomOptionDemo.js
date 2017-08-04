@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { countries } from '../constants';
 
-const CustomOptionComponnet = ({ option }) => (
+const CustomOptionComponnet = ({ option }) =>
   <div>
     <img className="flag" src={option.flag} />
     <span>{option.name}</span>
     <small className="code">{option.code}</small>
-  </div>
-);
+  </div>;
 
 export default class CustomOptionDemo extends Component {
   state = {
@@ -29,6 +28,7 @@ export default class CustomOptionDemo extends Component {
           optionLabelPath="name"
           optionComponent={<CustomOptionComponnet />}
           onChange={this.handleChange}
+          placeholder="Select your country"
         />
       </div>
     );

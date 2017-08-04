@@ -1,14 +1,7 @@
-import React, { Component, isValidElement, cloneElement } from 'react';
+import React, { Component } from 'react';
+import cx from 'classnames';
+import { renderComponent } from './utils';
 import Options from './Options';
-
-const renderComponent = (Component, props) => {
-  if (isValidElement(Component)) {
-    return cloneElement(Component, props);
-  }
-  if (Component) {
-    return <Component {...props} />;
-  }
-};
 
 export default class DropdownMenu extends Component {
   componentWillMount() {
@@ -22,12 +15,13 @@ export default class DropdownMenu extends Component {
   validateAndClose(options) {
     let { beforeOptionsComponent, afterOptionsComponent, select } = this.props;
     if (!beforeOptionsComponent && !afterOptionsComponent && !options.length) {
-      select.close();
+      select.actions.close();
     }
   }
 
   render() {
     let {
+      className,
       select,
       handleKeyDown,
       highlightedOption,
@@ -38,14 +32,12 @@ export default class DropdownMenu extends Component {
     } = this.props;
     return (
       <div
-        className="PowerSelect__Menu"
+        className={cx('PowerSelect__Menu', className && `${className}__Menu`)}
         tabIndex="1"
         onKeyDown={event => {
           handleKeyDown(event, highlightedOption);
         }}
-        style={{
-          minWidth: `${minWidth}px`,
-        }}
+        style={{ minWidth }}
       >
         {beforeOptionsComponent &&
           renderComponent(beforeOptionsComponent, { select })}

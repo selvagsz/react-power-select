@@ -22,9 +22,13 @@ import Snippet from './Snippet';
 export default () => {
   return (
     <div>
-      <header className="header">
-        <div style={{ display: 'inline-block' }}>
-          React Power Select
+      <section className="header">
+        <div className="header__container">
+          <h1>React Power Select</h1>
+          <div className="header__desc">
+            Highly composable & resusable select/autocomplete components
+          </div>
+
           <div className="text-right">
             <a
               className="github-button"
@@ -36,13 +40,8 @@ export default () => {
             </a>
           </div>
         </div>
-      </header>
+      </section>
       <div className="container">
-        {/*}
-        <section>
-          <ArrayOfObjectsDemo />
-        </section>
-*/}
         <section>
           <h1>Power Select</h1>
           <div className="Section">
@@ -51,7 +50,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[10, 12], [19, 23]]}
+                highlightLines={[[10, 12], [19, 24]]}
                 snippetName="PowerSelectPlainArrayDemo"
               />
             </div>
@@ -75,7 +74,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[4, 11], [40, 40]]}
+                highlightLines={[[4, 11], [43, 43]]}
                 snippetName="PowerSelectOptGroupDemo"
               />
             </div>
@@ -111,7 +110,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[4, 10], [30, 30]]}
+                highlightLines={[[4, 11], [30, 30]]}
                 snippetName="PowerSelectCustomOptionDemo"
               />
             </div>
@@ -123,7 +122,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[11, 17], [37, 37]]}
+                highlightLines={[[11, 15], [35, 35]]}
                 snippetName="PowerSelectCustomSelectedOptionDemo"
               />
             </div>
@@ -135,7 +134,7 @@ export default () => {
             </div>
             <div className="Section__Code">
               <Snippet
-                highlightLines={[[13, 16], [27, 37]]}
+                highlightLines={[[13, 16], [28, 37]]}
                 snippetName="PowerSelectAfterOptionsDemo"
               />
             </div>

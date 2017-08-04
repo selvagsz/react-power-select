@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Option from '../Option';
-import MultiSelectSearchInput from './SearchInput';
+import AutoResizeInput from '../AutoResizeInput';
 import SelectedOption from './SelectedOption';
+import TriggerWrapper from '../TriggerWrapper';
 
 export default class SelectTrigger extends Component {
   state = {
@@ -15,6 +15,10 @@ export default class SelectTrigger extends Component {
     });
   }
 
+  handleClearClick = event => {
+    this.props.onClearClick(event, { select: this.props.select });
+  };
+
   render() {
     let {
       selectedOption,
@@ -23,16 +27,21 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
-      onClick,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
       selectedOptionComponent,
+      ...rest
     } = this.props;
     let selected = selectedOption || [];
     return (
-      <div className="PowerSelect__Trigger" onClick={onClick}>
+      <TriggerWrapper
+        {...rest}
+        value={selected.length}
+        select={select}
+        onClearClick={this.handleClearClick}
+      >
         <div className="PowerSelectMultiple__OptionsContainer">
           <ul className="PowerSelectMultiple__SelectedOptions">
             {selected.map((selectedOption, index) => {
@@ -48,12 +57,12 @@ export default class SelectTrigger extends Component {
                 />
               );
             })}
-            <li>
-              <MultiSelectSearchInput
+            <li className="PowerSelectMultiple_TriggerInputContainer">
+              <AutoResizeInput
                 className="PowerSelect__TriggerInput"
                 autoComplete="off"
                 spellCheck="false"
-                placeholder={placeholder}
+                placeholder={selected.length ? '' : placeholder}
                 value={this.state.value}
                 disabled={disabled}
                 onChange={handleOnChange}
@@ -63,9 +72,8 @@ export default class SelectTrigger extends Component {
               />
             </li>
           </ul>
-          <span className="PowerSelect__TriggerStatus" />
         </div>
-      </div>
+      </TriggerWrapper>
     );
   }
 }

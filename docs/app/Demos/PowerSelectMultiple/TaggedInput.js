@@ -6,7 +6,7 @@ import { PowerSelectMultiple } from 'src';
 // .TaggedInput {
 //   // Hides the caret
 //   .PowerSelect__TriggerStatus {
-//     visibility: hidden;
+//     display: none;
 //   }
 
 //   // Removes the padding allocated for caret
@@ -34,8 +34,8 @@ class TaggedInput extends Component {
         select,
       });
 
-      select.resetSearch();
-      select.focus();
+      select.actions.search('');
+      select.actions.focus();
     }
   };
 
@@ -76,7 +76,11 @@ export default class TaggedInputDemo extends Component {
     return (
       <div className="demo">
         <h3>Tagged Input Component</h3>
-        <TaggedInput items={this.state.urls} onChange={this.handleChange} />
+        <TaggedInput
+          items={this.state.urls}
+          onChange={this.handleChange}
+          placholder="Enter your site urls"
+        />
       </div>
     );
   }

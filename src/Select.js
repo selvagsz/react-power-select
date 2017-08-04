@@ -102,12 +102,10 @@ export default class Select extends Component {
 
   selectOption = option => {
     this.setHighlightedOption(option);
-    if (option) {
-      this.props.onChange({
-        select: this.getPublicApi(),
-        option,
-      });
-    }
+    this.props.onChange({
+      select: this.getPublicApi(),
+      option,
+    });
     this.setState({
       searchTerm: null,
     });
@@ -139,7 +137,7 @@ export default class Select extends Component {
   };
 
   resetSearchAndClose = () => {
-    this.resetSearch();
+    this.search(null);
     this.close();
   };
 
@@ -177,22 +175,20 @@ export default class Select extends Component {
       matcher,
       searchIndices = optionLabelPath,
     } = this.props;
-    let filteredOptions = null;
-    if (searchTerm) {
-      filteredOptions = filterOptions({
-        options,
-        searchTerm,
-        searchIndices,
-        matcher,
-      });
-    }
-    if (!searchTerm || !filteredOptions.length) {
-      this.setHighlightedOption(null);
-    }
+    let filteredOptions = filterOptions({
+      options,
+      searchTerm: searchTerm || '',
+      searchIndices,
+      matcher,
+    });
+
     let { flattenedOptions } = flattenOptions(filteredOptions || []);
     if (searchTerm && flattenedOptions.length) {
       this.setHighlightedOption(flattenedOptions[0]);
+    } else {
+      this.setHighlightedOption(null);
     }
+
     this.setState(
       {
         filteredOptions,
@@ -205,8 +201,8 @@ export default class Select extends Component {
 
   handleSearchInputChange = event => {
     let value = event.target.value;
-    this.search(value);
     this.open();
+    this.search(value);
     this.props.onSearchInputChange(event, { select: this.getPublicApi() });
   };
 
@@ -270,6 +266,7 @@ export default class Select extends Component {
   handleEscapePress(event) {
     if (event.which === 27) {
       this.resetSearchAndClose();
+      this.focusField();
     }
   }
 
@@ -304,6 +301,13 @@ export default class Select extends Component {
     this.props.onClick(event, { select: this.getPublicApi() });
   };
 
+  handleClearClick = event => {
+    this.selectOption(undefined);
+    this.resetSearchAndClose();
+    this.focusField();
+    event.stopPropagation();
+  };
+
   handleOptionClick = highlightedOption => {
     this.selectOption(highlightedOption);
     this.focusField();
@@ -315,13 +319,14 @@ export default class Select extends Component {
   getPublicApi() {
     let { isOpen, searchTerm } = this.state;
     return {
-      open: this.open,
-      close: this.close,
-      search: this.search,
-      resetSearch: this.resetSearch,
-      focus: this.focusField,
       isOpen,
       searchTerm,
+      actions: {
+        open: this.open,
+        close: this.close,
+        search: this.search,
+        focus: this.focusField,
+      },
     };
   }
 
@@ -330,17 +335,20 @@ export default class Select extends Component {
       className,
       tabIndex,
       selected,
+      showClear,
       optionLabelPath,
       optionComponent,
       placeholder,
       disabled,
       selectedOptionComponent,
+      triggerLHSComponent,
+      triggerRHSComponent,
       beforeOptionsComponent,
       afterOptionsComponent,
     } = this.props;
 
     let { isOpen, searchTerm, highlightedOption, focused } = this.state;
-    let SelectTrigger = this.props.selectTriggerComponent;
+    let Trigger = this.props.triggerComponent;
     let options = this.getVisibleOptions();
     let selectApi = this.getPublicApi();
 
@@ -367,15 +375,19 @@ export default class Select extends Component {
             this.handleKeyDown(event, highlightedOption);
           }}
         >
-          <SelectTrigger
+          <Trigger
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
+            triggerLHSComponent={triggerLHSComponent}
+            triggerRHSComponent={triggerRHSComponent}
             placeholder={placeholder}
             disabled={disabled}
             searchTerm={searchTerm}
+            showClear={showClear}
             handleOnChange={this.handleSearchInputChange}
             onClick={this.handleClick}
+            onClearClick={this.handleClearClick}
             handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
             select={selectApi}
@@ -383,6 +395,7 @@ export default class Select extends Component {
         </div>
         {isOpen &&
           <DropdownMenu
+            className={className}
             minWidth={this.powerselect.offsetWidth}
             options={options}
             selected={selected}
@@ -414,10 +427,13 @@ Select.defaultProps = {
   options: [],
   disabled: false,
   tabIndex: 0,
+  showClear: true,
   closeOnSelect: true,
-  selectTriggerComponent: SelectTrigger,
   optionLabelPath: null,
   optionComponent: null,
+  triggerComponent: SelectTrigger,
+  triggerLHSComponent: null,
+  triggerRHSComponent: null,
   selectedOptionComponent: null,
   beforeOptionsComponent: null,
   afterOptionsComponent: null,

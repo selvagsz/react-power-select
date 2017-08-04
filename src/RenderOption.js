@@ -1,6 +1,11 @@
 import React, { Component, isValidElement, cloneElement } from 'react';
 
-export default ({ option, select, optionLabelPath, optionComponent }) => {
+export default function RenderOption({
+  option,
+  select,
+  optionLabelPath,
+  optionComponent,
+}) {
   let publicProps = { option, select, optionLabelPath };
   let OptionComponent = optionComponent;
   if (isValidElement(OptionComponent)) {
@@ -18,4 +23,4 @@ export default ({ option, select, optionLabelPath, optionComponent }) => {
     return <span>{option}</span>;
   }
   return null;
-};
+}

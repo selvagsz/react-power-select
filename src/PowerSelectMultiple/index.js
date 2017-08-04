@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import Select from '../Select';
 import MultiSelectTrigger from './SelectTrigger';
 
@@ -15,15 +16,17 @@ export default class PowerSelectMultiple extends Component {
 
   handleOnChange = ({ option, select }) => {
     let { selected, onChange } = this.props;
-    let options = selected.slice();
-    options.push(option);
-    onChange({
-      options,
-      select,
-    });
+    if (option) {
+      let options = selected.slice();
+      options.push(option);
+      onChange({
+        options,
+        select,
+      });
+    }
     if (select.searchTerm) {
-      select.resetSearch();
-      select.focus();
+      select.actions.search('');
+      select.actions.focus();
     }
   };
 
@@ -44,9 +47,12 @@ export default class PowerSelectMultiple extends Component {
           options,
           select,
         });
-        select.open();
-        select.focus();
+        select.actions.open();
+        select.actions.focus();
       }
+    }
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(event, { select });
     }
   };
 
@@ -57,26 +63,40 @@ export default class PowerSelectMultiple extends Component {
       options,
       select,
     });
-    select.focus();
+    select.actions.focus();
+  };
+
+  handleClearClick = (event, { select }) => {
+    event.stopPropagation();
+    this.props.onChange({
+      options: [],
+      select,
+    });
+    if (select.searchTerm) {
+      select.actions.search('');
+    }
+    select.actions.close();
+    select.actions.focus();
   };
 
   render() {
     let { className, options, onChange, ...rest } = this.props;
     return (
       <Select
-        className={`${className} PowerSelectMultiple`}
+        className={cx('PowerSelectMultiple', className)}
         ref={powerselect => (this.powerselect = powerselect)}
-        selectTriggerComponent={props =>
+        triggerComponent={props =>
           <MultiSelectTrigger
             {...props}
             showOptionClose={true}
             onOptionCloseClick={this.removeOption}
+            onClearClick={this.handleClearClick}
           />}
+        {...rest}
         options={this.state.filteredOptions}
         onChange={this.handleOnChange}
         closeOnSelect={false}
         onKeyDown={this.handleKeyDown}
-        {...rest}
       />
     );
   }

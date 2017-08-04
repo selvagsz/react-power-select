@@ -3,11 +3,26 @@ import Select from '../Select';
 import TypeAheadSelectTrigger from './SelectTrigger';
 
 export default class TypeAhead extends Component {
+  handleKeyDown = (event, { select }) => {
+    let { onKeyDown, onChange } = this.props;
+    if (event.which === 27) {
+      if (!select.searchTerm) {
+        onChange({
+          option: undefined,
+          select,
+        });
+      }
+    }
+    if (onKeyDown) {
+      onKeyDown(event, { select });
+    }
+  };
+
   render() {
-    let { selectedOptionLabelPath, ...rest } = this.props;
+    let { selectedOptionLabelPath, onKeyDown, ...rest } = this.props;
     return (
       <Select
-        selectTriggerComponent={props => {
+        triggerComponent={props => {
           return (
             <TypeAheadSelectTrigger
               {...props}
@@ -16,6 +31,7 @@ export default class TypeAhead extends Component {
           );
         }}
         {...rest}
+        onKeyDown={this.handleKeyDown}
       />
     );
   }

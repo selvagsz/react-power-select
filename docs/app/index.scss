@@ -1,3 +1,9 @@
+@mixin placeholder() {
+  color: #ccc;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
 *,
 *::before,
 *::after {
@@ -10,24 +16,61 @@ html {
 }
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Lato', sans-serif;
   padding-bottom: 100px;
-
-  &::after {
-    content: '';
-    display: block;
-    background: linear-gradient(90deg,#D5247B,#F09F4D);
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 278px;
-  }
 }
 
 html, body {
-  background-color: #fafafa;
+  background-color: rgba(249, 249, 249, 0.44);
+}
+
+::-webkit-input-placeholder {
+  @include placeholder()
+}
+::-moz-placeholder {
+  @include placeholder()
+}
+:-ms-input-placeholder {
+  @include placeholder()
+}
+:-moz-placeholder {
+  @include placeholder()
+}
+
+section.header {
+  background: linear-gradient(180deg,rgba(90, 62, 144, 0.99),#774aff);
+  padding: 125px 20px;
+  position: relative;
+  z-index: 1;
+
+  .header__container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .header__desc {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('https://68.media.tumblr.com/d78eb7bd6eafe022ea6cc2176f1b41c0/tumblr_nkwxd8cKHg1r82eito1_500.gif');
+    opacity: 0.03;
+    z-index: -1;
+  }
 }
 
 .tether-element {
@@ -78,13 +121,7 @@ html, body {
 header {
   font-size: 45px;
   color: #fff;
-  padding: 80px 10px 25px;
   text-align: center;
-  z-index: 1;
-  position: relative;
-  font-weight: 800;
-  letter-spacing: 4px;
-  line-height: 1.1;
 }
 
 .container {
@@ -92,8 +129,6 @@ header {
   margin: auto;
   z-index: 1;
   position: relative;
-  border-radius: 4px;
-  box-shadow: 0 0 20px -9px #333;
   background-color: #fff;
   padding: 30px;
 }
@@ -115,7 +150,7 @@ section {
       left: 0;
       width: 40px;
       top: 100%;
-      border: 2px solid #cb72fa;
+      border: 2px solid #e8e7e7;
       margin-top: 8px;
     }
   }
@@ -223,6 +258,12 @@ section {
   margin-top: 8px;
 }
 
+.PowerSelect__Trigger__RHS {
+  svg + svg {
+    margin-left: 12px;
+  }
+}
+
 @media (max-width: 875px) {
   .container {
     margin: 0 10px;
@@ -245,7 +286,11 @@ section {
 .TaggedInput {
   // Hides the caret
   .PowerSelect__TriggerStatus {
-    visibility: hidden;
+    display: none;
+  }
+
+  .PowerSelect__Clear {
+    padding-right: 8px;
   }
 
   // Removes the padding allocated for caret

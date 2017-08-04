@@ -1,7 +1,7 @@
 .PowerSelect {
   cursor: pointer;
   border: 1px solid #ccc;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: #fff;
 
   &:focus {
@@ -31,7 +31,7 @@
   border-bottom-left-radius: 0;
   border-bottom: 0;
 
-  .PowerSelect__TriggerStatus {
+  .PowerSelect__TriggerStatus::before {
     transform: rotate(-180deg);
   }
 }
@@ -93,7 +93,8 @@
 }
 
 .PowerSelect__Placeholder {
-  color: #aaa;
+  color: #ccc;
+  font-size: 14px;
 }
 
 .PowerSelect__SearchInputContainer {
@@ -103,10 +104,10 @@
 .PowerSelect__SearchInput {
   display: block;
   width: 100%;
-  height: 32px;
+  height: 34px;
   padding: 4px 8px;
   line-height: 1.4;
-  font-size: 14px;
+  font-size: inherit;
   border: 1px solid #ccc;
   border-radius: 2px;
   cursor: pointer;
@@ -118,67 +119,136 @@
 }
 
 .PowerSelect__TriggerInput {
-  display: block;
-  height: 32px;
+  display: inline-block;
   width: 100%;
+  height: 34px;
   border: none;
   cursor: pointer;
-  padding: 4px 22px 4px 12px;
-  font-size: 14px;
+  padding: 4px 22px 4px 8px;
+  font-size: inherit;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 
   &:focus {
     outline: none;
   }
 }
 
+.PowerSelect__Trigger__LHS,
+.PowerSelect__Trigger__RHS {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.PowerSelect__Trigger__LHS {
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+.PowerSelect__Trigger__RHS {
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
 .PowerSelect__TriggerLabel {
-  display: block;
-  line-height: 24px;
-  height: 100%;
-  padding: 5px 22px 5px 12px;
+  padding: 6px 22px 6px 8px;
+}
+
+.PowerSelect__Trigger__LHS + .PowerSelect__TriggerLabel {
+  padding-left: 4px;
 }
 
 .PowerSelect__TriggerStatus {
-  border-top: 4px solid #ccc;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  position: absolute;
-  right: 8px;
-  top: 50%;
+  padding-top: 2px;
+  padding-right: 8px;
+  padding-left: 4px;
+
+  &::before {
+    content: '';
+    display: block;
+    border-top: 4px solid #ccc;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+}
+
+.PowerSelect__Clear {
+  padding: 4px;
+  color: #888;
+  &:hover {
+    color: #333;
+  }
+  &::before {
+    content: '×'
+  }
+}
+
+.PowerSelect__Trigger--empty {
+  .PowerSelect__Clear {
+    visibility: hidden;
+  }
+}
+
+.PowerSelect__TriggerLabel,
+.PowerSelect__TriggerInputContainer,
+.PowerSelectMultiple__OptionsContainer,
+.PowerSelect__Clear,
+.PowerSelect__TriggerStatus {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+  height: 34px;
 }
 
 
 // MultiSelect
+.PowerSelectMultiple__OptionsContainer {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
 .PowerSelectMultiple__SelectedOptions {
   list-style: none;
   padding-left: 0;
-  padding-right: 22px;
-  display: inline-block;
+  display: block;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 
   > li {
-    display: inline-block;
+    display: block;
+    float: left;
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
 }
 
+.PowerSelect__Trigger--empty .PowerSelectMultiple_TriggerInputContainer {
+  float: none;
+  margin-left: 4px;
+}
+
 .PowerSelectMultiple__SelectedOption {
-  margin: 4px 0px 4px 4px;
+  line-height: 24px;
+  margin-left: 4px;
   background-color: #ebeeff;
   border: 1px solid #c6cfff;
 }
 
-.PowerSelectMultiple__SelectedOption__Label {
-  padding: 2px 6px;
-  display: inline-block;
-  vertical-align: middle;
+.PowerSelectMultiple__SelectedOption__Label,
+.PowerSelectMultiple__SelectedOption__Close {
+  padding: 0 6px;
+  display: block;
+  float: left;
 }
 
 .PowerSelectMultiple__SelectedOption__Close {
-  padding: 2px 6px;
   border-left: 1px solid #c6cfff;
   cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
-
   &:hover {
     background-color: #dce1ff;
   }
@@ -188,14 +258,17 @@
   .PowerSelect__Trigger {
     white-space: normal;
     height: auto;
-    min-height: 34px;
   }
 
   .PowerSelect__TriggerInput {
     display: inline-block;
     width: auto;
     padding: 0;
-    height: 34px;
+    height: 26px;
     margin-left: 4px;
+  }
+
+  .PowerSelect__Trigger--empty .PowerSelect__TriggerInput {
+    width: 100%;
   }
 }

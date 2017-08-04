@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import RenderOption from './RenderOption';
+import TriggerWrapper from './TriggerWrapper';
 
-export default ({
+export default function Trigger({
   selectedOption,
   optionLabelPath,
   selectedOptionComponent,
   placeholder,
-  onClick,
   select,
-}) => {
+  ...rest
+}) {
   return (
-    <div className="PowerSelect__Trigger" onClick={onClick}>
-      <span className="PowerSelect__TriggerLabel">
+    <TriggerWrapper value={selectedOption} select={select} {...rest}>
+      <div className="PowerSelect__TriggerLabel">
         {selectedOption
           ? <RenderOption
               option={selectedOption}
@@ -20,8 +21,7 @@ export default ({
               select={select}
             />
           : <span className="PowerSelect__Placeholder">{placeholder}</span>}
-      </span>
-      <span className="PowerSelect__TriggerStatus" />
-    </div>
+      </div>
+    </TriggerWrapper>
   );
-};
+}

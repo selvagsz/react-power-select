@@ -1,3 +1,5 @@
+import React, { isValidElement, cloneElement } from 'react';
+
 export const matcher = ({ option, searchTerm = '', searchIndices }) => {
   searchTerm = searchTerm.trim().toLowerCase();
   if (typeof option === 'string') {
@@ -122,4 +124,13 @@ export const isValidOptionPresent = options => {
       return !option.disabled;
     });
   })(options);
+};
+
+export const renderComponent = (Component, props) => {
+  if (isValidElement(Component)) {
+    return cloneElement(Component, props);
+  }
+  if (Component) {
+    return <Component {...props} />;
+  }
 };
