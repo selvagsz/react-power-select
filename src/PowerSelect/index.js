@@ -8,7 +8,13 @@ export default class PowerSelect extends Component {
     if (!searchEnabled && beforeOptionsComponent === SearchInput) {
       beforeOptionsComponent = null;
     }
-    return <Select beforeOptionsComponent={beforeOptionsComponent} {...rest} />;
+    return (
+      <Select
+        ref={select => (this.select = select)}
+        beforeOptionsComponent={beforeOptionsComponent}
+        {...rest}
+      />
+    );
   }
 }
 

@@ -330,6 +330,8 @@ export default class Select extends Component {
     };
   }
 
+  test = 'terarsdadsadad';
+
   render() {
     let {
       className,
@@ -395,6 +397,7 @@ export default class Select extends Component {
         </div>
         {isOpen &&
           <DropdownMenu
+            ref={dropdownRef => (this.dropdownRef = dropdownRef)}
             className={className}
             minWidth={this.powerselect.offsetWidth}
             options={options}
