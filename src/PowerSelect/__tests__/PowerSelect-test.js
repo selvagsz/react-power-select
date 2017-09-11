@@ -1,40 +1,54 @@
 // /* global describe, it, expect */
 import React from 'react';
-import PowerSelect from '../index';
+import sinon from 'sinon';
 import { ReactWrapper, shallow, mount } from 'enzyme';
+import PowerSelect from '../index';
 
 const frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Inferno'];
+const countries = [
+  {
+    name: 'Argentina',
+    code: 'ARG',
+    flag: 'https://restcountries.eu/data/arg.svg',
+    continent: 'South America',
+  },
+  {
+    name: 'Brazil',
+    code: 'BRA',
+    flag: 'https://restcountries.eu/data/bra.svg',
+    continent: 'South America',
+  },
+  {
+    name: 'Canada',
+    code: 'CAN',
+    flag: 'https://restcountries.eu/data/can.svg',
+    continent: 'North America',
+  },
+  {
+    name: 'China',
+    code: 'CHN',
+    flag: 'https://restcountries.eu/data/chn.svg',
+    continent: 'Asia',
+  },
+  {
+    name: 'India',
+    code: 'IND',
+    flag: 'https://restcountries.eu/data/ind.svg',
+    continent: 'Asia',
+  },
+];
 
 describe('<PowerSelect />', () => {
-  class PowerSelectWrapper extends React.Component {
-    constructor() {
-      super(...arguments);
-      this.state = {
-        options: this.props.options,
-        selected: this.props.selected,
-      };
-    }
-
-    handleChange = ({ option }) => {
-      this.setState({ selected: option });
-    };
-
-    render() {
-      return (
-        <PowerSelect
-          ref={powerselect => {
-            this.powerselect = powerselect;
-          }}
-          options={this.state.options}
-          selected={this.state.selected}
-          onChange={this.handleChange}
-        />
-      );
-    }
-  }
-
   it('should render the container tag', () => {
-    const wrapper = mount(<PowerSelectWrapper options={frameworks} />);
+    let handleChange = sinon.spy();
+    let selected;
+    const wrapper = mount(
+      <PowerSelect
+        options={frameworks}
+        selected={selected}
+        onChange={handleChange}
+      />
+    );
 
     expect(wrapper.find('.PowerSelect').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
@@ -43,31 +57,34 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerStatus').length).toBe(1);
   });
 
-  it('should open on trigger click', () => {
-    const wrapper = mount(<PowerSelectWrapper options={frameworks} />);
-
-    expect(document.body.querySelector('.PowerSelect__Menu')).toBeFalsy();
-    wrapper.find('.PowerSelect__Trigger').simulate('click');
-    expect(wrapper.find('.PowerSelect').length).toBe(1);
-    expect(
-      wrapper.find('.PowerSelect').hasClass('PowerSelect--open')
-    ).toBeTruthy();
-    expect(document.body.querySelector('.PowerSelect__Menu')).toBeTruthy();
+  it('should preselect, when `selected` is passed', () => {
+    let handleChange = sinon.spy();
+    let selected = frameworks[2];
+    const wrapper = mount(
+      <PowerSelect
+        options={frameworks}
+        selected={selected}
+        onChange={handleChange}
+      />
+    );
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(
+      frameworks[2]
+    );
   });
 
-  it('select option on option click', () => {
-    const wrapper = mount(<PowerSelectWrapper options={frameworks} />);
-    wrapper.find('.PowerSelect__Trigger').simulate('click');
-
-    const portal = new ReactWrapper(
-      wrapper.instance().powerselect.select.dropdownRef,
-      true
+  it('should preselect, when `selected` is passed even with object option', () => {
+    let handleChange = sinon.spy();
+    let selected = countries[2];
+    const wrapper = mount(
+      <PowerSelect
+        options={frameworks}
+        optionLabelPath="name"
+        selected={selected}
+        onChange={handleChange}
+      />
     );
-
-    portal.find('.PowerSelect__Options').childAt(1).simulate('click');
-    // expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeFalsy()
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(
-      frameworks[1]
+      countries[2].name
     );
   });
 });
