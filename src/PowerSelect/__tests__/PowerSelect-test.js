@@ -87,4 +87,25 @@ describe('<PowerSelect />', () => {
       countries[2].name
     );
   });
+
+  it.only('should open the dropdown on click', () => {
+    let handleChange = sinon.spy();
+    let selected = countries[2];
+    const wrapper = mount(
+      <PowerSelect
+        options={frameworks}
+        optionLabelPath="name"
+        selected={selected}
+        onChange={handleChange}
+      />
+    );
+
+    expect(
+      wrapper.find('.PowerSelect').hasClass('PowerSelect--open')
+    ).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('click');
+    expect(
+      wrapper.find('.PowerSelect').hasClass('PowerSelect--open')
+    ).toBeTruthy();
+  });
 });

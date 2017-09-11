@@ -367,6 +367,7 @@ export default class Select extends Component {
             PowerSelect__WithSearch: searchTerm,
           })}
           tabIndex={tabIndex}
+          onClick={this.handleClick}
           onFocus={() => {
             let triggerInput = this.powerselect.querySelector('input');
             if (triggerInput) {
@@ -388,14 +389,13 @@ export default class Select extends Component {
             searchTerm={searchTerm}
             showClear={showClear}
             handleOnChange={this.handleSearchInputChange}
-            onClick={this.handleClick}
             onClearClick={this.handleClearClick}
             handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
             select={selectApi}
           />
         </div>
-        {isOpen &&
+        {isOpen && (
           <DropdownMenu
             ref={dropdownRef => (this.dropdownRef = dropdownRef)}
             className={className}
@@ -410,7 +410,8 @@ export default class Select extends Component {
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
-          />}
+          />
+        )}
       </Dropdown>
     );
   }
