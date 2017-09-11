@@ -27,20 +27,18 @@ export default function SelectedOption(props) {
   }
   return (
     <li className="PowerSelectMultiple__SelectedOption">
-      <span className="PowerSelectMultiple__SelectedOption__Label">
-        {value}
-      </span>
-      {showOptionClose
-        ? <span
-            className="PowerSelectMultiple__SelectedOption__Close"
-            onClick={event => {
-              event.stopPropagation();
-              onCloseClick({ option, select });
-            }}
-          >
-            ×
-          </span>
-        : null}
+      <span className="PowerSelectMultiple__SelectedOption__Label">{value}</span>
+      {showOptionClose ? (
+        <span
+          className="PowerSelectMultiple__SelectedOption__Close"
+          onClick={event => {
+            event.stopPropagation();
+            onCloseClick({ option, select });
+          }}
+        >
+          ×
+        </span>
+      ) : null}
     </li>
   );
 }

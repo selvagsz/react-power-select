@@ -43,11 +43,7 @@ describe('<PowerSelect />', () => {
     let handleChange = sinon.spy();
     let selected;
     const wrapper = mount(
-      <PowerSelect
-        options={frameworks}
-        selected={selected}
-        onChange={handleChange}
-      />
+      <PowerSelect options={frameworks} selected={selected} onChange={handleChange} />
     );
 
     expect(wrapper.find('.PowerSelect').length).toBe(1);
@@ -61,15 +57,9 @@ describe('<PowerSelect />', () => {
     let handleChange = sinon.spy();
     let selected = frameworks[2];
     const wrapper = mount(
-      <PowerSelect
-        options={frameworks}
-        selected={selected}
-        onChange={handleChange}
-      />
+      <PowerSelect options={frameworks} selected={selected} onChange={handleChange} />
     );
-    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(
-      frameworks[2]
-    );
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(frameworks[2]);
   });
 
   it('should preselect, when `selected` is passed even with object option', () => {
@@ -83,9 +73,7 @@ describe('<PowerSelect />', () => {
         onChange={handleChange}
       />
     );
-    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(
-      countries[2].name
-    );
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[2].name);
   });
 
   it.only('should open the dropdown on click', () => {
@@ -100,12 +88,8 @@ describe('<PowerSelect />', () => {
       />
     );
 
-    expect(
-      wrapper.find('.PowerSelect').hasClass('PowerSelect--open')
-    ).toBeFalsy();
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeFalsy();
     wrapper.find('.PowerSelect').simulate('click');
-    expect(
-      wrapper.find('.PowerSelect').hasClass('PowerSelect--open')
-    ).toBeTruthy();
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeTruthy();
   });
 });

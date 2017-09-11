@@ -25,7 +25,7 @@ export default class AfterOptionsDemo extends Component {
           optionLabelPath="name"
           onChange={this.handleChange}
           placeholder="Select your country"
-          afterOptionsComponent={({ select }) =>
+          afterOptionsComponent={({ select }) => (
             <a
               className="quick-create"
               onClick={() => {
@@ -34,7 +34,8 @@ export default class AfterOptionsDemo extends Component {
               }}
             >
               + Add New
-            </a>}
+            </a>
+          )}
         />
       </div>
     );

@@ -61,10 +61,7 @@ export default () => {
               <ArrayOfObjectsDemo />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[21, 21]]}
-                snippetName="PowerSelectArrayOfObjectsDemo"
-              />
+              <Snippet highlightLines={[[21, 21]]} snippetName="PowerSelectArrayOfObjectsDemo" />
             </div>
           </div>
 
@@ -73,10 +70,7 @@ export default () => {
               <OptGroupDemo />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[4, 11], [43, 43]]}
-                snippetName="PowerSelectOptGroupDemo"
-              />
+              <Snippet highlightLines={[[4, 11], [43, 43]]} snippetName="PowerSelectOptGroupDemo" />
             </div>
           </div>
 
@@ -85,10 +79,7 @@ export default () => {
               <WithoutSearchDemo />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[21, 21]]}
-                snippetName="PowerSelectWithoutSearchDemo"
-              />
+              <Snippet highlightLines={[[21, 21]]} snippetName="PowerSelectWithoutSearchDemo" />
             </div>
           </div>
 
@@ -97,10 +88,7 @@ export default () => {
               <SearchFieldsDemo />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[22, 22]]}
-                snippetName="PowerSelectSearchFieldsDemo"
-              />
+              <Snippet highlightLines={[[22, 22]]} snippetName="PowerSelectSearchFieldsDemo" />
             </div>
           </div>
 
@@ -145,10 +133,7 @@ export default () => {
               <BeforeOptionsDemo />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[46, 61]]}
-                snippetName="PowerSelectBeforeOptionsDemo"
-              />
+              <Snippet highlightLines={[[46, 61]]} snippetName="PowerSelectBeforeOptionsDemo" />
             </div>
           </div>
         </section>
@@ -160,10 +145,7 @@ export default () => {
               <TypeAheadPlainArray />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[9, 12], [19, 23]]}
-                snippetName="TypeAheadPlainArray"
-              />
+              <Snippet highlightLines={[[9, 12], [19, 23]]} snippetName="TypeAheadPlainArray" />
             </div>
           </div>
 
@@ -172,10 +154,7 @@ export default () => {
               <TypeAheadArrayOfObjects />
             </div>
             <div className="Section__Code">
-              <Snippet
-                highlightLines={[[28, 28]]}
-                snippetName="TypeAheadArrayOfObjectsDemo"
-              />
+              <Snippet highlightLines={[[28, 28]]} snippetName="TypeAheadArrayOfObjectsDemo" />
             </div>
           </div>
         </section>

@@ -11,9 +11,10 @@ export default class SelectTrigger extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let value = nextProps.searchTerm !== null
-      ? nextProps.searchTerm
-      : this.getValueFromSelectedOption(nextProps);
+    let value =
+      nextProps.searchTerm !== null
+        ? nextProps.searchTerm
+        : this.getValueFromSelectedOption(nextProps);
     this.setState({
       value,
     });
