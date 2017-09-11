@@ -305,8 +305,6 @@ export default class Select extends Component {
     };
   }
 
-  test = 'terarsdadsadad';
-
   render() {
     let {
       className,
