@@ -38,14 +38,31 @@ const countries = [
   },
 ];
 
+const renderPowerSelect = props => {
+  let selected;
+  let handleChange = () => {};
+  return mount(
+    <PowerSelect
+      options={countries}
+      selected={selected}
+      optionLabelPath="name"
+      onChange={handleChange}
+      {...props}
+    />
+  );
+};
+
+const renderPowerSelectWithStringOptions = props => {
+  let selected;
+  let handleChange = () => {};
+  return mount(
+    <PowerSelect options={frameworks} selected={selected} onChange={handleChange} {...props} />
+  );
+};
+
 describe('<PowerSelect />', () => {
   it('should render the container tag', () => {
-    let handleChange = sinon.spy();
-    let selected;
-    const wrapper = mount(
-      <PowerSelect options={frameworks} selected={selected} onChange={handleChange} />
-    );
-
+    const wrapper = renderPowerSelectWithStringOptions();
     expect(wrapper.find('.PowerSelect').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerLabel').length).toBe(1);
@@ -54,31 +71,47 @@ describe('<PowerSelect />', () => {
   });
 
   it('should preselect, when `selected` is passed', () => {
-    let handleChange = sinon.spy();
-    let selected = frameworks[2];
-    const wrapper = mount(
-      <PowerSelect options={frameworks} selected={selected} onChange={handleChange} />
-    );
+    const wrapper = renderPowerSelectWithStringOptions({
+      selected: frameworks[2],
+    });
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(frameworks[2]);
   });
 
   it('should preselect, when `selected` is passed even with object option', () => {
-    let handleChange = sinon.spy();
-    let selected = countries[2];
-    const wrapper = mount(
-      <PowerSelect
-        options={frameworks}
-        optionLabelPath="name"
-        selected={selected}
-        onChange={handleChange}
-      />
-    );
+    const wrapper = renderPowerSelect({
+      selected: countries[2],
+    });
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[2].name);
   });
 
-  it('should not render close button, when `showClear` is false');
+  it('should not render close button, when `showClear` is false', () => {
+    const wrapper = renderPowerSelect({
+      showClear: false,
+    });
+    expect(wrapper.find('.PowerSelect__Clear').length).toBe(0);
+  });
 
-  it('should clear the selected option, when the clear button is clicked');
+  it('should clear the selected option, when the clear button is clicked', () => {
+    const handleChange = sinon.spy();
+    const wrapper = renderPowerSelect({
+      selected: countries[2],
+      onChange: handleChange,
+    });
+
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+    wrapper.find('.PowerSelect__Clear').simulate('click');
+    expect(handleChange.calledOnce).toBeTruthy();
+
+    let args = handleChange.getCall(0).args[0];
+    expect(args.option).toBe(undefined);
+    expect(args.select).toBeTruthy();
+    expect(args.select.searchTerm).toBe(null);
+
+    wrapper.setProps({
+      selected: args.option,
+    });
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
+  });
 
   it('should delegate `className` to the container, tether & menu');
 
@@ -94,17 +127,10 @@ describe('<PowerSelect />', () => {
 
   it('should disable search when `searchEnabled` is false');
 
-  it.only('should toggle the dropdown on click', () => {
-    let handleChange = sinon.spy();
-    let selected = countries[2];
-    const wrapper = mount(
-      <PowerSelect
-        options={frameworks}
-        optionLabelPath="name"
-        selected={selected}
-        onChange={handleChange}
-      />
-    );
+  it('should toggle the dropdown on click', () => {
+    const wrapper = renderPowerSelect({
+      selected: countries[2],
+    });
 
     var portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
     expect(portal.exists()).toBeFalsy();
