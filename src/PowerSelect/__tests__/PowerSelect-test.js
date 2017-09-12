@@ -1,5 +1,6 @@
 // /* global describe, it, expect */
 import React from 'react';
+import TestUtils from 'react-dom/test-utils';
 import sinon from 'sinon';
 import { ReactWrapper, shallow, mount } from 'enzyme';
 import PowerSelect from '../index';
@@ -38,31 +39,69 @@ const countries = [
   },
 ];
 
-const renderPowerSelect = props => {
-  let selected;
-  let handleChange = () => {};
-  return mount(
-    <PowerSelect
-      options={countries}
-      selected={selected}
-      optionLabelPath="name"
-      onChange={handleChange}
-      {...props}
-    />
-  );
-};
+class PowerSelectPageObject {
+  handleChange = sinon.spy();
 
-const renderPowerSelectWithStringOptions = props => {
-  let selected;
-  let handleChange = () => {};
-  return mount(
-    <PowerSelect options={frameworks} selected={selected} onChange={handleChange} {...props} />
-  );
-};
+  renderWithProps(props) {
+    let selected;
+    let container;
+    if (!this.container) {
+      container = this.container = document.createElement('div');
+      document.body.appendChild(container);
+    }
+
+    let mountedComponent = (this.mountedComponent = mount(
+      <PowerSelect
+        options={countries}
+        selected={selected}
+        optionLabelPath="name"
+        onChange={this.handleChange}
+        {...props}
+      />,
+      {
+        attachTo: container,
+      }
+    ));
+    return mountedComponent;
+  }
+
+  unmount() {
+    if (this.mountedComponent) {
+      this.mountedComponent.detach();
+    }
+  }
+
+  get portal() {
+    return new ReactWrapper(this.mountedComponent.instance().select.dropdownRef, true);
+  }
+
+  get isOpened() {
+    let wrapper = this.mountedComponent;
+    let hasOpenClass = wrapper.find('.PowerSelect').hasClass('PowerSelect--open');
+    let isDropdownVisible = this.portal.exists();
+
+    return isDropdownVisible && hasOpenClass;
+  }
+
+  triggerContainerClick() {
+    this.mountedComponent.find('.PowerSelect').simulate('click');
+  }
+}
 
 describe('<PowerSelect />', () => {
+  let powerselect;
+  beforeEach(() => {
+    powerselect = new PowerSelectPageObject();
+  });
+
+  afterEach(() => {
+    powerselect.unmount();
+  });
+
   it('should render the container tag', () => {
-    const wrapper = renderPowerSelectWithStringOptions();
+    const wrapper = powerselect.renderWithProps({
+      options: frameworks,
+    });
     expect(wrapper.find('.PowerSelect').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerLabel').length).toBe(1);
@@ -71,38 +110,39 @@ describe('<PowerSelect />', () => {
   });
 
   it('should preselect, when `selected` is passed', () => {
-    const wrapper = renderPowerSelectWithStringOptions({
-      selected: frameworks[2],
+    let selectedOption = frameworks[2];
+    const wrapper = powerselect.renderWithProps({
+      options: frameworks,
+      selected: selectedOption,
     });
-    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(frameworks[2]);
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(selectedOption);
   });
 
   it('should preselect, when `selected` is passed even with object option', () => {
-    const wrapper = renderPowerSelect({
-      selected: countries[2],
+    let selectedOption = countries[2];
+    const wrapper = powerselect.renderWithProps({
+      selected: selectedOption,
     });
-    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[2].name);
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(selectedOption.name);
   });
 
   it('should not render close button, when `showClear` is false', () => {
-    const wrapper = renderPowerSelect({
+    const wrapper = powerselect.renderWithProps({
       showClear: false,
     });
     expect(wrapper.find('.PowerSelect__Clear').length).toBe(0);
   });
 
   it('should clear the selected option, when the clear button is clicked', () => {
-    const handleChange = sinon.spy();
-    const wrapper = renderPowerSelect({
+    const wrapper = powerselect.renderWithProps({
       selected: countries[2],
-      onChange: handleChange,
     });
 
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
     wrapper.find('.PowerSelect__Clear').simulate('click');
-    expect(handleChange.calledOnce).toBeTruthy();
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
 
-    let args = handleChange.getCall(0).args[0];
+    let args = powerselect.handleChange.getCall(0).args[0];
     expect(args.option).toBe(undefined);
     expect(args.select).toBeTruthy();
     expect(args.select.searchTerm).toBe(null);
@@ -113,51 +153,114 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
   });
 
-  it.only('should delegate `className` to the container, tether & menu', () => {
-    const wrapper = renderPowerSelect({
+  it('should delegate `className` to the container, tether & menu', () => {
+    const wrapper = powerselect.renderWithProps({
       className: 'TestPowerSelect',
     });
     expect(wrapper.find('.PowerSelect').hasClass('TestPowerSelect')).toBeTruthy();
 
-    wrapper.find('.PowerSelect').simulate('click');
-    var portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
-
-    expect(portal.find('.PowerSelect__Menu').hasClass('TestPowerSelect__Menu')).toBeTruthy();
+    powerselect.triggerContainerClick();
+    expect(
+      powerselect.portal.find('.PowerSelect__Menu').hasClass('TestPowerSelect__Menu')
+    ).toBeTruthy();
     expect(document.querySelectorAll('.PowerSelect__Tether.TestPowerSelect__Tether').length).toBe(
       1
     );
   });
 
-  it('should delegate `tabIndex` when passed');
+  it('should delegate `tabIndex` when passed', () => {
+    const tabIndex = 2;
+    const wrapper = powerselect.renderWithProps({ tabIndex });
+    expect(wrapper.find('.PowerSelect').prop('tabIndex')).toBe(tabIndex);
+  });
 
-  it('should display placeholder when passed');
+  it('should display placeholder when passed', () => {
+    const placeholder = 'Please select a country';
+    const wrapper = powerselect.renderWithProps({ placeholder });
+    expect(wrapper.find('.PowerSelect__Placeholder').exists()).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__Placeholder').text()).toBe(placeholder);
 
-  it('should render `triggerLHSComponent` when passed');
+    wrapper.setProps({ selected: countries[2] });
+    expect(wrapper.find('.PowerSelect__Placeholder').exists()).toBeFalsy();
+  });
 
-  it('should render `triggerRHSComponent` when passed');
+  it('should render `triggerLHSComponent` when passed', () => {
+    const SearchIcon = <i className="icon-search" />;
+    const TriggerLHSComponent = () => SearchIcon;
+    const wrapper = powerselect.renderWithProps({
+      triggerLHSComponent: TriggerLHSComponent,
+    });
 
-  it('should be disabled, when `disabled` prop is set');
+    expect(wrapper.contains(SearchIcon)).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__Trigger__LHS').exists()).toBeTruthy();
+  });
 
-  it('should disable search when `searchEnabled` is false');
+  it('should render `triggerRHSComponent` when passed', () => {
+    const SearchIcon = <i className="icon-search" />;
+    const TriggerRHSComponent = () => SearchIcon;
+    const wrapper = powerselect.renderWithProps({
+      triggerRHSComponent: TriggerRHSComponent,
+    });
+
+    expect(wrapper.contains(SearchIcon)).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__Trigger__RHS').exists()).toBeTruthy();
+  });
+
+  it('should be disabled, when `disabled` prop is set', () => {
+    const wrapper = powerselect.renderWithProps({
+      disabled: true,
+    });
+
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--disabled')).toBeTruthy();
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeFalsy();
+  });
+
+  it('should disable search when `searchEnabled` is false', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+    expect(powerselect.portal.find('.PowerSelect__SearchInput').exists()).toBeTruthy();
+
+    wrapper.setProps({
+      searchEnabled: false,
+    });
+
+    expect(powerselect.portal.find('.PowerSelect__SearchInput').exists()).toBeFalsy();
+  });
 
   it('should toggle the dropdown on click', () => {
-    const wrapper = renderPowerSelect({
+    const wrapper = powerselect.renderWithProps({
       selected: countries[2],
     });
 
-    var portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
-    expect(portal.exists()).toBeFalsy();
-    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeFalsy();
-
-    wrapper.find('.PowerSelect').simulate('click');
-
-    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeTruthy();
-    portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
-    expect(portal.exists()).toBeTruthy();
-    expect(document.querySelectorAll('.PowerSelect__Tether').length).toBe(1);
+    expect(powerselect.isOpened).toBeFalsy();
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeTruthy();
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeFalsy();
   });
 
-  it('should close the dropdown on document click');
+  it('should close the dropdown on document click', () => {
+    const map = {};
+    document.addEventListener = jest.fn((event, cb) => {
+      map[event] = cb;
+    });
+
+    const wrapper = powerselect.renderWithProps();
+
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeTruthy();
+
+    // Should re-check this
+    map.click({
+      target: {
+        closest: function(selector) {
+          return false;
+        },
+      },
+    });
+    expect(powerselect.isOpened).toBeFalsy();
+  });
 
   it('should highlight the below option on down arrow press');
 
