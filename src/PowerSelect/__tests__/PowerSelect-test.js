@@ -113,7 +113,20 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
   });
 
-  it('should delegate `className` to the container, tether & menu');
+  it.only('should delegate `className` to the container, tether & menu', () => {
+    const wrapper = renderPowerSelect({
+      className: 'TestPowerSelect',
+    });
+    expect(wrapper.find('.PowerSelect').hasClass('TestPowerSelect')).toBeTruthy();
+
+    wrapper.find('.PowerSelect').simulate('click');
+    var portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
+
+    expect(portal.find('.PowerSelect__Menu').hasClass('TestPowerSelect__Menu')).toBeTruthy();
+    expect(document.querySelectorAll('.PowerSelect__Tether.TestPowerSelect__Tether').length).toBe(
+      1
+    );
+  });
 
   it('should delegate `tabIndex` when passed');
 
@@ -141,7 +154,7 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--open')).toBeTruthy();
     portal = new ReactWrapper(wrapper.instance().select.dropdownRef, true);
     expect(portal.exists()).toBeTruthy();
-    expect(document.querySelectorAll('.tether-element').length).toBeTruthy();
+    expect(document.querySelectorAll('.PowerSelect__Tether').length).toBe(1);
   });
 
   it('should close the dropdown on document click');
