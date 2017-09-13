@@ -5,6 +5,13 @@ import sinon from 'sinon';
 import { ReactWrapper, shallow, mount } from 'enzyme';
 import PowerSelect from '../index';
 
+const KEY_CODES = {
+  UP_ARROW: 38,
+  DOWN_ARROW: 40,
+  ESCAPE: 27,
+  ENTER: 13,
+  TAB: 9,
+};
 const frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Inferno'];
 const countries = [
   {
@@ -86,6 +93,36 @@ class PowerSelectPageObject {
   triggerContainerClick() {
     this.mountedComponent.find('.PowerSelect').simulate('click');
   }
+
+  triggerKeydown(keyCode, count = 1) {
+    let component = this.mountedComponent.find('.PowerSelect');
+
+    for (let i = 0; i < count; i++) {
+      component.simulate('keyDown', {
+        which: keyCode,
+        keyCode,
+      });
+    }
+  }
+
+  isOptionHighlighted(index) {
+    return (
+      this.portal.exists() &&
+      this.portal
+        .find('.PowerSelect__Options')
+        .childAt(index)
+        .hasClass('PowerSelect__Option--highlighted')
+    );
+  }
+
+  clickOption(index) {
+    this.portal
+      .find('.PowerSelect__Options')
+      .childAt(index)
+      .simulate('click');
+  }
+
+  getVisibleOptionAtIndex(index) {}
 }
 
 describe('<PowerSelect />', () => {
@@ -240,6 +277,8 @@ describe('<PowerSelect />', () => {
     expect(powerselect.isOpened).toBeFalsy();
   });
 
+  it('should render the options in the dropdown');
+
   it('should close the dropdown on document click', () => {
     const map = {};
     document.addEventListener = jest.fn((event, cb) => {
@@ -262,27 +301,128 @@ describe('<PowerSelect />', () => {
     expect(powerselect.isOpened).toBeFalsy();
   });
 
-  it('should highlight the below option on down arrow press');
+  it('should highlight the above/below option on up/down arrow press', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
 
-  it('should highlight the above option on up arrow press');
+    expect(powerselect.isOptionHighlighted(0)).toBeFalsy();
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW);
+    expect(powerselect.isOptionHighlighted(0)).toBeTruthy();
 
-  it('should highlight the first option on down arrow press with last option highlighted');
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, 3);
+    expect(powerselect.isOptionHighlighted(0)).toBeFalsy();
+    expect(powerselect.isOptionHighlighted(3)).toBeTruthy();
 
-  it('should highlight the last option on up arrow press with first option highlighted');
+    powerselect.triggerKeydown(KEY_CODES.UP_ARROW);
+    expect(powerselect.isOptionHighlighted(3)).toBeFalsy();
+    expect(powerselect.isOptionHighlighted(2)).toBeTruthy();
 
-  it('should highlight the selected option when opened');
+    powerselect.triggerKeydown(KEY_CODES.UP_ARROW, 2);
+    expect(powerselect.isOptionHighlighted(0)).toBeTruthy();
+  });
 
-  it('should make the highlighted option within viewport');
+  it('should highlight the first/last option on circular', () => {
+    let optionsCount = countries.length;
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, optionsCount);
 
-  it('should select the option when click');
+    expect(powerselect.isOptionHighlighted(optionsCount - 1)).toBeTruthy();
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW);
+    expect(powerselect.isOptionHighlighted(0)).toBeTruthy();
+    powerselect.triggerKeydown(KEY_CODES.UP_ARROW);
+    expect(powerselect.isOptionHighlighted(optionsCount - 1)).toBeTruthy();
+  });
 
-  it('should select the option on tab & focusout');
+  it('should highlight the selected option when opened', () => {
+    let selectionIndex = 2;
+    const wrapper = powerselect.renderWithProps({
+      selected: countries[selectionIndex],
+    });
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOptionHighlighted(selectionIndex)).toBeTruthy();
+  });
 
-  it('should select the option on enter & focusin');
+  // it('should make the highlighted option within viewport');
 
-  it('should close dropdown on escape press');
+  it('should select the option when click', () => {
+    let optionIndex = 2;
+    let optionToBeSelected = countries[2];
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
 
-  it('should filter the options based on the searchTerm');
+    powerselect.clickOption(optionIndex);
+    let args = powerselect.handleChange.getCall(0).args[0];
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
+
+    expect(args.option).toBe(optionToBeSelected);
+    expect(args.select).toBeTruthy();
+
+    wrapper.setProps({
+      selected: args.option,
+    });
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(optionToBeSelected.name);
+  });
+
+  it('should select the option on tab & focusout', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, 2);
+    powerselect.triggerKeydown(KEY_CODES.TAB);
+
+    let args = powerselect.handleChange.getCall(0).args[0];
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
+
+    expect(args.option).toBe(countries[1]);
+    expect(args.select).toBeTruthy();
+
+    wrapper.setProps({
+      selected: args.option,
+    });
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[1].name);
+  });
+
+  it('should select the option on enter & focusin', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+
+    powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, 2);
+    powerselect.triggerKeydown(KEY_CODES.ENTER);
+
+    let args = powerselect.handleChange.getCall(0).args[0];
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
+
+    expect(args.option).toBe(countries[1]);
+    expect(args.select).toBeTruthy();
+
+    wrapper.setProps({
+      selected: args.option,
+    });
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[1].name);
+  });
+
+  it('should close dropdown on escape press', () => {
+    const map = {};
+    document.addEventListener = jest.fn((event, cb) => {
+      map[event] = cb;
+    });
+
+    const wrapper = powerselect.renderWithProps();
+
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeTruthy();
+
+    // Should re-check this
+    map.keydown({
+      which: KEY_CODES.ESCAPE,
+      keyCode: KEY_CODES.ESCAPE,
+    });
+
+    expect(powerselect.isOpened).toBeFalsy();
+  });
+
+  it('should filter the options based on the searchTerm', () => {});
 
   it('should use custom `matcher` func when provided');
 
