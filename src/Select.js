@@ -262,8 +262,14 @@ export default class Select extends Component {
   }
 
   handleFocus = event => {
-    this.setFocusedState(true);
-    this.props.onFocus(event, { select: this.getPublicApi() });
+    if (!this.state.focused) {
+      let triggerInput = this.powerselect.querySelector('input');
+      if (triggerInput) {
+        triggerInput.focus();
+      }
+      this.setFocusedState(true);
+      this.props.onFocus(event, { select: this.getPublicApi() });
+    }
   };
 
   handleBlur = event => {
@@ -341,12 +347,7 @@ export default class Select extends Component {
           })}
           tabIndex={tabIndex}
           onClick={this.handleClick}
-          onFocus={() => {
-            let triggerInput = this.powerselect.querySelector('input');
-            if (triggerInput) {
-              triggerInput.focus();
-            }
-          }}
+          onFocus={this.handleFocus}
           onKeyDown={event => {
             this.handleKeyDown(event, highlightedOption);
           }}
@@ -363,7 +364,6 @@ export default class Select extends Component {
             showClear={showClear}
             handleOnChange={this.handleSearchInputChange}
             onClearClick={this.handleClearClick}
-            handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
             select={selectApi}
           />

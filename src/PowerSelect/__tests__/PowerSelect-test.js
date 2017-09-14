@@ -122,6 +122,18 @@ class PowerSelectPageObject {
       .simulate('click');
   }
 
+  enterSearchText(string) {
+    this.portal.find('.PowerSelect__SearchInput').simulate('change', {
+      target: {
+        value: string,
+      },
+    });
+  }
+
+  getVisibleOptions() {
+    return this.portal.find('.PowerSelect__Options').children();
+  }
+
   getVisibleOptionAtIndex(index) {}
 }
 
@@ -422,15 +434,73 @@ describe('<PowerSelect />', () => {
     expect(powerselect.isOpened).toBeFalsy();
   });
 
-  it('should filter the options based on the searchTerm', () => {});
+  it('should filter the options based on the searchTerm', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+    let optionsCount = powerselect.getVisibleOptions().length;
+    powerselect.enterSearchText('in');
+    let filteredOptions = powerselect.getVisibleOptions();
+    let filteredOptionsCount = filteredOptions.length;
 
-  it('should use custom `matcher` func when provided');
+    expect(filteredOptionsCount).toBeLessThan(optionsCount);
 
-  it('should reset the filter when the dropdown is closed');
+    for (let i = 0; i < filteredOptionsCount; i++) {
+      expect(filteredOptions.at(i).text()).toMatch(/in/gi);
+    }
 
-  it('should trigger `onChange` when an option is selected or cleared');
+    powerselect.enterSearchText('');
+    expect(powerselect.getVisibleOptions().length).toBeGreaterThan(filteredOptionsCount);
+    expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
+  });
 
-  it('should trigger `onFocus` when the powerselect is focused');
+  it('should use custom `matcher` func when provided', () => {
+    const matcher = ({ option, searchTerm = '', searchIndices }) => {
+      return option[searchIndices].toLowerCase().indexOf(searchTerm) !== -1;
+    };
+
+    const wrapper = powerselect.renderWithProps({
+      matcher,
+    });
+
+    powerselect.triggerContainerClick();
+    let optionsCount = powerselect.getVisibleOptions().length;
+    powerselect.enterSearchText('abc');
+    expect(powerselect.getVisibleOptions().length).toBe(0);
+    powerselect.enterSearchText('');
+    expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
+    powerselect.enterSearchText('india');
+    expect(powerselect.getVisibleOptions().length).toBe(1);
+    powerselect.enterSearchText('');
+    expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
+  });
+
+  it('should reset the filter when the dropdown is closed', () => {
+    const wrapper = powerselect.renderWithProps();
+    powerselect.triggerContainerClick();
+    let optionsCount = powerselect.getVisibleOptions().length;
+    powerselect.enterSearchText('in');
+    expect(powerselect.getVisibleOptions().length).toBeLessThan(optionsCount);
+
+    powerselect.triggerContainerClick(); // close it
+    powerselect.triggerContainerClick(); // open again
+    expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
+  });
+
+  it('should trigger `onFocus` when the powerselect is focused', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      onFocus: handleOnFocus,
+    });
+
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    let args = handleOnFocus.getCall(0).args;
+    expect(args.length).toBe(2);
+    expect(args[0].type).toBe('focus');
+    expect(args[1].select).toBeTruthy();
+  });
 
   it('should trigger `onBlur` when the powerselect is blurred');
 
