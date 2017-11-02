@@ -345,6 +345,7 @@ export default class Select extends Component {
       triggerRHSComponent,
       beforeOptionsComponent,
       afterOptionsComponent,
+      autocomplete = false,
     } = this.props;
 
     let { isOpen, searchTerm, highlightedOption, focused } = this.state;
@@ -376,6 +377,8 @@ export default class Select extends Component {
           }}
         >
           <Trigger
+            autocomplete={autocomplete}
+            highlightedOption={highlightedOption}
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
@@ -393,7 +396,7 @@ export default class Select extends Component {
             select={selectApi}
           />
         </div>
-        {isOpen &&
+        {isOpen && (
           <DropdownMenu
             className={className}
             minWidth={this.powerselect.offsetWidth}
@@ -407,7 +410,8 @@ export default class Select extends Component {
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
-          />}
+          />
+        )}
       </Dropdown>
     );
   }
