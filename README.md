@@ -3,6 +3,8 @@ A highly composable &amp; reusable select components
 
 [![npm version](https://badge.fury.io/js/react-power-select.svg)](https://www.npmjs.com/package/react-power-select)
 
+[![Coverage Status](https://coveralls.io/repos/github/selvagsz/react-power-select/badge.svg?branch=master)](https://coveralls.io/github/selvagsz/react-power-select)
+
 ### DEMO https://selvagsz.github.io/react-power-select/
 
 # Installation
