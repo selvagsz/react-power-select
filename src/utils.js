@@ -48,11 +48,7 @@ export const getOptionIndex = (options, option) => {
 export const flattenOptions = options => {
   let isOptGroupOptions = false;
   let optGroupMap = new Map();
-  let flattenedOptions = (function traverse(
-    options,
-    flattenedOptions = [],
-    group = {}
-  ) {
+  let flattenedOptions = (function traverse(options, flattenedOptions = [], group = {}) {
     return options.reduce((prev, currentOption) => {
       if (isOptGroup(currentOption)) {
         isOptGroupOptions = true;
@@ -70,12 +66,7 @@ export const flattenOptions = options => {
   };
 };
 
-export const filterOptions = ({
-  options,
-  searchTerm,
-  searchIndices,
-  matcher,
-}) => {
+export const filterOptions = ({ options, searchTerm, searchIndices, matcher }) => {
   return (function doFilter(options) {
     let filtered = [];
     for (let i = 0, len = options.length; i < len; i++) {
@@ -94,18 +85,12 @@ export const filterOptions = ({
   })(options);
 };
 
-export const getNextValidOption = ({
-  options,
-  currentOption,
-  counter,
-  optGroupMap,
-}) => {
+export const getNextValidOption = ({ options, currentOption, counter, optGroupMap }) => {
   return (function next(currentOption) {
     let currentIndex = options.indexOf(currentOption);
     let nextIndex = currentIndex + counter;
-    nextIndex = nextIndex === -1
-      ? options.length - 1
-      : nextIndex === options.length ? 0 : nextIndex;
+    nextIndex =
+      nextIndex === -1 ? options.length - 1 : nextIndex === options.length ? 0 : nextIndex;
     let nextOption = options[nextIndex];
     let group = optGroupMap.get(nextOption);
     if (nextOption && (nextOption.disabled || group.disabled)) {

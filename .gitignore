@@ -1,6 +1,7 @@
 # output
 lib/
 dist/
+coverage/
 
 # dependencies
 /node_modules

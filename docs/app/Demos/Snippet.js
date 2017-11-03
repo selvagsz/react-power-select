@@ -23,7 +23,7 @@ export default class Snippet extends Component {
   render() {
     return (
       <CodeMirror
-        ref={codemirror => this.codemirror = codemirror}
+        ref={codemirror => (this.codemirror = codemirror)}
         value={window[this.props.snippetName]}
         options={{
           lineNumbers: true,
