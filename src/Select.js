@@ -326,6 +326,7 @@ export default class Select extends Component {
       triggerRHSComponent,
       beforeOptionsComponent,
       afterOptionsComponent,
+      autocomplete = false,
     } = this.props;
 
     let { isOpen, searchTerm, highlightedOption, focused } = this.state;
@@ -353,6 +354,8 @@ export default class Select extends Component {
           }}
         >
           <Trigger
+            autocomplete={autocomplete}
+            highlightedOption={highlightedOption}
             selectedOption={selected}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
