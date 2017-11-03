@@ -12,7 +12,7 @@ export default class SelectTrigger extends Component {
 
   componentWillReceiveProps(nextProps) {
     let value;
-    if (this.props.autocomplete) {
+    if (this.props.autocomplete && nextProps.highlightedOption !== null) {
       value = '';
       const { searchTerm: thisTerm } = this.props;
       const { searchTerm: nextTerm } = nextProps;
