@@ -52,33 +52,17 @@ export default class Select extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener(
-      'keydown',
-      this.documentEventListeners.handleEscapePress
-    );
-    document.addEventListener(
-      'click',
-      this.documentEventListeners.handleDocumentClick,
-      true
-    );
+    document.addEventListener('keydown', this.documentEventListeners.handleEscapePress);
+    document.addEventListener('click', this.documentEventListeners.handleDocumentClick, true);
   }
 
   componentWillUnmount() {
-    document.removeEventListener(
-      'keydown',
-      this.documentEventListeners.handleEscapePress
-    );
-    document.removeEventListener(
-      'click',
-      this.documentEventListeners.handleDocumentClick,
-      true
-    );
+    document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress);
+    document.removeEventListener('click', this.documentEventListeners.handleDocumentClick, true);
   }
 
   flattenOptions(options) {
-    let { isOptGroupOptions, flattenedOptions, optGroupMap } = flattenOptions(
-      options
-    );
+    let { isOptGroupOptions, flattenedOptions, optGroupMap } = flattenOptions(options);
     this.isOptGroupOptions = isOptGroupOptions;
     this._optGroupMap = optGroupMap;
     this.setState({
@@ -118,9 +102,7 @@ export default class Select extends Component {
     let flattenedOptions = this.getFlattenedOptions();
     if (this.state.highlightedOption === null) {
       let { selected } = this.props;
-      let highlightedOption = flattenedOptions.find(
-        option => option === selected
-      );
+      let highlightedOption = flattenedOptions.find(option => option === selected);
       this.setHighlightedOption(highlightedOption);
     }
     this.setState({
@@ -169,12 +151,7 @@ export default class Select extends Component {
   };
 
   search = (searchTerm, callback) => {
-    let {
-      options,
-      optionLabelPath,
-      matcher,
-      searchIndices = optionLabelPath,
-    } = this.props;
+    let { options, optionLabelPath, matcher, searchIndices = optionLabelPath } = this.props;
     let filteredOptions = filterOptions({
       options,
       searchTerm: searchTerm || '',
@@ -273,9 +250,7 @@ export default class Select extends Component {
   handleDocumentClick(event) {
     let $target = event.target;
     let powerselect = this.powerselect;
-    if (
-      !(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))
-    ) {
+    if (!(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))) {
       let { focused, isOpen } = this.state;
       if (focused) {
         this.setFocusedState(false);
@@ -287,8 +262,14 @@ export default class Select extends Component {
   }
 
   handleFocus = event => {
-    this.setFocusedState(true);
-    this.props.onFocus(event, { select: this.getPublicApi() });
+    if (!this.state.focused) {
+      let triggerInput = this.powerselect.querySelector('input');
+      if (triggerInput) {
+        triggerInput.focus();
+      }
+      this.setFocusedState(true);
+      this.props.onFocus(event, { select: this.getPublicApi() });
+    }
   };
 
   handleBlur = event => {
@@ -353,7 +334,7 @@ export default class Select extends Component {
     let selectApi = this.getPublicApi();
 
     return (
-      <Dropdown>
+      <Dropdown className={className}>
         <div
           ref={powerselect => {
             this.powerselect = powerselect;
@@ -365,12 +346,8 @@ export default class Select extends Component {
             PowerSelect__WithSearch: searchTerm,
           })}
           tabIndex={tabIndex}
-          onFocus={() => {
-            let triggerInput = this.powerselect.querySelector('input');
-            if (triggerInput) {
-              triggerInput.focus();
-            }
-          }}
+          onClick={this.handleClick}
+          onFocus={this.handleFocus}
           onKeyDown={event => {
             this.handleKeyDown(event, highlightedOption);
           }}
@@ -386,15 +363,14 @@ export default class Select extends Component {
             searchTerm={searchTerm}
             showClear={showClear}
             handleOnChange={this.handleSearchInputChange}
-            onClick={this.handleClick}
             onClearClick={this.handleClearClick}
-            handleOnFocus={this.handleFocus}
             handleOnBlur={this.handleBlur}
             select={selectApi}
           />
         </div>
-        {isOpen &&
+        {isOpen && (
           <DropdownMenu
+            ref={dropdownRef => (this.dropdownRef = dropdownRef)}
             className={className}
             minWidth={this.powerselect.offsetWidth}
             options={options}
@@ -407,7 +383,8 @@ export default class Select extends Component {
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
-          />}
+          />
+        )}
       </Dropdown>
     );
   }
@@ -415,11 +392,7 @@ export default class Select extends Component {
 
 Select.propTypes = {
   options: PropTypes.array.isRequired,
-  selected: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
+  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
   onChange: PropTypes.func.isRequired,
 };
 

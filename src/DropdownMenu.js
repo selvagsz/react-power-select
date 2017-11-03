@@ -39,17 +39,11 @@ export default class DropdownMenu extends Component {
         }}
         style={{ minWidth }}
       >
-        {beforeOptionsComponent &&
-          renderComponent(beforeOptionsComponent, { select })}
+        {beforeOptionsComponent && renderComponent(beforeOptionsComponent, { select })}
 
-        <Options
-          select={select}
-          highlightedOption={highlightedOption}
-          {...otherProps}
-        />
+        <Options select={select} highlightedOption={highlightedOption} {...otherProps} />
 
-        {afterOptionsComponent &&
-          renderComponent(afterOptionsComponent, { select })}
+        {afterOptionsComponent && renderComponent(afterOptionsComponent, { select })}
       </div>
     );
   }

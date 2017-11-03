@@ -24,10 +24,7 @@ export default class TypeAhead extends Component {
       <Select
         triggerComponent={props => {
           return (
-            <TypeAheadSelectTrigger
-              {...props}
-              selectedOptionLabelPath={selectedOptionLabelPath}
-            />
+            <TypeAheadSelectTrigger {...props} selectedOptionLabelPath={selectedOptionLabelPath} />
           );
         }}
         {...rest}

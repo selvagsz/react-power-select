@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 import { PowerSelectMultiple } from 'src';
 import { countries } from '../constants';
 
-const CustomOptionComponnet = ({ option }) =>
+const CustomOptionComponnet = ({ option }) => (
   <div>
     <img className="flag" src={option.flag} />
     {option.name} ({option.code})
-  </div>;
+  </div>
+);
 
-const CustomSelectedOptionComponent = ({
-  option,
-  optionLabelPath,
-  onCloseClick,
-  select,
-}) =>
+const CustomSelectedOptionComponent = ({ option, optionLabelPath, onCloseClick, select }) => (
   <li className="PowerSelectMultiple__SelectedOption">
     <span className="PowerSelectMultiple__SelectedOption__Label">
       <img className="flag" src={option.flag} />
@@ -28,7 +24,8 @@ const CustomSelectedOptionComponent = ({
     >
       ×
     </span>
-  </li>;
+  </li>
+);
 
 export default class ArrayOfObjectsDemo extends Component {
   state = {

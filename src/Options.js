@@ -23,15 +23,12 @@ export default class Options extends Component {
   scrollTo({ options, highlightedOption }) {
     if (highlightedOption) {
       let optionIndex = getOptionIndex(options, highlightedOption);
-      let $option = this.optionsList.querySelector(
-        `[data-option-index="${optionIndex}"]`
-      );
+      let $option = this.optionsList.querySelector(`[data-option-index="${optionIndex}"]`);
       let delta = 0;
       if ($option) {
         let $optionOffsetHeight = $option.offsetHeight;
         let $optionOffsetTop = $option.offsetTop;
-        delta =
-          $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
+        delta = $optionOffsetTop + $optionOffsetHeight - this.optionsListOffsetHeight;
       }
       if (delta > 0) {
         this.optionsList.scrollTop = delta;
@@ -42,13 +39,7 @@ export default class Options extends Component {
   }
 
   renderOptions(options, optGroupDisabled = false) {
-    let {
-      select,
-      optionLabelPath,
-      optionComponent,
-      highlightedOption,
-      onOptionClick,
-    } = this.props;
+    let { select, optionLabelPath, optionComponent, highlightedOption, onOptionClick } = this.props;
     return options.map((option, index) => {
       let optionIndex = getOptionIndex(this.props.options, option);
       if (isOptGroup(option)) {
@@ -86,10 +77,7 @@ export default class Options extends Component {
   render() {
     let { options } = this.props;
     return (
-      <div
-        className="PowerSelect__Options"
-        ref={optionsList => (this.optionsList = optionsList)}
-      >
+      <div className="PowerSelect__Options" ref={optionsList => (this.optionsList = optionsList)}>
         {this.renderOptions(options)}
       </div>
     );

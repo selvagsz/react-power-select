@@ -10,21 +10,18 @@ import { countries } from '../constants';
 //   }
 // ]
 
-let groupedCountries = countries.reduce(
-  (groups, { continent, ...currentOption }) => {
-    let group = groups.find(group => group.label === continent);
-    if (group) {
-      group.options.push(currentOption);
-    } else {
-      groups.push({
-        label: continent,
-        options: [],
-      });
-    }
-    return groups;
-  },
-  []
-);
+let groupedCountries = countries.reduce((groups, { continent, ...currentOption }) => {
+  let group = groups.find(group => group.label === continent);
+  if (group) {
+    group.options.push(currentOption);
+  } else {
+    groups.push({
+      label: continent,
+      options: [],
+    });
+  }
+  return groups;
+}, []);
 
 export default class OptGroupDemo extends Component {
   state = {

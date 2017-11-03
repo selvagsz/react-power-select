@@ -4,14 +4,8 @@ import { countries } from '../constants';
 
 const createHighlighedOption = (label, searchTerm) => {
   if (searchTerm) {
-    let escapedSearchTerm = searchTerm.replace(
-      /([.?*+^$[\]\\(){}|-])/g,
-      '\\$1'
-    );
-    label = label.replace(
-      new RegExp(escapedSearchTerm, 'i'),
-      '<span class="highlight">$&</span>'
-    );
+    let escapedSearchTerm = searchTerm.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+    label = label.replace(new RegExp(escapedSearchTerm, 'i'), '<span class="highlight">$&</span>');
   }
 
   return {
@@ -22,12 +16,7 @@ const createHighlighedOption = (label, searchTerm) => {
 const HighlightedOption = ({ option, select, optionLabelPath }) => {
   let highlightedLabel = option[optionLabelPath];
   return (
-    <span
-      dangerouslySetInnerHTML={createHighlighedOption(
-        highlightedLabel,
-        select.searchTerm
-      )}
-    />
+    <span dangerouslySetInnerHTML={createHighlighedOption(highlightedLabel, select.searchTerm)} />
   );
 };
 
