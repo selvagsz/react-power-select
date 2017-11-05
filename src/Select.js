@@ -359,6 +359,7 @@ export default class Select extends Component {
         >
           <Trigger
             selectedOption={selected}
+            highlightedOption={highlightedOption}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
             triggerLHSComponent={triggerLHSComponent}
