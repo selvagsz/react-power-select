@@ -322,6 +322,7 @@ export default class Select extends Component {
       placeholder,
       disabled,
       selectedOptionComponent,
+      selectedOptionLabelPath,
       triggerLHSComponent,
       triggerRHSComponent,
       beforeOptionsComponent,
@@ -356,6 +357,7 @@ export default class Select extends Component {
             selectedOption={selected}
             highlightedOption={highlightedOption}
             optionLabelPath={optionLabelPath}
+            selectedOptionLabelPath={selectedOptionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
             triggerLHSComponent={triggerLHSComponent}
             triggerRHSComponent={triggerRHSComponent}

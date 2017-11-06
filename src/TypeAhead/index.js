@@ -27,6 +27,7 @@ export default class TypeAhead extends Component {
         triggerComponent={props => {
           return <TriggerComponent {...props} selectedOptionLabelPath={selectedOptionLabelPath} />;
         }}
+        selectedOptionLabelPath={selectedOptionLabelPath}
         {...rest}
         onKeyDown={this.handleKeyDown}
       />
