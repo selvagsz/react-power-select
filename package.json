@@ -28,6 +28,9 @@
     "unmockedModulePathPatterns": [
       "node_modules",
       "babel"
+    ],
+    "testPathIgnorePatterns": [
+      "src/__tests__/utils"
     ]
   },
   "lint-staged": {

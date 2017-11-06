@@ -9,3 +9,4 @@ coverage/
 
 # misc
 npm-debug.log
+.DS_Store
