@@ -49,6 +49,11 @@ export default class Select extends Component {
 
   componentWillReceiveProps({ options }) {
     this.flattenOptions(options);
+    if (this.props.options !== options) {
+      this.setState({
+        filteredOptions: options,
+      });
+    }
   }
 
   componentDidMount() {
@@ -262,12 +267,12 @@ export default class Select extends Component {
   }
 
   handleFocus = event => {
+    let triggerInput = this.powerselect.querySelector('input');
+    if (triggerInput) {
+      triggerInput.focus();
+    }
+    this.setFocusedState(true);
     if (!this.state.focused) {
-      let triggerInput = this.powerselect.querySelector('input');
-      if (triggerInput) {
-        triggerInput.focus();
-      }
-      this.setFocusedState(true);
       this.props.onFocus(event, { select: this.getPublicApi() });
     }
   };
