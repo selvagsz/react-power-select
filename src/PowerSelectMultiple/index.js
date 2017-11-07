@@ -24,9 +24,9 @@ export default class PowerSelectMultiple extends Component {
         select,
       });
     }
+    select.actions.focus();
     if (select.searchTerm) {
       select.actions.search('');
-      select.actions.focus();
     }
   };
 
