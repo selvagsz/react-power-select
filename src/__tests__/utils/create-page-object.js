@@ -8,12 +8,12 @@ export default class PageObjectBase {
 
   renderWithProps(props) {
     let selected;
-    let container;
+    let attachToContainer;
     let Component = this.Component;
 
-    if (!this.container) {
-      container = this.container = document.createElement('div');
-      document.body.appendChild(container);
+    if (!this.attachToContainer) {
+      attachToContainer = this.attachToContainer = document.createElement('div');
+      document.body.appendChild(attachToContainer);
     }
 
     let mountedComponent = (this.mountedComponent = mount(
@@ -25,7 +25,7 @@ export default class PageObjectBase {
         {...props}
       />,
       {
-        attachTo: container,
+        attachTo: attachToContainer,
       }
     ));
     return mountedComponent;
@@ -43,18 +43,26 @@ export default class PageObjectBase {
 
   get isOpened() {
     let wrapper = this.mountedComponent;
-    let hasOpenClass = wrapper.find('.PowerSelect').hasClass('PowerSelect--open');
+    let hasOpenClass = this.container.hasClass('PowerSelect--open');
     let isDropdownVisible = this.portal.exists();
 
     return isDropdownVisible && hasOpenClass;
   }
 
+  get container() {
+    return this.mountedComponent.find('.PowerSelect');
+  }
+
   triggerContainerClick() {
-    this.mountedComponent.find('.PowerSelect').simulate('click');
+    this.container.simulate('click');
+  }
+
+  triggerClearClick() {
+    this.mountedComponent.find('.PowerSelect__Clear').simulate('click');
   }
 
   triggerKeydown(keyCode, count = 1) {
-    let component = this.mountedComponent.find('.PowerSelect');
+    let component = this.container;
 
     for (let i = 0; i < count; i++) {
       component.simulate('keyDown', {
