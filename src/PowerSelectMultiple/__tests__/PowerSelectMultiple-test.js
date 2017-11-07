@@ -227,12 +227,10 @@ describe('<PowerSelectMultiple />', () => {
       map[event] = cb;
     });
     const wrapper = powerselect.renderWithProps();
-
     powerselect.triggerContainerClick();
     expect(powerselect.isOpened).toBeTruthy();
     powerselect.clickOption(1);
     powerselect.renderChange();
-
     // Trigger document click. Should re-check this
     map.click({
       target: {
@@ -242,189 +240,14 @@ describe('<PowerSelectMultiple />', () => {
       },
     });
     expect(powerselect.isOpened).toBeFalsy();
-
     powerselect.triggerContainerClick();
     powerselect.clickOption(1);
     powerselect.renderChange();
     expect(powerselect.renderedSelectedOptions.length).toBe(2);
     expect(powerselect.isOptionsPresentInDropdown()).toBeFalsy();
+    powerselect.clickOption(1);
+    powerselect.renderChange();
+    expect(powerselect.renderedSelectedOptions.length).toBe(3);
+    expect(powerselect.isOptionsPresentInDropdown()).toBeFalsy();
   });
-
-  // it('should highlight the selected option when opened', () => {
-  //   let selectionIndex = 2;
-  //   const wrapper = powerselect.renderWithProps({
-  //     selected: countries[selectionIndex],
-  //   });
-  //   powerselect.triggerContainerClick();
-  //   expect(powerselect.isOptionHighlighted(selectionIndex)).toBeTruthy();
-  // });
-
-  // // it('should make the highlighted option within viewport');
-
-  // it('should select the option when click', () => {
-  //   let optionIndex = 2;
-  //   let optionToBeSelected = countries[2];
-  //   const wrapper = powerselect.renderWithProps();
-  //   powerselect.triggerContainerClick();
-
-  //   powerselect.clickOption(optionIndex);
-  //   let args = powerselect.handleChange.getCall(0).args[0];
-  //   expect(powerselect.handleChange.calledOnce).toBeTruthy();
-
-  //   expect(args.option).toBe(optionToBeSelected);
-  //   expect(args.select).toBeTruthy();
-
-  //   wrapper.setProps({
-  //     selected: args.option,
-  //   });
-  //   expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(optionToBeSelected.name);
-  // });
-
-  // it('should select the option on tab & focusout', () => {
-  //   const wrapper = powerselect.renderWithProps();
-  //   powerselect.triggerContainerClick();
-
-  //   powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, 2);
-  //   powerselect.triggerKeydown(KEY_CODES.TAB);
-
-  //   let args = powerselect.handleChange.getCall(0).args[0];
-  //   expect(powerselect.handleChange.calledOnce).toBeTruthy();
-
-  //   expect(args.option).toBe(countries[1]);
-  //   expect(args.select).toBeTruthy();
-
-  //   wrapper.setProps({
-  //     selected: args.option,
-  //   });
-  //   expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[1].name);
-  // });
-
-  // it('should select the option on enter & focusin', () => {
-  //   const wrapper = powerselect.renderWithProps();
-  //   powerselect.triggerContainerClick();
-
-  //   powerselect.triggerKeydown(KEY_CODES.DOWN_ARROW, 2);
-  //   powerselect.triggerKeydown(KEY_CODES.ENTER);
-
-  //   let args = powerselect.handleChange.getCall(0).args[0];
-  //   expect(powerselect.handleChange.calledOnce).toBeTruthy();
-
-  //   expect(args.option).toBe(countries[1]);
-  //   expect(args.select).toBeTruthy();
-
-  //   wrapper.setProps({
-  //     selected: args.option,
-  //   });
-  //   expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe(countries[1].name);
-  // });
-
-  // it('should close dropdown on escape press', () => {
-  //   const map = {};
-  //   document.addEventListener = jest.fn((event, cb) => {
-  //     map[event] = cb;
-  //   });
-
-  //   const wrapper = powerselect.renderWithProps();
-
-  //   powerselect.triggerContainerClick();
-  //   expect(powerselect.isOpened).toBeTruthy();
-
-  //   // Should re-check this
-  //   map.keydown({
-  //     which: KEY_CODES.ESCAPE,
-  //     keyCode: KEY_CODES.ESCAPE,
-  //   });
-
-  //   expect(powerselect.isOpened).toBeFalsy();
-  // });
-
-  // it('should filter the options based on the searchTerm', () => {
-  //   const wrapper = powerselect.renderWithProps();
-  //   powerselect.triggerContainerClick();
-  //   let optionsCount = powerselect.getVisibleOptions().length;
-  //   powerselect.enterSearchText('in');
-  //   let filteredOptions = powerselect.getVisibleOptions();
-  //   let filteredOptionsCount = filteredOptions.length;
-
-  //   expect(filteredOptionsCount).toBeLessThan(optionsCount);
-
-  //   for (let i = 0; i < filteredOptionsCount; i++) {
-  //     expect(filteredOptions.at(i).text()).toMatch(/in/gi);
-  //   }
-
-  //   powerselect.enterSearchText('');
-  //   expect(powerselect.getVisibleOptions().length).toBeGreaterThan(filteredOptionsCount);
-  //   expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
-  // });
-
-  // it('should use custom `matcher` func when provided', () => {
-  //   const matcher = ({ option, searchTerm = '', searchIndices }) => {
-  //     return option[searchIndices].toLowerCase().indexOf(searchTerm) !== -1;
-  //   };
-
-  //   const wrapper = powerselect.renderWithProps({
-  //     matcher,
-  //   });
-
-  //   powerselect.triggerContainerClick();
-  //   let optionsCount = powerselect.getVisibleOptions().length;
-  //   powerselect.enterSearchText('abc');
-  //   expect(powerselect.getVisibleOptions().length).toBe(0);
-  //   powerselect.enterSearchText('');
-  //   expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
-  //   powerselect.enterSearchText('india');
-  //   expect(powerselect.getVisibleOptions().length).toBe(1);
-  //   powerselect.enterSearchText('');
-  //   expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
-  // });
-
-  // it('should reset the filter when the dropdown is closed', () => {
-  //   const wrapper = powerselect.renderWithProps();
-  //   powerselect.triggerContainerClick();
-  //   let optionsCount = powerselect.getVisibleOptions().length;
-  //   powerselect.enterSearchText('in');
-  //   expect(powerselect.getVisibleOptions().length).toBeLessThan(optionsCount);
-
-  //   powerselect.triggerContainerClick(); // close it
-  //   powerselect.triggerContainerClick(); // open again
-  //   expect(powerselect.getVisibleOptions().length).toBe(optionsCount);
-  // });
-
-  // it('should trigger `onFocus` when the powerselect is focused', () => {
-  //   const handleOnFocus = sinon.spy();
-  //   const wrapper = powerselect.renderWithProps({
-  //     onFocus: handleOnFocus,
-  //   });
-
-  //   expect(handleOnFocus.calledOnce).toBeFalsy();
-  //   wrapper.find('.PowerSelect').simulate('focus');
-  //   expect(handleOnFocus.calledOnce).toBeTruthy();
-
-  //   let args = handleOnFocus.getCall(0).args;
-  //   expect(args.length).toBe(2);
-  //   expect(args[0].type).toBe('focus');
-  //   expect(args[1].select).toBeTruthy();
-  // });
-
-  // it('should trigger `onBlur` when the powerselect is blurred');
-
-  // it('should trigger `onOpen` when the powerselect is opened');
-
-  // it('should trigger `onClose` when the powerselect is closed');
-
-  // it('should trigger `onKeyDown` when any key is pressed');
-
-  // it('should trigger `onSearchInputChange` when searchInput changes');
-
-  // it('should render the `optionComponent`, when provided');
-
-  // it('should render the `selectedOptionComponent`, when provided');
-
-  // it('should render the `beforeOptionsComponent`, when provided');
-
-  // it('should render the `afterOptionsComponent`, when provided');
-
-  // it('should disable & prevent clicks & highlights when the option is disabled');
-
-  // it('should prevent max call limit recursion, when all options are disabled');
 });
