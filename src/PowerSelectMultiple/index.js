@@ -24,9 +24,9 @@ export default class PowerSelectMultiple extends Component {
         select,
       });
     }
+    select.actions.focus();
     if (select.searchTerm) {
       select.actions.search('');
-      select.actions.focus();
     }
   };
 
@@ -82,7 +82,7 @@ export default class PowerSelectMultiple extends Component {
     return (
       <Select
         className={cx('PowerSelectMultiple', className)}
-        ref={powerselect => (this.powerselect = powerselect)}
+        ref={select => (this.select = select)}
         triggerComponent={props => (
           <MultiSelectTrigger
             {...props}
