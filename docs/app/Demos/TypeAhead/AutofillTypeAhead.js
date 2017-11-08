@@ -3,8 +3,8 @@ import { TypeAhead } from 'src';
 import { countries } from '../constants';
 
 // Implementation
-const SelectTrigger = TypeAhead.SelectTrigger;
-class SelectTriggerExt extends Component {
+const TypeAheadTrigger = TypeAhead.Trigger;
+class TypeAheadTriggerExt extends Component {
   state = {};
 
   componentWillMount() {
@@ -36,13 +36,13 @@ class SelectTriggerExt extends Component {
 
   render() {
     let { searchTerm, ...rest } = this.props;
-    return <SelectTrigger searchTerm={this.state.searchTerm} {...rest} />;
+    return <TypeAheadTrigger searchTerm={this.state.searchTerm} {...rest} />;
   }
 }
 
-// Good to have Wrapper Component. Otherwise, you'd need to pass `triggerComponent={SelectTriggerExt}` on the consumption end
+// Good to have Wrapper Component. Otherwise, you'd need to pass `triggerComponent={TypeAheadTriggerExt}` on the consumption end
 const AutoFillTypeAhead = props => {
-  return <TypeAhead triggerComponent={SelectTriggerExt} {...props} />;
+  return <TypeAhead triggerComponent={TypeAheadTriggerExt} {...props} />;
 };
 /*** End of Implementation ***/
 
