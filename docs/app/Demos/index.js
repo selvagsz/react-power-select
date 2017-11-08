@@ -232,7 +232,7 @@ export default () => {
           </div>
           <div className="Section__Code">
             <Snippet
-              highlightLines={[[5, 56], [74, 79]]}
+              highlightLines={[[5, 47], [64, 69]]}
               snippetName="TypeAheadAutoFillTypeAhead"
             />
           </div>
