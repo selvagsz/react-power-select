@@ -11,6 +11,7 @@ import BeforeOptionsDemo from './PowerSelect/BeforeOptionsDemo';
 
 import TypeAheadPlainArray from './TypeAhead/PlainArray';
 import TypeAheadArrayOfObjects from './TypeAhead/ArrayOfObjectsDemo';
+import AutoFillTypeAheadDemo from './TypeAhead/AutoFillTypeAhead';
 
 import MultiSelectPlainArray from './PowerSelectMultiple/PlainArray';
 import MultiSelectArrayOfObjects from './PowerSelectMultiple/ArrayOfObjectsDemo';
@@ -199,7 +200,7 @@ export default () => {
         </section>
 
         <section>
-          <h1>More Receipes</h1>
+          <h1>More Recipes</h1>
           <div className="Section">
             <div className="Section__Demo">
               <HighlightSearchDemo />
@@ -215,9 +216,6 @@ export default () => {
           <div className="Section">
             <div className="Section__Demo">
               <TaggedInputDemo />
-              <div className="help">
-                Type some text & type <code>','</code>
-              </div>
             </div>
             <div className="Section__Code">
               <Snippet
@@ -227,6 +225,18 @@ export default () => {
             </div>
           </div>
         </section>
+
+        <div className="Section">
+          <div className="Section__Demo">
+            <AutoFillTypeAheadDemo />
+          </div>
+          <div className="Section__Code">
+            <Snippet
+              highlightLines={[[5, 56], [74, 79]]}
+              snippetName="TypeAheadAutoFillTypeAhead"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

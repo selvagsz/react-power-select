@@ -53,6 +53,14 @@ export default class PageObjectBase {
     return this.mountedComponent.find('.PowerSelect');
   }
 
+  get trigger() {
+    return new ReactWrapper(this.mountedComponent.instance().select.triggerRef, true);
+  }
+
+  get isDisabled() {
+    return this.container.hasClass('PowerSelect--disabled');
+  }
+
   triggerContainerClick() {
     this.container.simulate('click');
   }
@@ -101,5 +109,10 @@ export default class PageObjectBase {
     return this.portal.find('.PowerSelect__Options').children();
   }
 
-  getVisibleOptionAtIndex(index) {}
+  renderChange() {
+    let args = this.handleChange.lastCall.args[0];
+    this.mountedComponent.setProps({
+      selected: args.option,
+    });
+  }
 }

@@ -358,7 +358,9 @@ export default class Select extends Component {
           }}
         >
           <Trigger
+            ref={triggerRef => (this.triggerRef = triggerRef)}
             selectedOption={selected}
+            highlightedOption={highlightedOption}
             optionLabelPath={optionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
             triggerLHSComponent={triggerLHSComponent}

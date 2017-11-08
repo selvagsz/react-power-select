@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import cx from 'classnames';
 import Select from '../Select';
-import TypeAheadSelectTrigger from './SelectTrigger';
+import SelectTrigger from './SelectTrigger';
 
 export default class TypeAhead extends Component {
   handleKeyDown = (event, { select }) => {
@@ -19,13 +20,15 @@ export default class TypeAhead extends Component {
   };
 
   render() {
-    let { selectedOptionLabelPath, onKeyDown, ...rest } = this.props;
+    let { className, selectedOptionLabelPath, onKeyDown, ...rest } = this.props;
+    const TriggerComponent = this.props.triggerComponent;
+
     return (
       <Select
+        className={cx('TypeAhead', className)}
+        ref={select => (this.select = select)}
         triggerComponent={props => {
-          return (
-            <TypeAheadSelectTrigger {...props} selectedOptionLabelPath={selectedOptionLabelPath} />
-          );
+          return <TriggerComponent {...props} selectedOptionLabelPath={selectedOptionLabelPath} />;
         }}
         {...rest}
         onKeyDown={this.handleKeyDown}
@@ -35,3 +38,6 @@ export default class TypeAhead extends Component {
 }
 
 TypeAhead.displayName = 'TypeAhead';
+TypeAhead.defaultProps = {
+  triggerComponent: SelectTrigger,
+};
