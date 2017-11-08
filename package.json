@@ -20,7 +20,8 @@
     "collectCoverage": true,
     "coverageReporters": [
       "html",
-      "text"
+      "text",
+      "lcov"
     ],
     "roots": [
       "src"
