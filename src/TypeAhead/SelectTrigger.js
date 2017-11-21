@@ -50,6 +50,7 @@ export default class SelectTrigger extends Component {
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
+      ref,
       ...rest
     } = this.props;
     let value = this.state.value;
