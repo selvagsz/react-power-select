@@ -32,6 +32,7 @@ export default class SelectTrigger extends Component {
       handleOnFocus,
       handleOnBlur,
       selectedOptionComponent,
+      ref,
       ...rest
     } = this.props;
     let selected = selectedOption || [];

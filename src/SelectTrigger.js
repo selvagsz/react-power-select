@@ -8,6 +8,7 @@ export default function Trigger({
   selectedOptionComponent,
   placeholder,
   select,
+  ref,
   ...rest
 }) {
   return (

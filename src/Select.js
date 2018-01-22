@@ -185,7 +185,13 @@ export default class Select extends Component {
     let value = event.target.value;
     this.open();
     this.search(value);
-    this.props.onSearchInputChange(event, { select: this.getPublicApi() });
+
+    if (this.props.onSearchInputChange) {
+      // show deprecate warning
+      this.props.onSearchInputChange(event, { select: this.getPublicApi() });
+    } else {
+      this.props.onSearch(event, { select: this.getPublicApi() });
+    }
   };
 
   validateAndHighlightOption(highlightedOption, counter) {
@@ -254,8 +260,7 @@ export default class Select extends Component {
 
   handleDocumentClick(event) {
     let $target = event.target;
-    let powerselect = this.powerselect;
-    if (!(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))) {
+    if (!($target.closest('.PowerSelect') || $target.closest('.PowerSelect__Menu'))) {
       let { focused, isOpen } = this.state;
       if (focused) {
         this.setFocusedState(false);
@@ -426,5 +431,5 @@ Select.defaultProps = {
   onKeyDown: noop,
   onOpen: noop,
   onClose: noop,
-  onSearchInputChange: noop,
+  onSearch: noop,
 };
