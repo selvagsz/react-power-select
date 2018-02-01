@@ -1,6 +1,6 @@
 {
   "name": "react-power-select",
-  "version": "1.0.0-beta.10",
+  "version": "1.0.0-beta.11",
   "description": "A highly composable & reusable select component in react",
   "main": "lib/index.js",
   "scripts": {
@@ -103,6 +103,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.10",
-    "react-tether": "^0.5.7"
+    "react-tether": "^0.6.1"
   }
 }
