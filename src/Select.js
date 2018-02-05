@@ -253,8 +253,11 @@ export default class Select extends Component {
 
   handleEscapePress(event) {
     if (event.which === 27) {
-      this.resetSearchAndClose();
-      this.focusField();
+      let $target = event.target;
+      if (this.powerselect.contains($target) || this.dropdown.contains($target)) {
+        this.resetSearchAndClose();
+        this.focusField();
+      }
     }
   }
 
@@ -385,6 +388,7 @@ export default class Select extends Component {
         {isOpen && (
           <DropdownMenu
             ref={dropdownRef => (this.dropdownRef = dropdownRef)}
+            onRef={dropdown => (this.dropdown = dropdown)}
             className={className}
             minWidth={this.powerselect.offsetWidth}
             options={options}

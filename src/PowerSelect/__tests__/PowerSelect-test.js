@@ -297,6 +297,11 @@ describe('<PowerSelect />', () => {
     powerselect.triggerContainerClick();
     expect(powerselect.isOpened).toBeTruthy();
 
+    //mock contains
+    powerselect.mountedComponent.instance().select.powerselect.contains = jest
+      .fn()
+      .mockReturnValue(true);
+
     // Should re-check this
     map.keydown({
       which: KEY_CODES.ESCAPE,

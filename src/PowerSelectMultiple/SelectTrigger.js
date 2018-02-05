@@ -27,12 +27,12 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
+      autoFocus,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
       handleOnBlur,
       selectedOptionComponent,
-      ref,
       ...rest
     } = this.props;
     let selected = selectedOption || [];
@@ -66,6 +66,7 @@ export default class SelectTrigger extends Component {
                 placeholder={selected.length ? '' : placeholder}
                 value={this.state.value}
                 disabled={disabled}
+                autoFocus={autoFocus}
                 onChange={handleOnChange}
                 onKeyDown={handleKeyDown}
                 onFocus={handleOnFocus}
