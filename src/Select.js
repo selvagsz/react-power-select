@@ -129,7 +129,9 @@ export default class Select extends Component {
   };
 
   toggle = event => {
-    event && event.stopPropagation();
+    if (event && this.powerselect.contains(event.target)) {
+      event.stopPropagation();
+    }
     if (this.state.isOpen) {
       this.resetSearchAndClose();
     } else {
@@ -263,7 +265,7 @@ export default class Select extends Component {
 
   handleDocumentClick(event) {
     let $target = event.target;
-    if (!($target.closest('.PowerSelect') || $target.closest('.PowerSelect__Menu'))) {
+    if (!(this.powerselect.contains($target) || this.dropdown.contains(event.target))) {
       let { focused, isOpen } = this.state;
       if (focused) {
         this.setFocusedState(false);
