@@ -1,13 +1,13 @@
 import { Component } from 'react';
-import CodeMirror from 'react-codemirror';
+import { UnControlled as CodeMirror } from 'react-codemirror2';
 
 export default class Snippet extends Component {
   componentDidMount() {
-    let codeMirror = this.codemirror.codeMirror;
+    let codeMirrorEditor = this.codemirror.editor;
     let highlightLines = this.props.highlightLines;
 
     highlightLines.map(line => {
-      codeMirror.markText(
+      codeMirrorEditor.markText(
         {
           line: line[0] - 1,
           ch: 0,
