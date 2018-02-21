@@ -20,7 +20,7 @@ class PowerSelectMultiplePageObject extends PageObjectBase {
   }
 
   get triggerInput() {
-    return this.mountedComponent.find('.PowerSelect__TriggerInput');
+    return this.mountedComponent.find('.PowerSelect__TriggerInput').hostNodes();
   }
 
   getSelectedOptionAt(index) {
@@ -56,7 +56,7 @@ class PowerSelectMultiplePageObject extends PageObjectBase {
 
   isOptionsPresentInDropdown(options) {
     let selectedOptions = options || this.handleChange.lastCall.args[0].options;
-    let dropdownOptions = this.portal.props().options;
+    let dropdownOptions = this.mountedComponent.instance().select.dropdownRef.props.options;
     return selectedOptions.some(option => dropdownOptions.includes(option));
   }
 }
@@ -78,7 +78,7 @@ describe('<PowerSelectMultiple />', () => {
     expect(wrapper.find('.PowerSelect.PowerSelectMultiple').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
     expect(wrapper.find('.PowerSelectMultiple__OptionsContainer').length).toBe(1);
-    expect(wrapper.find('.PowerSelect__TriggerInput').length).toBe(1);
+    expect(wrapper.find('.PowerSelect__TriggerInput').hostNodes().length).toBe(1);
     expect(wrapper.find('.PowerSelect__Clear').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerStatus').length).toBe(1);
   });
