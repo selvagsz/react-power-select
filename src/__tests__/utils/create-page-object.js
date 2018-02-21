@@ -55,7 +55,7 @@ export default class PageObjectBase {
   }
 
   get trigger() {
-    return new ReactWrapper(this.mountedComponent.instance().select.triggerRef, true);
+    return this.mountedComponent.find('SelectTrigger');
   }
 
   get isDisabled() {
