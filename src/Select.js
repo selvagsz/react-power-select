@@ -256,7 +256,10 @@ export default class Select extends Component {
   handleEscapePress(event) {
     if (event.which === 27) {
       let $target = event.target;
-      if (this.powerselect.contains($target) || this.dropdown.contains($target)) {
+      if (
+        this.powerselect.contains($target) ||
+        (this.dropdown && this.dropdown.contains($target))
+      ) {
         this.resetSearchAndClose();
         this.focusField();
       }
@@ -265,7 +268,12 @@ export default class Select extends Component {
 
   handleDocumentClick(event) {
     let $target = event.target;
-    if (!(this.powerselect.contains($target) || this.dropdown.contains(event.target))) {
+    if (
+      !(
+        this.powerselect.contains($target) ||
+        (this.dropdown && this.dropdown.contains(event.target))
+      )
+    ) {
       let { focused, isOpen } = this.state;
       if (focused) {
         this.setFocusedState(false);
