@@ -130,8 +130,40 @@ header {
   z-index: 1;
   position: relative;
   background-color: #fff;
-  padding: 30px;
+  padding: 15px 30px;
+  margin-top: -65px;
+  border-radius: 4px;
 }
+
+.react-tabs__tab-list {
+  padding-left: 0;
+
+  &::before, &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.react-tabs__tab {
+  list-style: none;
+  float: left;
+  padding: 15px;
+  cursor: pointer;
+
+  &:first-child {
+    padding-left: 0;
+  }
+}
+
+.react-tabs__tab--selected {
+  border-bottom: 2px solid #6d45da;
+}
+
+.react-tabs__tab-panel {
+  margin-top: 30px;
+}
+
 
 .demo {
   h3 {

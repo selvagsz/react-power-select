@@ -99,6 +99,7 @@
     "react": "^16.2.0",
     "react-codemirror2": "^4.0.0",
     "react-dom": "^16.2.0",
+    "react-tabs": "^2.2.1",
     "react-test-renderer": "^16.2.0",
     "regenerator-runtime": "^0.10.5",
     "sass-loader": "^6.0.5",
