@@ -77,6 +77,11 @@
   ],
   "homepage": "https://github.com/selvagsz/react-power-select#readme",
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.0",
+    "@storybook/addon-knobs": "^3.4.0",
+    "@storybook/addon-links": "^3.4.0",
+    "@storybook/addons": "^3.4.0",
+    "@storybook/react": "^3.4.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-jest": "^20.0.3",
@@ -111,11 +116,7 @@
     "sinon": "^3.2.1",
     "style-loader": "^0.18.1",
     "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.4.5",
-    "@storybook/react": "^3.4.0",
-    "@storybook/addon-actions": "^3.4.0",
-    "@storybook/addon-links": "^3.4.0",
-    "@storybook/addons": "^3.4.0"
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
     "classnames": "^2.2.5",

@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import 'src/styles';
 import 'docs/app/index.scss';
+import { withKnobs } from '@storybook/addon-knobs/react';
 
 import PowerSelectPlainArrayDemo from 'docs/app/Demos/PowerSelect/PlainArrayDemo';
 
@@ -22,6 +23,7 @@ const Centered = story => (
 );
 
 const stories = storiesOf('PowerSelect', module);
+stories.addDecorator(withKnobs);
 stories.addDecorator(Centered);
 
 stories.add('with general configs', () => <PowerSelectPlainArrayDemo />);

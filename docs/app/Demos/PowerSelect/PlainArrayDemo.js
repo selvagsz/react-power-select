@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { frameworks } from '../constants';
+import { text, boolean } from '@storybook/addon-knobs/react';
 
 export default class PlainArrayDemo extends Component {
   state = {
@@ -13,17 +14,15 @@ export default class PlainArrayDemo extends Component {
 
   render() {
     return (
-      <div>
-        <div className="demo">
-          <h3>Plain Array</h3>
-          <PowerSelect
-            options={frameworks}
-            selected={this.state.selectedFramework}
-            onChange={this.handleChange}
-            placeholder="Select your favourite framework"
-          />
-        </div>
-      </div>
+      <PowerSelect
+        options={frameworks}
+        selected={this.state.selectedFramework}
+        onChange={this.handleChange}
+        placeholder={text('placeholder', 'Select your favourite framework')}
+        searchPlaceholder={text('searchPlaceholder', 'Search...')}
+        disabled={boolean('disabled', false)}
+        showClear={boolean('showClear', true)}
+      />
     );
   }
 }
