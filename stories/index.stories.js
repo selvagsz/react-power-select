@@ -3,8 +3,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import 'src/styles';
+import 'docs/app/index.scss';
 
-import { Button } from '@storybook/react/demo';
+import PowerSelectPlainArrayDemo from 'docs/app/Demos/PowerSelect/PlainArrayDemo';
 
 const Centered = story => (
   <section
@@ -22,4 +24,4 @@ const Centered = story => (
 const stories = storiesOf('PowerSelect', module);
 stories.addDecorator(Centered);
 
-stories.add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>);
+stories.add('with general configs', () => <PowerSelectPlainArrayDemo />);
