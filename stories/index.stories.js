@@ -4,10 +4,22 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { Button, Welcome } from '@storybook/react/demo';
+import { Button } from '@storybook/react/demo';
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+const Centered = story => (
+  <section
+    style={{
+      display: 'flex',
+      height: '80vh',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <div style={{ maxWidth: '350px' }}>{story()}</div>
+  </section>
+);
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+const stories = storiesOf('PowerSelect', module);
+stories.addDecorator(Centered);
+
+stories.add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>);
