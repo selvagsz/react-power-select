@@ -21,9 +21,10 @@ export default class PlainArrayDemo extends Component {
         selected={this.state.selectedFramework}
         onChange={this.handleChange}
         placeholder={text('placeholder', 'Select your favourite framework')}
-        searchPlaceholder={text('searchPlaceholder', 'Search...')}
         disabled={boolean('disabled', false)}
         showClear={boolean('showClear', true)}
+        searchEnabled={boolean('searchEnabled', true)}
+        searchPlaceholder={text('searchPlaceholder', 'Search...')}
       />
     );
   }

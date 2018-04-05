@@ -21,17 +21,14 @@ export default class CustomOptionDemo extends Component {
 
   render() {
     return (
-      <div className="demo">
-        <h3>Custom Option Component</h3>
-        <PowerSelect
-          options={countries}
-          selected={this.state.selectedCountry}
-          optionLabelPath="name"
-          optionComponent={<CustomOptionComponnet />}
-          onChange={this.handleChange}
-          placeholder="Select your country"
-        />
-      </div>
+      <PowerSelect
+        options={countries}
+        selected={this.state.selectedCountry}
+        optionLabelPath="name"
+        optionComponent={<CustomOptionComponnet />}
+        onChange={this.handleChange}
+        placeholder="Select your country"
+      />
     );
   }
 }

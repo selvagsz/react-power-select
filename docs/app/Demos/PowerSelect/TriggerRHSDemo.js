@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PowerSelect from 'src/PowerSelect';
 import { countries } from '../constants';
 
-export default class AfterOptionsDemo extends Component {
+export default class TriggerRHSDemo extends Component {
   state = {
     selectedCountry: null,
   };
@@ -23,17 +23,7 @@ export default class AfterOptionsDemo extends Component {
         optionLabelPath="name"
         onChange={this.handleChange}
         placeholder="Select your country"
-        afterOptionsComponent={({ select }) => (
-          <a
-            className="quick-create"
-            onClick={() => {
-              this.handleNewClick();
-              select.actions.close();
-            }}
-          >
-            + Add New
-          </a>
-        )}
+        triggerRHSComponent={({ select }) => <a>RHS</a>}
       />
     );
   }
