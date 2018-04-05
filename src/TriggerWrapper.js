@@ -25,12 +25,12 @@ export default function TriggerWrapper({
 
       {children}
 
+      {showClear && <span className="PowerSelect__Clear" onClick={onClearClick} />}
       {triggerRHSComponent && (
         <div className="PowerSelect__Trigger__RHS">
           {renderComponent(triggerRHSComponent, { select })}
         </div>
       )}
-      {showClear && <span className="PowerSelect__Clear" onClick={onClearClick} />}
       <span className="PowerSelect__TriggerStatus" />
     </div>
   );
