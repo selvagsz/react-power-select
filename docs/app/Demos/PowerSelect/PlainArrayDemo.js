@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import { text, boolean } from '@storybook/addon-knobs/react';
+import { action } from '@storybook/addon-actions';
 import PowerSelect from 'src/PowerSelect';
 import { frameworks } from '../constants';
-import { text, boolean } from '@storybook/addon-knobs/react';
 
 export default class PlainArrayDemo extends Component {
   state = {
     selectedFramework: 'React',
   };
 
-  handleChange = ({ option }) => {
-    this.setState({ selectedFramework: option });
+  handleChange = args => {
+    action('onChange')(args); // For action logging in storybook. Can be safely ignored
+    this.setState({ selectedFramework: args.option });
   };
 
   render() {
