@@ -16,7 +16,7 @@ const CustomSelectedOptionComponent = ({ option, select }) => (
   </span>
 );
 
-export default class ArrayOfObjectsDemo extends Component {
+export default class CustomOptionDemo extends Component {
   state = {
     selectedCountries: [countries[2], countries[4]],
   };
