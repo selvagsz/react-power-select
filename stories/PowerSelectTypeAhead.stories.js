@@ -6,7 +6,7 @@ import Centered from './utils/Centered';
 import GeneralConfigDemo from 'examples/TypeAhead/GeneralConfigDemo';
 import CustomOptionDemo from 'examples/TypeAhead/CustomOptionDemo';
 
-const stories = storiesOf('TypeAhead', module);
+const stories = storiesOf('Power Select TypeAhead', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(Centered);
 
