@@ -250,4 +250,23 @@ describe('<PowerSelectMultiple />', () => {
     expect(powerselect.renderedSelectedOptions.length).toBe(3);
     expect(powerselect.isOptionsPresentInDropdown()).toBeFalsy();
   });
+
+  it('should render custom selected option component when passed', () => {
+    let selectedOptions = countries.slice(0, 3);
+    const wrapper = powerselect.renderWithProps({
+      selected: selectedOptions,
+      selectedOptionComponent: ({ option }) => {
+        return <span className="customSelectedOption">{option.name}</span>;
+      },
+    });
+    expect(powerselect.renderedSelectedOptions.length).toBe(3);
+    expect(wrapper.find('span.customSelectedOption').length).toBe(3);
+    expect(
+      wrapper.containsAllMatchingElements([
+        <span className="customSelectedOption">{selectedOptions[0].name}</span>,
+        <span className="customSelectedOption">{selectedOptions[1].name}</span>,
+        <span className="customSelectedOption">{selectedOptions[2].name}</span>,
+      ])
+    ).toBeTruthy();
+  });
 });

@@ -9,22 +9,11 @@ const CustomOptionComponnet = ({ option }) => (
   </div>
 );
 
-const CustomSelectedOptionComponent = ({ option, optionLabelPath, onCloseClick, select }) => (
-  <li className="PowerSelectMultiple__SelectedOption">
-    <span className="PowerSelectMultiple__SelectedOption__Label">
-      <img className="flag" src={option.flag} />
-      {option[optionLabelPath]}
-    </span>
-    <span
-      className="PowerSelectMultiple__SelectedOption__Close"
-      onClick={event => {
-        event.stopPropagation();
-        onCloseClick({ option, select });
-      }}
-    >
-      ×
-    </span>
-  </li>
+const CustomSelectedOptionComponent = ({ option }) => (
+  <span>
+    <img className="flag" src={option.flag} />
+    {option.name}
+  </span>
 );
 
 export default class ArrayOfObjectsDemo extends Component {
