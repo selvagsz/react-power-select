@@ -3,7 +3,7 @@ import RenderOption from './RenderOption';
 import TriggerWrapper from './TriggerWrapper';
 
 export default function Trigger({
-  selectedOption,
+  selectedOption: option,
   optionLabelPath,
   selectedOptionComponent,
   placeholder,
@@ -11,15 +11,10 @@ export default function Trigger({
   ...rest
 }) {
   return (
-    <TriggerWrapper value={selectedOption} select={select} {...rest}>
+    <TriggerWrapper value={option} select={select} {...rest}>
       <div className="PowerSelect__TriggerLabel">
-        {selectedOption ? (
-          <RenderOption
-            option={selectedOption}
-            optionLabelPath={optionLabelPath}
-            optionComponent={selectedOptionComponent}
-            select={select}
-          />
+        {option ? (
+          selectedOptionComponent({ option, select })
         ) : (
           <span className="PowerSelect__Placeholder">{placeholder}</span>
         )}

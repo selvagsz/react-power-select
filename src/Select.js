@@ -4,6 +4,7 @@ import cx from 'classnames';
 import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
 import DropdownMenu from './DropdownMenu';
+import DefaultOption from './DefaultOption';
 import {
   matcher,
   isOptGroup,
@@ -434,7 +435,7 @@ Select.defaultProps = {
   triggerComponent: SelectTrigger,
   triggerLHSComponent: null,
   triggerRHSComponent: null,
-  selectedOptionComponent: null,
+  selectedOptionComponent: DefaultOption,
   beforeOptionsComponent: null,
   afterOptionsComponent: null,
   matcher: matcher,
