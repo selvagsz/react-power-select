@@ -1,36 +1,30 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
-import RenderOption from './RenderOption';
 
-export default class Option extends Component {
-  render() {
-    let {
-      option,
-      select,
-      disabled,
-      optionIndex,
-      optionLabelPath,
-      optionComponent,
-      isHighlighted,
-      onOptionClick,
-    } = this.props;
-    let isDisabled = disabled || option.disabled;
-    return (
-      <div
-        className={cx('PowerSelect__Option', {
-          'PowerSelect__Option--disabled': isDisabled,
-          'PowerSelect__Option--highlighted': isHighlighted,
-        })}
-        data-option-index={optionIndex}
-        onClick={isDisabled ? null : onOptionClick}
-      >
-        <RenderOption
-          option={option}
-          optionLabelPath={optionLabelPath}
-          optionComponent={optionComponent}
-          select={select}
-        />
-      </div>
-    );
-  }
+export default function Option({
+  option,
+  disabled,
+  isHighlighted,
+  optionIndex,
+  onOptionClick,
+  children,
+}) {
+  return (
+    <div
+      className={cx('PowerSelect__Option', {
+        'PowerSelect__Option--disabled': disabled,
+        'PowerSelect__Option--highlighted': isHighlighted,
+      })}
+      data-option-index={optionIndex}
+      onClick={
+        disabled ? null : (
+          () => {
+            onOptionClick(option);
+          }
+        )
+      }
+    >
+      {children}
+    </div>
+  );
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
 import { renderComponent } from './utils';
-import Options from './Options';
 
 export default class DropdownMenu extends Component {
   componentWillMount() {
@@ -21,6 +20,7 @@ export default class DropdownMenu extends Component {
 
   render() {
     let {
+      children,
       className,
       select,
       handleKeyDown,
@@ -43,7 +43,7 @@ export default class DropdownMenu extends Component {
       >
         {beforeOptionsComponent && renderComponent(beforeOptionsComponent, { select })}
 
-        <Options select={select} highlightedOption={highlightedOption} {...otherProps} />
+        {children}
 
         {afterOptionsComponent && renderComponent(afterOptionsComponent, { select })}
       </div>

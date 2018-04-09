@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Dropdown from './Dropdown';
 import SelectTrigger from './SelectTrigger';
+import Dropdown from './Dropdown';
 import DropdownMenu from './DropdownMenu';
+import Options from './Options';
 import DefaultOption from './DefaultOption';
 import {
   matcher,
@@ -337,6 +338,7 @@ export default class Select extends Component {
 
   render() {
     let {
+      children,
       className,
       tabIndex,
       selected,
@@ -411,7 +413,15 @@ export default class Select extends Component {
             select={selectApi}
             beforeOptionsComponent={beforeOptionsComponent}
             afterOptionsComponent={afterOptionsComponent}
-          />
+          >
+            <Options
+              options={options}
+              highlightedOption={highlightedOption}
+              onOptionClick={this.handleOptionClick}
+            >
+              {children({ results: options, select: selectApi })}
+            </Options>
+          </DropdownMenu>
         )}
       </Dropdown>
     );
