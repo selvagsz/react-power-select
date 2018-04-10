@@ -64,6 +64,7 @@ export default class Select extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress);
     document.removeEventListener('click', this.documentEventListeners.handleDocumentClick, true);
+    clearTimeout(this.focusFieldTimeout);
   }
 
   flattenOptions(options) {
@@ -152,7 +153,7 @@ export default class Select extends Component {
   }
 
   focusField = () => {
-    setTimeout(() => {
+    this.focusFieldTimeout = setTimeout(() => {
       this.powerselect.focus();
     });
   };
