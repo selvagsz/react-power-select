@@ -7,7 +7,10 @@ export const matcher = ({ option, searchTerm = '', searchIndices }) => {
   }
   if (searchIndices) {
     return makeArray(searchIndices).some(index => {
-      return (option[index] || '').toLowerCase().indexOf(searchTerm) !== -1;
+      if (typeof (option[index] || '') === 'string') {
+        return (option[index] || '').toLowerCase().indexOf(searchTerm) !== -1;
+      }
+      return (String(option[index]) || '').toLowerCase().indexOf(searchTerm) !== -1;
     });
   }
   return true;
