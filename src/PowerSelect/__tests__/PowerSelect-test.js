@@ -105,6 +105,17 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__Placeholder').exists()).toBeFalsy();
   });
 
+  it('should display searchPlaceholder when passed', () => {
+    const searchPlaceholder = 'Search...';
+    const wrapper = powerselect.renderWithProps({ searchPlaceholder });
+    powerselect.triggerContainerClick();
+    expect(
+      powerselect.portal
+        .find(`.PowerSelect__SearchInput[placeholder="${searchPlaceholder}"]`)
+        .exists()
+    ).toBeTruthy();
+  });
+
   it('should render `triggerLHSComponent` when passed', () => {
     const SearchIcon = <i className="icon-search" />;
     const TriggerLHSComponent = () => SearchIcon;
@@ -296,6 +307,11 @@ describe('<PowerSelect />', () => {
 
     powerselect.triggerContainerClick();
     expect(powerselect.isOpened).toBeTruthy();
+
+    //mock contains
+    powerselect.mountedComponent.instance().select.powerselect.contains = jest
+      .fn()
+      .mockReturnValue(true);
 
     // Should re-check this
     map.keydown({

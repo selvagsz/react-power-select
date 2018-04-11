@@ -64,6 +64,7 @@ export default class Select extends Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.documentEventListeners.handleEscapePress);
     document.removeEventListener('click', this.documentEventListeners.handleDocumentClick, true);
+    clearTimeout(this.focusFieldTimeout);
   }
 
   flattenOptions(options) {
@@ -129,7 +130,9 @@ export default class Select extends Component {
   };
 
   toggle = event => {
-    event && event.stopPropagation();
+    if (event && this.powerselect.contains(event.target)) {
+      event.stopPropagation();
+    }
     if (this.state.isOpen) {
       this.resetSearchAndClose();
     } else {
@@ -150,7 +153,7 @@ export default class Select extends Component {
   }
 
   focusField = () => {
-    setTimeout(() => {
+    this.focusFieldTimeout = setTimeout(() => {
       this.powerselect.focus();
     });
   };
@@ -185,7 +188,13 @@ export default class Select extends Component {
     let value = event.target.value;
     this.open();
     this.search(value);
-    this.props.onSearchInputChange(event, { select: this.getPublicApi() });
+
+    if (this.props.onSearchInputChange) {
+      // show deprecate warning
+      this.props.onSearchInputChange(event, { select: this.getPublicApi() });
+    } else {
+      this.props.onSearch(event, { select: this.getPublicApi() });
+    }
   };
 
   validateAndHighlightOption(highlightedOption, counter) {
@@ -247,15 +256,25 @@ export default class Select extends Component {
 
   handleEscapePress(event) {
     if (event.which === 27) {
-      this.resetSearchAndClose();
-      this.focusField();
+      let $target = event.target;
+      if (
+        this.powerselect.contains($target) ||
+        (this.dropdown && this.dropdown.contains($target))
+      ) {
+        this.resetSearchAndClose();
+        this.focusField();
+      }
     }
   }
 
   handleDocumentClick(event) {
     let $target = event.target;
-    let powerselect = this.powerselect;
-    if (!(powerselect.contains($target) || $target.closest('.PowerSelect__Menu'))) {
+    if (
+      !(
+        this.powerselect.contains($target) ||
+        (this.dropdown && this.dropdown.contains(event.target))
+      )
+    ) {
       let { focused, isOpen } = this.state;
       if (focused) {
         this.setFocusedState(false);
@@ -359,7 +378,6 @@ export default class Select extends Component {
           }}
         >
           <Trigger
-            ref={triggerRef => (this.triggerRef = triggerRef)}
             selectedOption={selected}
             highlightedOption={highlightedOption}
             optionLabelPath={optionLabelPath}
@@ -380,6 +398,7 @@ export default class Select extends Component {
         {isOpen && (
           <DropdownMenu
             ref={dropdownRef => (this.dropdownRef = dropdownRef)}
+            onRef={dropdown => (this.dropdown = dropdown)}
             className={className}
             minWidth={this.powerselect.offsetWidth}
             options={options}
@@ -426,5 +445,5 @@ Select.defaultProps = {
   onKeyDown: noop,
   onOpen: noop,
   onClose: noop,
-  onSearchInputChange: noop,
+  onSearch: noop,
 };

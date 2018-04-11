@@ -1,4 +1,5 @@
 import React, { isValidElement, cloneElement } from 'react';
+import { renderComponent } from '../utils';
 
 export default function SelectedOption(props) {
   let {
@@ -10,13 +11,6 @@ export default function SelectedOption(props) {
     select,
   } = props;
   let value = null;
-  let SelectedOptionComponent = selectedOptionComponent;
-  if (isValidElement(SelectedOptionComponent)) {
-    return cloneElement(SelectedOptionComponent, props);
-  }
-  if (SelectedOptionComponent) {
-    return <SelectedOptionComponent {...props} />;
-  }
   if (typeof option === 'object') {
     if (optionLabelPath) {
       value = option[optionLabelPath];
@@ -27,7 +21,13 @@ export default function SelectedOption(props) {
   }
   return (
     <li className="PowerSelectMultiple__SelectedOption">
-      <span className="PowerSelectMultiple__SelectedOption__Label">{value}</span>
+      <span className="PowerSelectMultiple__SelectedOption__Label">
+        {selectedOptionComponent ? (
+          renderComponent(selectedOptionComponent, { option, select })
+        ) : (
+          value
+        )}
+      </span>
       {showOptionClose ? (
         <span
           className="PowerSelectMultiple__SelectedOption__Close"

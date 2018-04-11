@@ -124,7 +124,7 @@
   height: 34px;
   border: none;
   cursor: pointer;
-  padding: 4px 22px 4px 8px;
+  padding: 4px 8px 4px 8px;
   font-size: inherit;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -139,16 +139,6 @@
   display: table-cell;
   vertical-align: middle;
   white-space: nowrap;
-}
-
-.PowerSelect__Trigger__LHS {
-  padding-left: 8px;
-  padding-right: 4px;
-}
-
-.PowerSelect__Trigger__RHS {
-  padding-right: 4px;
-  padding-left: 4px;
 }
 
 .PowerSelect__TriggerLabel {

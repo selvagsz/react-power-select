@@ -46,6 +46,7 @@ export default class SelectTrigger extends Component {
       select,
       placeholder,
       disabled,
+      autoFocus,
       handleOnChange,
       handleKeyDown,
       handleOnFocus,
@@ -64,6 +65,7 @@ export default class SelectTrigger extends Component {
             placeholder={placeholder}
             value={value}
             disabled={disabled}
+            autoFocus={autoFocus}
             onChange={this.handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={handleOnFocus}

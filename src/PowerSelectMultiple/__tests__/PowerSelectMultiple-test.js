@@ -20,7 +20,7 @@ class PowerSelectMultiplePageObject extends PageObjectBase {
   }
 
   get triggerInput() {
-    return this.mountedComponent.find('.PowerSelect__TriggerInput');
+    return this.mountedComponent.find('.PowerSelect__TriggerInput').hostNodes();
   }
 
   getSelectedOptionAt(index) {
@@ -56,7 +56,7 @@ class PowerSelectMultiplePageObject extends PageObjectBase {
 
   isOptionsPresentInDropdown(options) {
     let selectedOptions = options || this.handleChange.lastCall.args[0].options;
-    let dropdownOptions = this.portal.props().options;
+    let dropdownOptions = this.mountedComponent.instance().select.dropdownRef.props.options;
     return selectedOptions.some(option => dropdownOptions.includes(option));
   }
 }
@@ -78,7 +78,7 @@ describe('<PowerSelectMultiple />', () => {
     expect(wrapper.find('.PowerSelect.PowerSelectMultiple').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
     expect(wrapper.find('.PowerSelectMultiple__OptionsContainer').length).toBe(1);
-    expect(wrapper.find('.PowerSelect__TriggerInput').length).toBe(1);
+    expect(wrapper.find('.PowerSelect__TriggerInput').hostNodes().length).toBe(1);
     expect(wrapper.find('.PowerSelect__Clear').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerStatus').length).toBe(1);
   });
@@ -249,5 +249,24 @@ describe('<PowerSelectMultiple />', () => {
     powerselect.renderChange();
     expect(powerselect.renderedSelectedOptions.length).toBe(3);
     expect(powerselect.isOptionsPresentInDropdown()).toBeFalsy();
+  });
+
+  it('should render custom selected option component when passed', () => {
+    let selectedOptions = countries.slice(0, 3);
+    const wrapper = powerselect.renderWithProps({
+      selected: selectedOptions,
+      selectedOptionComponent: ({ option }) => {
+        return <span className="customSelectedOption">{option.name}</span>;
+      },
+    });
+    expect(powerselect.renderedSelectedOptions.length).toBe(3);
+    expect(wrapper.find('span.customSelectedOption').length).toBe(3);
+    expect(
+      wrapper.containsAllMatchingElements([
+        <span className="customSelectedOption">{selectedOptions[0].name}</span>,
+        <span className="customSelectedOption">{selectedOptions[1].name}</span>,
+        <span className="customSelectedOption">{selectedOptions[2].name}</span>,
+      ])
+    ).toBeTruthy();
   });
 });

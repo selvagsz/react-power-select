@@ -9,7 +9,7 @@ class TypeAheadPageObject extends PageObjectBase {
   Component = TypeAhead;
 
   get inputComponent() {
-    return this.mountedComponent.find('.PowerSelect__TriggerInput');
+    return this.mountedComponent.find('.PowerSelect__TriggerInput').hostNodes();
   }
 
   get inputValue() {
@@ -34,7 +34,7 @@ describe('<TypeAhead />', () => {
     expect(wrapper.find('.PowerSelect.TypeAhead').length).toBe(1);
     expect(wrapper.find('.PowerSelect__Trigger').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerInputContainer').length).toBe(1);
-    expect(wrapper.find('.PowerSelect__TriggerInput').length).toBe(1);
+    expect(wrapper.find('.PowerSelect__TriggerInput').hostNodes().length).toBe(1);
     expect(wrapper.find('.PowerSelect__Clear').length).toBe(1);
     expect(wrapper.find('.PowerSelect__TriggerStatus').length).toBe(1);
   });

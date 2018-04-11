@@ -7,6 +7,14 @@ export default class AutoResizeInput extends Component {
     this.setInputSize(this.props.value);
   }
 
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      setTimeout(() => {
+        this.input.focus();
+      }, 0);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setInputSize(nextProps.value);
   }
@@ -18,7 +26,8 @@ export default class AutoResizeInput extends Component {
   }
 
   render() {
-    return <input size={this.state.length} {...this.props} />;
+    let { autoFocus, ...rest } = this.props;
+    return <input ref={input => (this.input = input)} size={this.state.length} {...rest} />;
   }
 }
 
