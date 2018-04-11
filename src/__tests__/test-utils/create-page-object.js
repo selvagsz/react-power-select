@@ -1,7 +1,9 @@
+import $ from 'jquery';
 import React from 'react';
 import sinon from 'sinon';
 import { ReactWrapper, shallow, mount } from 'enzyme';
 import { frameworks, countries } from './constants';
+import TestUtils from 'react-dom/test-utils';
 
 export default class PageObjectBase {
   handleChange = sinon.spy();
@@ -38,14 +40,13 @@ export default class PageObjectBase {
   }
 
   get portal() {
-    return new ReactWrapper(this.mountedComponent.instance().select.dropdownRef, true);
+    return $('.PowerSelect__Tether');
   }
 
   get isOpened() {
     let wrapper = this.mountedComponent;
     let hasOpenClass = this.container.hasClass('PowerSelect--open');
     let isDropdownVisible = this.portal.exists();
-
     return isDropdownVisible && hasOpenClass;
   }
 
@@ -54,7 +55,7 @@ export default class PageObjectBase {
   }
 
   get trigger() {
-    return new ReactWrapper(this.mountedComponent.instance().select.triggerRef, true);
+    return this.mountedComponent.find('SelectTrigger');
   }
 
   get isDisabled() {
@@ -98,11 +99,8 @@ export default class PageObjectBase {
   }
 
   enterSearchText(string) {
-    this.portal.find('.PowerSelect__SearchInput').simulate('change', {
-      target: {
-        value: string,
-      },
-    });
+    let input = document.querySelector('input.PowerSelect__SearchInput');
+    TestUtils.Simulate.change(input, { target: { value: string } });
   }
 
   getVisibleOptions() {
