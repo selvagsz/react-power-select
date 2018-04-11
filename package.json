@@ -35,7 +35,7 @@
       "babel"
     ],
     "testPathIgnorePatterns": [
-      "src/__tests__/utils"
+      "src/__tests__/test-utils"
     ]
   },
   "lint-staged": {
