@@ -1,8 +1,8 @@
 // /* global describe, it, expect */
 import React from 'react';
 import sinon from 'sinon';
-import PageObjectBase from '../../__tests__/utils/create-page-object';
-import { frameworks, countries, KEY_CODES } from '../../__tests__/utils/constants';
+import PageObjectBase from '../../__tests__/test-utils//create-page-object';
+import { frameworks, countries, KEY_CODES } from '../../__tests__/test-utils//constants';
 import TypeAhead from '../index';
 
 class TypeAheadPageObject extends PageObjectBase {

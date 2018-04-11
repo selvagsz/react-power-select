@@ -25,6 +25,8 @@ export const matcher = ({ option, searchTerm = '', searchIndices }) => {
   return true;
 };
 
+export const isNone = value => value === null || value === undefined;
+
 export const makeArray = obj => {
   if (obj === null || obj === undefined) {
     return [];
