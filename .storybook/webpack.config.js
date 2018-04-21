@@ -10,6 +10,9 @@ const path = require('path');
 
 module.exports = {
   context: process.cwd(),
+  output: {
+    path: path.resolve(process.cwd(), 'docs'),
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
     modules: [
