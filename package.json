@@ -8,13 +8,12 @@
     "test": "jest",
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
-    "build:docs": "webpack --config docs/app/webpack.config.js --env production",
     "build": "npm run clean && npm run build:commonjs && webpack && rm -rf dist/css.js",
     "prepublish": "npm run build",
     "precommit": "lint-staged",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o ./docs"
   },
   "jest": {
     "automock": false,
