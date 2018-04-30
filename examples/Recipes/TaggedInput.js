@@ -77,7 +77,7 @@ export default class TaggedInputDemo extends Component {
       <TaggedInput
         items={this.state.urls}
         onChange={this.handleChange}
-        placeholder="Enter your site urls"
+        placeholder="Enter your site urls; separated by comma"
       />
     );
   }
