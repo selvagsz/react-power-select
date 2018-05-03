@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 
 export default function Option({
-  option,
+  value,
   disabled,
   isHighlighted,
   optionIndex,
@@ -17,11 +17,11 @@ export default function Option({
       })}
       data-option-index={optionIndex}
       onClick={
-        disabled ? null : (
-          () => {
-            onOptionClick(option);
-          }
-        )
+        disabled
+          ? null
+          : () => {
+              onOptionClick(value);
+            }
       }
     >
       {children}

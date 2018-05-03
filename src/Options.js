@@ -85,7 +85,7 @@ export default class Options extends Component {
       if (child.type === Option) {
         return React.cloneElement(child, {
           ...child.props,
-          isHighlighted: child.props.option === highlightedOption,
+          isHighlighted: child.props.value === highlightedOption,
           optionIndex,
           onOptionClick,
         });
