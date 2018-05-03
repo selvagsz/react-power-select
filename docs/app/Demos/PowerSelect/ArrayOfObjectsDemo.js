@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import PowerSelect from 'src/PowerSelect';
+import { PowerSelect, Option } from 'src';
 import { countries } from '../constants';
 
 export default class ArrayOfObjectsDemo extends Component {
   state = {
-    selectedCountry: null,
+    selectedCountry: 'BRA',
   };
 
-  handleChange = ({ option }) => {
-    this.setState({ selectedCountry: option });
+  handleChange = ({ value }) => {
+    this.setState({ selectedCountry: value });
   };
 
   render() {
@@ -18,10 +18,24 @@ export default class ArrayOfObjectsDemo extends Component {
         <PowerSelect
           options={countries}
           selected={this.state.selectedCountry}
-          optionLabelPath="name"
           onChange={this.handleChange}
           placeholder="Select your country"
-        />
+          searchIndices={['name']}
+          selectedOptionComponent={({ value }) => {
+            let selectedOption = countries.find(country => country.code === value);
+            return selectedOption.name;
+          }}
+        >
+          {({ results }) => {
+            return results.map(option => {
+              return (
+                <Option key={option.code} value={option.code}>
+                  {option.name}
+                </Option>
+              );
+            });
+          }}
+        </PowerSelect>
       </div>
     );
   }
