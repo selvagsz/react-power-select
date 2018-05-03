@@ -160,7 +160,7 @@ export default class Select extends Component {
   };
 
   search = (searchTerm, callback) => {
-    let { options, optionLabelPath, matcher, searchIndices = optionLabelPath } = this.props;
+    let { options, matcher, searchIndices } = this.props;
     let filteredOptions = filterOptions({
       options,
       searchTerm: searchTerm || '',
@@ -343,7 +343,6 @@ export default class Select extends Component {
       tabIndex,
       selected,
       showClear,
-      optionLabelPath,
       optionComponent,
       placeholder,
       disabled,
@@ -382,7 +381,6 @@ export default class Select extends Component {
           <Trigger
             selectedOption={selected}
             highlightedOption={highlightedOption}
-            optionLabelPath={optionLabelPath}
             selectedOptionLabelPath={selectedOptionLabelPath}
             selectedOptionComponent={selectedOptionComponent}
             triggerLHSComponent={triggerLHSComponent}
@@ -405,7 +403,6 @@ export default class Select extends Component {
             minWidth={this.powerselect.offsetWidth}
             options={options}
             selected={selected}
-            optionLabelPath={optionLabelPath}
             optionComponent={optionComponent}
             onOptionClick={this.handleOptionClick}
             handleKeyDown={this.handleKeyDown}
@@ -440,7 +437,6 @@ Select.defaultProps = {
   tabIndex: 0,
   showClear: true,
   closeOnSelect: true,
-  optionLabelPath: null,
   optionComponent: null,
   triggerComponent: SelectTrigger,
   triggerLHSComponent: null,

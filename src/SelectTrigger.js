@@ -4,7 +4,6 @@ import TriggerWrapper from './TriggerWrapper';
 
 export default function Trigger({
   selectedOption: option,
-  optionLabelPath,
   selectedOptionComponent,
   placeholder,
   select,
