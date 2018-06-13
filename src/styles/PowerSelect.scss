@@ -41,7 +41,6 @@
   height: 34px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .PowerSelect__Menu {
@@ -142,7 +141,10 @@
 }
 
 .PowerSelect__TriggerLabel {
-  padding: 6px 22px 6px 8px;
+  padding: 6px 8px;
+  overflow: hidden;
+  max-width: 0px;
+  text-overflow: ellipsis;
 }
 
 .PowerSelect__Trigger__LHS + .PowerSelect__TriggerLabel {
@@ -190,7 +192,6 @@
   vertical-align: middle;
   height: 34px;
 }
-
 
 // MultiSelect
 .PowerSelectMultiple__OptionsContainer {
