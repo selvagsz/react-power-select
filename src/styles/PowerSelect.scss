@@ -191,6 +191,10 @@
   height: 34px;
 }
 
+.PowerSelect__TriggerLabel {
+  overflow: hidden;
+  max-width: 0px;
+}
 
 // MultiSelect
 .PowerSelectMultiple__OptionsContainer {
