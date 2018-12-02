@@ -4,6 +4,7 @@ export const KEY_CODES = {
   ESCAPE: 27,
   ENTER: 13,
   TAB: 9,
+  BACKSPACE: 8,
 };
 
 export const frameworks = ['React', 'Ember', 'Angular', 'Vue', 'Inferno'];
