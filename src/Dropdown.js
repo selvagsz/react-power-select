@@ -10,6 +10,12 @@ export default class Dropdown extends Component {
         className={cx('PowerSelect__Tether', className && `${className}__Tether`)}
         attachment="top left"
         targetAttachment="bottom left"
+        constraints={[
+          {
+            to: 'window',
+            attachment: 'together',
+          },
+        ]}
       >
         {children}
       </TetherComponent>
