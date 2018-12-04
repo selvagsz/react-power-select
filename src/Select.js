@@ -324,7 +324,12 @@ export default class Select extends Component {
   };
 
   handleBackspacePress() {
-    if (this.state.focused && !this.state.isOpen && !this.state.searchTerm) {
+    if (
+      this.state.focused &&
+      !this.state.isOpen &&
+      !this.state.searchTerm &&
+      !this.props.disabled
+    ) {
       this.selectOption(undefined);
       this.focusField();
     }

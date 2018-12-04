@@ -103,6 +103,29 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
   });
 
+  it('should not clear the selected option on backspace press if powerselect is disabled', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      selected: countries[2],
+      onFocus: handleOnFocus,
+      disabled: true,
+    });
+
+    // Make sure powerselect is focussed
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    // Make sure option is selected and powerselect is disabled
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--disabled')).toBeTruthy();
+
+    //Make sure backspace does not trigger handlechange and clear the selected option
+    powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
+    expect(powerselect.handleChange.notCalled).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+  });
+
   it('should delegate `className` to the container, tether & menu', () => {
     const wrapper = powerselect.renderWithProps({
       className: 'TestPowerSelect',
