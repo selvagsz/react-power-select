@@ -27,9 +27,17 @@
 }
 
 .PowerSelect--open {
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom: 0;
+  //Tether specific style changes to suport auto reposition of drop down menu
+  &.tether-target-attached-top {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top: 0;
+  }
+  &.tether-target-attached-bottom {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: 0;
+  }
 
   .PowerSelect__TriggerStatus::before {
     transform: rotate(-180deg);
