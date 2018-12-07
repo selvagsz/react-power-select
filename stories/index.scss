@@ -37,15 +37,6 @@ html, body {
   @include placeholder()
 }
 
-.icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
-}
-
 .flag {
   width: 20px;
   height: 13px;
@@ -77,8 +68,17 @@ html, body {
   border-top: 1px dashed rgba(89, 96, 206, 0.5);
 }
 
+.code {
+  float: right;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
 .highlight {
   background-color: yellow;
+  font-weight: bold;
 }
 
 .help {

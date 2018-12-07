@@ -19,7 +19,7 @@ const PowerSelectMultipleWithHooks = props => {
         setSelectedCountries(args.options);
       }}
       optionLabelPath={text('optionLabelPath', 'name')}
-      placeholder={text('placeholder', 'Select your favourite countries')}
+      placeholder={text('placeholder', 'Select your favorite countries')}
       disabled={boolean('disabled', false)}
       showClear={boolean('showClear', true)}
       searchIndices={array('searchIndices', ['name', 'code'])}

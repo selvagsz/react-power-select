@@ -19,7 +19,7 @@ const TypeAheadWithHooks = () => {
         setCountry(args.option);
       }}
       optionLabelPath={text('optionLabelPath', 'name')}
-      placeholder={text('placeholder', 'Select your favourite country')}
+      placeholder={text('placeholder', 'Select your favorite country')}
       disabled={boolean('disabled', false)}
       showClear={boolean('showClear', true)}
       searchPlaceholder={text('searchPlaceholder', 'Search...')}

@@ -23,7 +23,7 @@ const PowerSelectWithHooks = props => {
         setCountry(args.option);
       }}
       optionLabelPath={text('optionLabelPath', 'name')}
-      placeholder={text('placeholder', 'Select your favourite country')}
+      placeholder={text('placeholder', 'Select your favorite country')}
       disabled={boolean('disabled', false)}
       showClear={boolean('showClear', true)}
       searchEnabled={boolean('searchEnabled', true)}
@@ -42,7 +42,7 @@ powerSelect.add('customOptionComponent', () => (
       return (
         <div>
           <img className="flag" src={option.flag} />
-          <span>{option.name}</span>
+          <span>{option.name}&nbsp;</span>
           <small className="code">{option.code}</small>
         </div>
       );
