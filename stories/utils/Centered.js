@@ -9,6 +9,6 @@ export default story => (
       justifyContent: 'center',
     }}
   >
-    <div style={{ maxWidth: '350px' }}>{story()}</div>
+    <div style={{ width: '350px' }}>{story()}</div>
   </section>
 );
