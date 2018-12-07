@@ -57,7 +57,7 @@ powerSelect.add('selectedOptionComponent', () => (
         <div>
           <img className="flag" src={option.flag} />
           <span>{option.name}&nbsp;</span>
-          <small className="code">({option.code})</small>
+          <small>({option.code})</small>
         </div>
       );
     }}
