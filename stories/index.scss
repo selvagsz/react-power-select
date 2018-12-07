@@ -1,0 +1,108 @@
+@mixin placeholder() {
+  color: #ccc;
+  font-weight: lighter;
+  font-size: 14px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  padding-bottom: 100px;
+}
+
+html, body {
+  background-color: rgba(249, 249, 249, 0.44);
+}
+
+::-webkit-input-placeholder {
+  @include placeholder()
+}
+::-moz-placeholder {
+  @include placeholder()
+}
+:-ms-input-placeholder {
+  @include placeholder()
+}
+:-moz-placeholder {
+  @include placeholder()
+}
+
+.flag {
+  width: 20px;
+  height: 13px;
+  margin-right: 8px;
+}
+
+.quick-create {
+  padding: 8px 12px;
+  border-top: 1px solid #e5e5e5;
+  cursor: pointer;
+  display: block;
+  color: #3260b7;
+  background-color: #e5ebf6;
+
+  &:hover {
+    color: #0039a6;
+  }
+}
+
+.options-header {
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 5px;
+  font-weight: bold;
+  border-bottom: 1px dashed rgba(89, 96, 206, 0.5);
+  margin-bottom: 10px;
+  background-color: rgba(89, 96, 206, 0.25);
+  border-top: 1px dashed rgba(89, 96, 206, 0.5);
+}
+
+.code {
+  float: right;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+.help {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+textarea#options {
+  max-height: 200px;
+}
+
+.TaggedInput {
+  // Hides the caret
+  .PowerSelect__TriggerStatus {
+    display: none;
+  }
+
+  .PowerSelect__Clear {
+    padding-right: 8px;
+  }
+
+  // Removes the padding allocated for caret
+  .PowerSelectMultiple__SelectedOptions {
+    padding-right: 0;
+  }
+}

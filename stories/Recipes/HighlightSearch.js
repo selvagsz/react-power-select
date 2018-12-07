@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PowerSelect from 'src/PowerSelect';
-import { countries } from '../constants';
+import { PowerSelect } from 'src';
+import { countries } from '../utils/constants';
 
 const createHighlighedOption = (label, searchTerm) => {
   if (searchTerm) {
     let escapedSearchTerm = searchTerm.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
     label = label.replace(new RegExp(escapedSearchTerm, 'i'), '<span class="highlight">$&</span>');
   }
-
   return {
     __html: label,
   };
@@ -31,16 +30,14 @@ export default class HighlightSearchDemo extends Component {
 
   render() {
     return (
-      <div className="demo">
-        <h3>Highlight Search Term</h3>
-        <PowerSelect
-          options={countries}
-          selected={this.state.selectedCountry}
-          optionLabelPath="name"
-          optionComponent={<HighlightedOption />}
-          onChange={this.handleChange}
-        />
-      </div>
+      <PowerSelect
+        options={countries}
+        selected={this.state.selectedCountry}
+        optionLabelPath="name"
+        optionComponent={<HighlightedOption />}
+        onChange={this.handleChange}
+        placeholder="Select your country"
+      />
     );
   }
 }
