@@ -120,7 +120,46 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
     expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--disabled')).toBeTruthy();
 
-    //Make sure backspace does not trigger handlechange and clear the selected option
+    //Make sure backspace does not trigger handlechange and selected option is not cleared
+    powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
+    expect(powerselect.handleChange.notCalled).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+  });
+
+  it('should delegate `className` to the container, tether & menu', () => {
+    const wrapper = powerselect.renderWithProps({
+      className: 'TestPowerSelect',
+    });
+    expect(wrapper.find('.PowerSelect').hasClass('TestPowerSelect')).toBeTruthy();
+
+    powerselect.triggerContainerClick();
+    expect(
+      powerselect.portal.find('.PowerSelect__Menu').hasClass('TestPowerSelect__Menu')
+    ).toBeTruthy();
+    expect(document.querySelectorAll('.PowerSelect__Tether.TestPowerSelect__Tether').length).toBe(
+      1
+    );
+  });
+
+  it('should not clear the selected option on backspace press if powerselect does not have a clear option', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      showClear: false,
+      selected: countries[2],
+      onFocus: handleOnFocus,
+      disabled: true,
+    });
+
+    // Make sure powerselect is focussed
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    // Make sure option is selected and powerselect has no clear field
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect__Clear')).toBeFalsy();
+
+    //Make sure backspace does not trigger handlechange and selected option is not cleared
     powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
     expect(powerselect.handleChange.notCalled).toBeTruthy();
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');

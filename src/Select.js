@@ -323,12 +323,21 @@ export default class Select extends Component {
     }
   };
 
+  /*
+   * Backspace clears field if the power select:
+   * 1. is focused
+   * 2. is closed
+   * 3. has no search term
+   * 4. is not disabled
+   * 5. has clear button
+   */
   handleBackspacePress() {
     if (
       this.state.focused &&
       !this.state.isOpen &&
       !this.state.searchTerm &&
-      !this.props.disabled
+      !this.props.disabled &&
+      this.props.showClear
     ) {
       this.selectOption(undefined);
       this.focusField();
