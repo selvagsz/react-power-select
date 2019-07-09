@@ -4,7 +4,6 @@
   "description": "A highly composable & reusable select component in react",
   "main": "lib/index.js",
   "scripts": {
-    "start": "webpack-dev-server --config docs/app/webpack.config.js --content-base docs/index.html",
     "test": "jest",
     "clean": "rm -rf lib",
     "build:commonjs": "babel src/ --out-dir lib/",
@@ -116,8 +115,7 @@
     "sass-loader": "^6.0.5",
     "sinon": "^3.2.1",
     "style-loader": "^0.18.1",
-    "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.4.5"
+    "webpack": "^2.6.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",

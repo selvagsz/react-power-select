@@ -27,6 +27,7 @@ const PowerSelectWithHooks = props => {
       disabled={boolean('disabled', false)}
       showClear={boolean('showClear', true)}
       searchEnabled={boolean('searchEnabled', true)}
+      searchInputAutoFocus={boolean('searchInputAutoFocus', true)}
       searchPlaceholder={text('searchPlaceholder', 'Search...')}
       searchIndices={array('searchIndices', ['name', 'code'])}
       {...props}
