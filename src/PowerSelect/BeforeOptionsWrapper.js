@@ -6,6 +6,7 @@ export default function BeforeOptionsWrapper({
   onChange,
   beforeOptionsComponent,
   searchPlaceholder,
+  searchInputAutoFocus,
   ...otherProps
 }) {
   let BeforeOptionsComponent = beforeOptionsComponent;
@@ -17,7 +18,7 @@ export default function BeforeOptionsWrapper({
             className="PowerSelect__SearchInput"
             value={otherProps.select.searchTerm || ''}
             placeholder={searchPlaceholder}
-            autoFocus={true}
+            autoFocus={searchInputAutoFocus}
             onChange={onChange}
           />
         </div>

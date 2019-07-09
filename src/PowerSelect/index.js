@@ -9,15 +9,20 @@ export default class PowerSelect extends Component {
   };
 
   render() {
-    let { searchEnabled, searchPlaceholder, beforeOptionsComponent, ...rest } = this.props;
-    let BeforeOptionsComponent = beforeOptionsComponent;
-
+    let {
+      searchEnabled,
+      searchPlaceholder,
+      beforeOptionsComponent,
+      searchInputAutoFocus,
+      ...rest
+    } = this.props;
     return (
       <Select
         ref={select => (this.select = select)}
         beforeOptionsComponent={
           <BeforeOptionsWrapper
             searchEnabled={searchEnabled}
+            searchInputAutoFocus={searchInputAutoFocus}
             searchPlaceholder={searchPlaceholder}
             beforeOptionsComponent={beforeOptionsComponent}
             onChange={this.handleSearchInputChange}
@@ -32,4 +37,5 @@ export default class PowerSelect extends Component {
 PowerSelect.displayName = 'PowerSelect';
 PowerSelect.defaultProps = {
   searchEnabled: true,
+  searchInputAutoFocus: true,
 };
