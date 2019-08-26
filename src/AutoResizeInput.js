@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class AutoResizeInput extends Component {
   state = {};
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setInputSize(this.props.value);
   }
 
@@ -15,7 +15,7 @@ export default class AutoResizeInput extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setInputSize(nextProps.value);
   }
 

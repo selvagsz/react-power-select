@@ -43,11 +43,11 @@ export default class Select extends Component {
     handleDocumentClick: ::this.handleDocumentClick,
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.flattenOptions(this.props.options);
   }
 
-  componentWillReceiveProps({ options }) {
+  UNSAFE_componentWillReceiveProps({ options }) {
     this.flattenOptions(options);
     if (this.props.options !== options) {
       this.setState({

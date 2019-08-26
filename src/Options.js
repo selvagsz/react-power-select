@@ -4,7 +4,7 @@ import Option from './Option';
 import { getOptionIndex, isOptGroup } from './utils';
 
 export default class Options extends Component {
-  componentWillReceiveProps({ options, highlightedOption }) {
+  UNSAFE_componentWillReceiveProps({ options, highlightedOption }) {
     this.scrollTo({ options, highlightedOption });
   }
 

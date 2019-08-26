@@ -8,7 +8,7 @@ export default class SelectTrigger extends Component {
     value: '',
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let value = nextProps.searchTerm !== null ? nextProps.searchTerm : '';
     this.setState({
       value,
