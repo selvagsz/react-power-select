@@ -91,7 +91,6 @@ export default class Select extends Component {
   }
 
   selectOption = option => {
-    this.setHighlightedOption(option);
     this.props.onChange({
       select: this.getPublicApi(),
       option,
