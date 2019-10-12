@@ -345,6 +345,7 @@ export default class Select extends Component {
       optionComponent,
       placeholder,
       disabled,
+      horizontalPosition,
       selectedOptionComponent,
       selectedOptionLabelPath,
       triggerLHSComponent,
@@ -359,7 +360,7 @@ export default class Select extends Component {
     let selectApi = this.getPublicApi();
 
     return (
-      <Dropdown className={className}>
+      <Dropdown className={className} horizontalPosition={horizontalPosition}>
         <div
           ref={powerselect => {
             this.powerselect = powerselect;
@@ -438,6 +439,7 @@ Select.defaultProps = {
   selectedOptionComponent: null,
   beforeOptionsComponent: null,
   afterOptionsComponent: null,
+  horizontalPosition: 'left',
   matcher: matcher,
   onFocus: noop,
   onBlur: noop,
