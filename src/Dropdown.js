@@ -4,12 +4,12 @@ import cx from 'classnames';
 
 export default class Dropdown extends Component {
   render() {
-    let { className, children } = this.props;
+    let { className, horizontalPosition, children } = this.props;
     return (
       <TetherComponent
         className={cx('PowerSelect__Tether', className && `${className}__Tether`)}
-        attachment="top left"
-        targetAttachment="bottom left"
+        attachment={`top ${horizontalPosition}`}
+        targetAttachment={`bottom ${horizontalPosition}`}
         constraints={[
           {
             to: 'window',
