@@ -5,12 +5,12 @@ import AutoResizeInput from '../AutoResizeInput';
 export default class SelectTrigger extends Component {
   state = {};
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let value = this.getValueFromSelectedOption(this.props);
     this.setState({ value });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let value =
       nextProps.searchTerm !== null
         ? nextProps.searchTerm

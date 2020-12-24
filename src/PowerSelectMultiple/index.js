@@ -6,11 +6,11 @@ import MultiSelectTrigger from './SelectTrigger';
 export default class PowerSelectMultiple extends Component {
   state = {};
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.filterOptions(this.props.options, this.props.selected);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.filterOptions(nextProps.options, nextProps.selected);
   }
 

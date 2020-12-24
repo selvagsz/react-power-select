@@ -4,11 +4,11 @@ import { renderComponent } from './utils';
 import Options from './Options';
 
 export default class DropdownMenu extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.validateAndClose(this.props.options);
   }
 
-  componentWillReceiveProps({ options }) {
+  UNSAFE_componentWillReceiveProps({ options }) {
     this.validateAndClose(options);
   }
 
