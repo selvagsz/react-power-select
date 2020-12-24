@@ -74,6 +74,97 @@ describe('<PowerSelect />', () => {
     expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
   });
 
+  it('should clear the selected option, when the backspace key is pressed on focussed powerselect', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      selected: countries[2],
+      onFocus: handleOnFocus,
+    });
+
+    // Make sure powerselect is focussed
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    // Make sure option is selected
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+
+    // Make sure backspace clears the selected option
+    powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
+    let args = powerselect.handleChange.getCall(0).args[0];
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
+    expect(args.option).toBe(undefined);
+    expect(args.select).toBeTruthy();
+    expect(args.select.searchTerm).toBe(null);
+
+    wrapper.setProps({
+      selected: args.option,
+    });
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBeFalsy();
+  });
+
+  it('should not clear the selected option on backspace press if powerselect is disabled', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      selected: countries[2],
+      onFocus: handleOnFocus,
+      disabled: true,
+    });
+
+    // Make sure powerselect is focussed
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    // Make sure option is selected and powerselect is disabled
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect--disabled')).toBeTruthy();
+
+    //Make sure backspace does not trigger handlechange and selected option is not cleared
+    powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
+    expect(powerselect.handleChange.notCalled).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+  });
+
+  it('should delegate `className` to the container, tether & menu', () => {
+    const wrapper = powerselect.renderWithProps({
+      className: 'TestPowerSelect',
+    });
+    expect(wrapper.find('.PowerSelect').hasClass('TestPowerSelect')).toBeTruthy();
+
+    powerselect.triggerContainerClick();
+    expect(
+      powerselect.portal.find('.PowerSelect__Menu').hasClass('TestPowerSelect__Menu')
+    ).toBeTruthy();
+    expect(document.querySelectorAll('.PowerSelect__Tether.TestPowerSelect__Tether').length).toBe(
+      1
+    );
+  });
+
+  it('should not clear the selected option on backspace press if powerselect does not have a clear option', () => {
+    const handleOnFocus = sinon.spy();
+    const wrapper = powerselect.renderWithProps({
+      showClear: false,
+      selected: countries[2],
+      onFocus: handleOnFocus,
+      disabled: true,
+    });
+
+    // Make sure powerselect is focussed
+    expect(handleOnFocus.calledOnce).toBeFalsy();
+    wrapper.find('.PowerSelect').simulate('focus');
+    expect(handleOnFocus.calledOnce).toBeTruthy();
+
+    // Make sure option is selected and powerselect has no clear field
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+    expect(wrapper.find('.PowerSelect').hasClass('PowerSelect__Clear')).toBeFalsy();
+
+    //Make sure backspace does not trigger handlechange and selected option is not cleared
+    powerselect.triggerKeydown(KEY_CODES.BACKSPACE);
+    expect(powerselect.handleChange.notCalled).toBeTruthy();
+    expect(wrapper.find('.PowerSelect__TriggerLabel').text()).toBe('Canada');
+  });
+
   it('should delegate `className` to the container, tether & menu', () => {
     const wrapper = powerselect.renderWithProps({
       className: 'TestPowerSelect',
