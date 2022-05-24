@@ -28,7 +28,7 @@ export default class AutoResizeInput extends Component {
 
   render() {
     let { autoFocus, ...rest } = this.props;
-    return <input ref={input => setInputRef(input)} size={this.state.length} {...rest} />;
+    return <input ref={input => this.setInputRef(input)} size={this.state.length} {...rest} />;
   }
 }
 
