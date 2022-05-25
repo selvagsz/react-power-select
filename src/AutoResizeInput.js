@@ -2,17 +2,9 @@ import React, { Component } from 'react';
 
 export default class AutoResizeInput extends Component {
   state = {};
-
+  
   componentWillMount() {
     this.setInputSize(this.props.value);
-  }
-
-  componentDidMount() {
-    if (this.props.autoFocus) {
-      setTimeout(() => {
-        this.input.focus();
-      }, 0);
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,10 +16,19 @@ export default class AutoResizeInput extends Component {
       length: value.length + 4,
     });
   }
+  
+  setInputRef(input) {
+    this.input = input;
+
+    // Focus input if autoFocus passed
+    if (this.props.autoFocus) {
+      this.input.focus();
+    }
+  }
 
   render() {
     let { autoFocus, ...rest } = this.props;
-    return <input ref={input => (this.input = input)} size={this.state.length} {...rest} />;
+    return <input ref={input => this.setInputRef(input)} size={this.state.length} {...rest} />;
   }
 }
 
