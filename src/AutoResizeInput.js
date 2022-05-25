@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export default class AutoResizeInput extends Component {
   state = {};
-  
+
   componentWillMount() {
     this.setInputSize(this.props.value);
   }
@@ -16,12 +16,12 @@ export default class AutoResizeInput extends Component {
       length: value.length + 4,
     });
   }
-  
+
   setInputRef(input) {
     this.input = input;
 
     // Focus input if autoFocus passed
-    if (this.props.autoFocus) {
+    if (this.props.autoFocus && this.input) {
       this.input.focus();
     }
   }
