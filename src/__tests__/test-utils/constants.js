@@ -11,31 +11,31 @@ export const countries = [
   {
     name: 'Argentina',
     code: 'ARG',
-    flag: 'https://restcountries.eu/data/arg.svg',
+    flag: 'https://flagcdn.com/ar.svg',
     continent: 'South America',
   },
   {
     name: 'Brazil',
     code: 'BRA',
-    flag: 'https://restcountries.eu/data/bra.svg',
+    flag: 'https://flagcdn.com/br.svg',
     continent: 'South America',
   },
   {
     name: 'Canada',
     code: 'CAN',
-    flag: 'https://restcountries.eu/data/can.svg',
+    flag: 'https://flagcdn.com/ca.svg',
     continent: 'North America',
   },
   {
     name: 'China',
     code: 'CHN',
-    flag: 'https://restcountries.eu/data/chn.svg',
+    flag: 'https://flagcdn.com/cn.svg',
     continent: 'Asia',
   },
   {
     name: 'India',
     code: 'IND',
-    flag: 'https://restcountries.eu/data/ind.svg',
+    flag: 'https://flagcdn.com/in.svg',
     continent: 'Asia',
   },
 ];
