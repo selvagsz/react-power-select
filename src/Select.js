@@ -18,6 +18,7 @@ const KEY_CODES = {
   DOWN_ARROW: 40,
   ENTER: 13,
   TAB: 9,
+  BACKSPACE: 8,
 };
 
 const actions = {
@@ -25,6 +26,7 @@ const actions = {
   [KEY_CODES.DOWN_ARROW]: 'handleDownArrow',
   [KEY_CODES.ENTER]: 'handleEnterPress',
   [KEY_CODES.TAB]: 'handleTabPress',
+  [KEY_CODES.BACKSPACE]: 'handleBackspacePress',
 };
 
 const noop = () => {};
@@ -319,6 +321,27 @@ export default class Select extends Component {
       this.resetSearchAndClose();
     }
   };
+
+  /*
+   * Backspace clears field if the power select:
+   * 1. is focused
+   * 2. is closed
+   * 3. has no search term
+   * 4. is not disabled
+   * 5. has clear button
+   */
+  handleBackspacePress() {
+    if (
+      this.state.focused &&
+      !this.state.isOpen &&
+      !this.state.searchTerm &&
+      !this.props.disabled &&
+      this.props.showClear
+    ) {
+      this.selectOption(undefined);
+      this.focusField();
+    }
+  }
 
   getPublicApi() {
     let { isOpen, searchTerm } = this.state;
