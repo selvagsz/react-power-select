@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import cx from 'classnames';
 import Option from './Option';
 import { getOptionIndex, isOptGroup } from './utils';
 
-export default class Options extends Component {
-  componentWillReceiveProps({ options, highlightedOption }) {
-    this.scrollTo({ options, highlightedOption });
-  }
-
+export default class Options extends PureComponent {
   componentDidMount() {
     let { options, highlightedOption } = this.props;
     this.optionsListOffsetHeight = this.optionsList.offsetHeight;
