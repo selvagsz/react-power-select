@@ -240,6 +240,25 @@ describe('<PowerSelect />', () => {
 
   // it('should make the highlighted option within viewport');
 
+  it('does not select an option after an open select becomes disabled', () => {
+    const wrapper = powerselect.renderWithProps({
+      options: frameworks,
+      selected: frameworks[0],
+      closeOnSelect: false,
+    });
+
+    powerselect.triggerContainerClick();
+    expect(powerselect.isOpened).toBeTruthy();
+    wrapper.setProps({ disabled: true });
+    powerselect.clickOption(1);
+    expect(powerselect.handleChange.called).toBeFalsy();
+
+    wrapper.setProps({ disabled: false });
+    powerselect.clickOption(1);
+    expect(powerselect.handleChange.calledOnce).toBeTruthy();
+    expect(powerselect.handleChange.lastCall.args[0].option).toBe(frameworks[1]);
+  });
+
   it('should select the option when click', () => {
     let optionIndex = 2;
     let optionToBeSelected = countries[2];
