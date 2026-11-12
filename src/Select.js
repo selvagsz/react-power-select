@@ -91,6 +91,8 @@ export default class Select extends Component {
   }
 
   selectOption = option => {
+    if (this.props.disabled) return;
+
     this.props.onChange({
       select: this.getPublicApi(),
       option,
